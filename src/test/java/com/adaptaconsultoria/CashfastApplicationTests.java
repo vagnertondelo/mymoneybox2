@@ -14,8 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.adaptaconsultoria.models.Token;
-import com.adaptaconsultoria.models.User;
+import com.adaptaconsultoria.objects.in.UserIn;
 import com.adaptaconsultoria.services.RequestService;
 
 @RunWith(SpringRunner.class)
@@ -40,12 +39,8 @@ public class CashfastApplicationTests {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-		
-		Token token =  restTemplate.postForObject("http://192.168.3.34:80/cbc/api/auth", request, Token.class);
-		
-		User user = token.getUser();
-		
-		System.out.println(user);
+		UserIn userIn =  restTemplate.postForObject("http://192.168.3.34:80/cbc/api/auth", request, UserIn.class);
+		System.out.println(userIn);
 		
 
 	}
