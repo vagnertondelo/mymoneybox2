@@ -1,5 +1,7 @@
 package com.adaptaconsultoria.services;
 
-public interface UserServiceImpl {
-	
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
 }

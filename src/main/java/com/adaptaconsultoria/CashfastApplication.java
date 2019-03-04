@@ -9,5 +9,4 @@ public class CashfastApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CashfastApplication.class, args);
 	}
-
 }

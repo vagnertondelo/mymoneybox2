@@ -8,5 +8,25 @@
     "name": "application.password",
     "type": "java.lang.String",
     "description": "A description for 'application.password'"
+  },
+  {
+    "name": "api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'api.url'"
+  },
+  {
+    "name": "app.password",
+    "type": "java.lang.String",
+    "description": "A description for 'app.password'"
+  },
+  {
+    "name": "app.token",
+    "type": "java.lang.String",
+    "description": "A description for 'app.token'"
+  },
+  {
+    "name": "app.name",
+    "type": "java.lang.String",
+    "description": "A description for 'app.name'"
   }
 ]}
