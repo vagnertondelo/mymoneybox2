@@ -6,8 +6,8 @@
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>
-<jsp:include page="../tiles/template/head.jsp"></jsp:include>
-<jsp:include page="../tiles/template/css.jsp"></jsp:include>
+<jsp:include page="../../tiles/template/head.jsp"></jsp:include>
+<jsp:include page="../../tiles/template/css.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/validation/form-validation.css">
 
 </head>
@@ -77,11 +77,11 @@
 		</div>
 	</div>
 	<!-- ////////////////////////////////////////////////////////////////////////////-->
-	<jsp:include page="../tiles/template/js.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/form.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/validate.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/alert.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/message.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/js.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

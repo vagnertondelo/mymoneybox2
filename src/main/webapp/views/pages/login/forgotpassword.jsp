@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<jsp:include page="../tiles/template/head.jsp"></jsp:include>
-<jsp:include page="../tiles/template/css.jsp"></jsp:include>
+<jsp:include page="../../tiles/template/head.jsp"></jsp:include>
+<jsp:include page="../../tiles/template/css.jsp"></jsp:include>
 </head>
 <body class="vertical-layout vertical-menu-modern 1-column   menu-expanded blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
 	<!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -52,9 +52,9 @@
 		</div>
 	</div>
 	<!-- ///////////////////////////////////js/////////////////////////////////////////-->
-	<jsp:include page="../tiles/template/js.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/validate.jsp"></jsp:include>
-	<jsp:include page="../tiles/template/message.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/js.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

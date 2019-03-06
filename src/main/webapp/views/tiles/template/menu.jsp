@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+<div class="main-menu menu-accordion menu-shadow menu-fixed expanded menu-light" data-scroll-to-active="true">
 	<div class="main-menu-content">
 		<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li class=" nav-item"><a href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
