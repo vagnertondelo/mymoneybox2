@@ -20,17 +20,18 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private CbcService cbcService;
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
-	private static final String url = "http://localhost:8080/cbc/api/account";
+	private static final String path = "auth";
 
 	@Override
 	public User login(String username, String password) {
 		MultiValueMap<Object, Object> map = cbcService.getAll();
 		UserIn userIn = new UserIn();
+		
 		try {
 			map.add("userName", username);
 			map.add("userPassword", password);
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<UserIn> obj = restTemplate.exchange(url, HttpMethod.POST, cbcService.getRequest(map), UserIn.class);
+			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(path), HttpMethod.POST, cbcService.getRequest(map), UserIn.class);
 			Optional<User> userOp = Optional.of(obj.getBody().getUser());
 			return userOp.get();
 		} catch (Exception e) {

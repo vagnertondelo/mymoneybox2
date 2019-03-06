@@ -24,12 +24,9 @@
 								<div class="card-header border-0">
 									<div class="card-title text-center">
 										<div class="p-1">
-											<img class="brand-logo" src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png" style="width: 124px;" alt="branding logo">
+											<img src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png" style="width: 124px;" alt="branding logo">
 										</div>
 									</div>
-									<h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
-										<span>Bem vindo ao ${projectName}</span>
-									</h6>
 								</div>
 								<c:if test="${param.error ne null}">
 									<c:remove var="messageType" scope="session" />
@@ -40,39 +37,43 @@
 									<c:set var="messageTitle" scope="request" value="Usuário ou senha inválido!" />
 								</c:if>
 								<div class="card-content">
-									<div class="card-body">
-										<form class="form-horizontal form-simple" action="${pageContext.request.contextPath}/login" method="post" id="${formId}">
-											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <input type="hidden" id="so" name="so" />
-											<fieldset class="form-group position-relative has-icon-left mb-0">
-												<input type="text" class="form-control form-control-lg input-lg" id="username" name="username" placeholder="Login" required>
-												<div class="form-control-position">
-													<i class="ft-user"></i>
-												</div>
+									<p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2">
+										<span>Bem vindo ao ${projectName}</span>
+									</p>
+									<div class="card-body pt-0">
+										<form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" id="${formId}">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <input type="hidden" id="so" name="so" />
+											<fieldset class="form-group floating-label-form-group">
+												<label for="username">Usuário</label> <input type="text" class="form-control" name="username" id="username" placeholder="" required>
 											</fieldset>
-											<fieldset class="form-group position-relative has-icon-left">
-												<input type="password" class="form-control form-control-lg input-lg" name="password" id="password" maxlength="120" placeholder="Senha" required>
-												<div class="form-control-position">
-													<i class="la la-key"></i>
-												</div>
+											<fieldset class="form-group floating-label-form-group mb-1">
+												<label for="password">Senha</label> <input type="password" class="form-control" id="password" name="password" placeholder="" required>
 											</fieldset>
 											<div class="form-group row">
-												<div class="col-md-6 col-12 text-center text-md-left">
+												<div class="col-md-6 col-12 text-center text-sm-left">
 													<fieldset></fieldset>
 												</div>
-												<div class="col-md-6 col-12 text-center text-md-right right">
-													<a href="forgotpassword" class="card-link">Esqueci minha senha ?</a>
+												<div class="col-md-6 col-12 float-sm-left text-center text-sm-right">
+													<a href="recover-password.html" class="card-link">Esqueci a minha senha?</a>
 												</div>
 											</div>
-											<button type="submit" class="btn btn-info btn-lg btn-block">
-												<i class="ft-unlock"></i> Entrar
+											<button type="submit" class="btn btn-outline-info btn-block">
+												<i class="ft-unlock"></i> Login
 											</button>
 										</form>
+									</div>
+									<p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-1">
+										<span>Novo no ${projectName} ?</span>
+									</p>
+									<div class="card-body">
+										<a href="${pageContext.request.contextPath}/register" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Cadastrar-se </a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</section>
+
 			</div>
 		</div>
 	</div>

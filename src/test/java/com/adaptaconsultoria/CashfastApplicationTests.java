@@ -71,7 +71,7 @@ public class CashfastApplicationTests {
 //		Object object =  restTemplate.postForObject("http://localhost:8090/cbc/api/account", request, Object.class);
 
 //		ResponseEntity<List<UserIn>> obj = restTemplate.exchange("http://localhost:8090/cbc/api/account", HttpMethod.POST, null, new ParameterizedTypeReference<List<UserIn>>() {});
-		ResponseEntity<UserIn> obj = restTemplate.exchange("http://localhost:8090/cbc/api/account", HttpMethod.POST, request, UserIn.class);
+		ResponseEntity<UserIn> obj = restTemplate.exchange("http://192.168.0.34/cbc/api/auth", HttpMethod.POST, request, UserIn.class);
 		
 	    UserIn userIn = obj.getBody();
 		System.out.println(userIn);

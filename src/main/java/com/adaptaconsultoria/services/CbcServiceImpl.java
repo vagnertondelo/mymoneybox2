@@ -2,6 +2,7 @@ package com.adaptaconsultoria.services;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import com.adaptaconsultoria.models.Token;
 
 @Service
 public class CbcServiceImpl implements CbcService {
@@ -95,5 +101,31 @@ public class CbcServiceImpl implements CbcService {
 			log.error(e.getMessage());
 		}
 		return new HttpEntity<>(null, null);
+	}
+
+	@Override
+	public String append(String path) {
+		try {
+			return (getUrl() + path);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Token requestToken() {
+		MultiValueMap<Object, Object> map = getAll();
+		String path = "auth";
+		Token token = new Token();
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getRequest(map), Token.class);
+			Optional<Token> tokenOp = Optional.of(obj.getBody());
+			token = tokenOp.get();
+			return token;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
 	}
 }

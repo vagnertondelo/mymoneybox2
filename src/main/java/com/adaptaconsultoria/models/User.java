@@ -7,11 +7,29 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
-	private String name;
-	private String email;
-	private String login;
-	private String company;
-	private Boolean status;
-	private String gender;
-	private String cellphone;
+	
+	String ipAddress;
+	String doLogin;
+	
+	String countryIsoCode;
+	
+	String firstname;
+	String lastname;
+	String name;
+	String login;
+	String password;
+	String email;
+	String phone;
+	String taxid;
+	
+	String address;
+	String addressCountryIsoCode;
+	String addressRegionCode;
+	String addressCityCode;
+	String addressDistrict;
+	String addressZipcode;
+	String accountNo;
+	
+	String sponsorAccountNo;
+	
 }
