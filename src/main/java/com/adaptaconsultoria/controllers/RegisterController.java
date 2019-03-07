@@ -22,8 +22,8 @@ public class RegisterController {
 		pageUtil.setPageTitle("Registrar");
 		pageUtil.setTitle("Registrar");
 		pageUtil.setAttr("projectName", cbcService.getName());
-		pageUtil.setAttr("token", cbcService.requestToken().getToken());
-		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
+//		pageUtil.setAttr("token", cbcService.requestToken().getToken());
+//		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		pageUtil.setJs("register.js");
 		pageUtil.setFormId("register-form");
 		return pageUtil.getModel();

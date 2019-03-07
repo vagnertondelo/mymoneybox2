@@ -93,11 +93,9 @@
 												</div>
 
 												<div class="row">
-													<div class="col-md-3">
-														<div class="col-md-3 form-group">
-															<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
-															</select>
-														</div>
+													<div class="col-md-3 form-group">
+														<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
+														</select>
 													</div>
 													<div class="col-md-3">
 														<div class="form-group">
@@ -111,7 +109,6 @@
 												</div>
 
 												<div class="row">
-
 													<div class="col-md-12 form-group">
 														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country" name="addressCountryIsoCode" id="addressCountryIsoCode">
 														</select>

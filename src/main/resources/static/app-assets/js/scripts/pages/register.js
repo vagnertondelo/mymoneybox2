@@ -6,13 +6,8 @@ $(document).ready(function() {
 });
 
 function select2Initialize() {
-	
-	var data = {
-		    
-		};
-	
 	$('.state').select2();
-	
+	$('.city').select2();
 }
 
 function stepsValidation() {
@@ -53,30 +48,26 @@ function getCidadesByEstadosBrazil() {
 	$.getJSON(contextPath + '/app-assets/json/estados_cidades.json', function (data) {
 		var items = [];
 		var options = '<option value="">Escolha um estado</option>';	
+		
 		$.each(data, function (key, val) {
 			$('.state').append(new Option(val.nome, val.sigla, false, false)).trigger('change');
 		});		
 		
-		$(".state").change(function () {		
-			debugger
-		
+		$(".state").change(function () {	
 			var options_cidades = '';
 			var str = "";					
-			
-			$("#estados option:selected").each(function () {
-				debugger
+			$(".state option:selected").each(function () {
 				str += $(this).text();
 			});
-			
 			$.each(data, function (key, val) {
-				if(val.nome == str) {							
-					$.each(val.cidades, function (key_city, val_city) {
-						options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
-					});							
+				if(val.nome == str) {
+					console.log(val.cidades)
+					$('.city').empty()
+					$(".city").select2({
+						  data: val.cidades
+					})
 				}
 			});
-			
-			$("#cidades").html(options_cidades);
 		}).change();		
 	});
 }
