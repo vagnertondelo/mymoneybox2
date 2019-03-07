@@ -1,7 +1,6 @@
 package com.adaptaconsultoria;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,24 +20,36 @@ import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.Bean;
 import com.adaptaconsultoria.objects.in.UserIn;
+import com.adaptaconsultoria.services.CbcService;
+import com.adaptaconsultoria.services.LocationService;
 import com.adaptaconsultoria.services.RequestService;
 import com.adaptaconsultoria.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class CashfastApplicationTests {
+public class TestApplication {
 
 	@Autowired
 	public RequestService requestService;
-	private static final Logger log = LoggerFactory.getLogger(CashfastApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CbcService cbcService;
+	
+	@Autowired
+	private LocationService locationService;
 
 	@Test
 	public void contextLoads() {
-		testUser();
+		getLocation();
+	}
+	
+	public void getLocation() {
+		locationService.getLocationByCompany();
 	}
 
 	public void testJson() {

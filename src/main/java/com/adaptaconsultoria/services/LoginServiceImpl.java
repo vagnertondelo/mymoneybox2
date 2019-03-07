@@ -24,14 +24,14 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public User login(String username, String password) {
-		MultiValueMap<Object, Object> map = cbcService.getAll();
+		MultiValueMap<Object, Object> map = cbcService.getApplicationCredentials();
 		UserIn userIn = new UserIn();
 		
 		try {
 			map.add("userName", username);
 			map.add("userPassword", password);
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(path), HttpMethod.POST, cbcService.getRequest(map), UserIn.class);
+			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(path), HttpMethod.POST, cbcService.getPostRequest(map), UserIn.class);
 			Optional<User> userOp = Optional.of(obj.getBody().getUser());
 			return userOp.get();
 		} catch (Exception e) {

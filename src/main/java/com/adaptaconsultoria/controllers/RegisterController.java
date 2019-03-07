@@ -3,11 +3,15 @@ package com.adaptaconsultoria.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.adaptaconsultoria.services.CbcService;
+import com.adaptaconsultoria.services.LocationService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
 
 @Controller
@@ -15,6 +19,9 @@ public class RegisterController {
 
 	@Autowired
 	private CbcService cbcService;
+	
+	@Autowired
+	private LocationService locationService;
 	
 	@GetMapping(path = "register")
 	public ModelAndView register(HttpServletRequest request) {
@@ -27,5 +34,11 @@ public class RegisterController {
 		pageUtil.setJs("register.js");
 		pageUtil.setFormId("register-form");
 		return pageUtil.getModel();
+	}
+	
+	@PostMapping(path = "locations", produces = "application/json")
+	@ResponseBody
+	public Object getLocations() {
+		return locationService.getLocationByCompany();
 	}
 }

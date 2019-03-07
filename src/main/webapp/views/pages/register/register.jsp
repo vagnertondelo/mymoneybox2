@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/wizard.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/extensions/flag-icon.min-adjust.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/intlTelInput/intlTelInput.css">
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 	<div class="app-content">
@@ -52,6 +53,18 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
+															<label for="taxid">ID:</label> <input type="text" class="form-control" id="taxid" name="taxid" placeholder="ID">
+														</div>
+													</div>
+
+													<div class="col-md-6 form-group">
+														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country" name="countryIsoCode" id="countryIsoCode">
+														</select>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="form-group">
 															<label for="email">Email:<span class="danger">*</span></label> <input type="email" class="form-control required" id="email" name="email" placeholder="Email">
 														</div>
 													</div>
@@ -60,19 +73,6 @@
 														<div class="form-group">
 															<label for="phone">Telefone:</label> <input type="text" class="form-control" id="phone" name="phone" placeholder="Telefone">
 														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="taxid">ID:</label> <input type="text" class="form-control" id="taxid" name="taxid" placeholder="ID">
-														</div>
-													</div>
-
-													<div class="col-md-6 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country" name="countryIsoCode" id="countryIsoCode">
-														</select>
 													</div>
 												</div>
 											</fieldset>
@@ -93,11 +93,9 @@
 												</div>
 
 												<div class="row">
-													<div class="col-md-3">
-														<div class="col-md-3 form-group">
-															<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
-															</select>
-														</div>
+													<div class="col-md-3 form-group">
+														<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
+														</select>
 													</div>
 													<div class="col-md-3">
 														<div class="form-group">
@@ -111,9 +109,8 @@
 												</div>
 
 												<div class="row">
-
 													<div class="col-md-12 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
 														</select>
 													</div>
 												</div>
@@ -143,15 +140,6 @@
 												</div>
 											</fieldset>
 										</form>
-
-
-										<form>
-											<!-- Estado -->
-											<select id="estados">
-												<option value=""></option>
-											</select> <select id="cidades">
-											</select>
-										</form>
 									</div>
 								</div>
 							</div>
@@ -166,7 +154,7 @@
 	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
-
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/intlTelInput/intlTelInput.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.adaptaconsultoria.models.Token;
 
@@ -49,7 +50,7 @@ public class CbcServiceImpl implements CbcService {
 	}
 
 	@Override
-	public String getToken() {
+	public String getAppToken() {
 		try {
 			return env.getProperty("app.token");
 		} catch (Exception e) {
@@ -79,10 +80,10 @@ public class CbcServiceImpl implements CbcService {
 	}
 
 	@Override
-	public MultiValueMap<Object, Object> getAll() {
+	public MultiValueMap<Object, Object> getApplicationCredentials() {
 		MultiValueMap<Object, Object> map = new LinkedMultiValueMap<>();
 		try {
-			map.add("appToken", getToken());
+			map.add("appToken", getAppToken());
 			map.add("appPassword", getPassword());
 			map.add("ipAddress", getIpAdress());
 		} catch (Exception e) {
@@ -92,15 +93,50 @@ public class CbcServiceImpl implements CbcService {
 	}
 
 	@Override
-	public HttpEntity<MultiValueMap<Object, Object>> getRequest(MultiValueMap<Object, Object> map) {
+	public MultiValueMap<String, String> getBasicPublicServiceRequest() {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		try {
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			return new HttpEntity<>(map, headers);
+			map.add("token", requestToken().getToken());
+			map.add("ipAddress", getIpAdress());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return map;
+	}
+
+	@Override
+	public String getGetRequest(String path, MultiValueMap<String, String> parameters) {
+		try {
+			return UriComponentsBuilder.fromHttpUrl(append(path)).queryParams(parameters).toUriString();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	@Override
+	public HttpEntity<MultiValueMap<Object, Object>> getPostRequest(MultiValueMap<Object, Object> map) {
+		try {
+			HttpHeaders requestHeaders = new HttpHeaders();
+			requestHeaders.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+			return new HttpEntity<>(map, requestHeaders);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return new HttpEntity<>(null, null);
+	}
+	
+	@Override
+	public HttpEntity<?> requestHeaders() {
+		try {
+			HttpHeaders requestHeaders = new HttpHeaders();
+			requestHeaders.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+			return new HttpEntity<>(requestHeaders);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -114,12 +150,12 @@ public class CbcServiceImpl implements CbcService {
 
 	@Override
 	public Token requestToken() {
-		MultiValueMap<Object, Object> map = getAll();
+		MultiValueMap<Object, Object> map = getApplicationCredentials();
 		String path = "auth";
 		Token token = new Token();
 		try {
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getRequest(map), Token.class);
+			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getPostRequest(map), Token.class);
 			Optional<Token> tokenOp = Optional.of(obj.getBody());
 			token = tokenOp.get();
 			return token;
