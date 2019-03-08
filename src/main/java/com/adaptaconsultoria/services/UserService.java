@@ -6,6 +6,6 @@ import com.adaptaconsultoria.models.User;
 
 public interface UserService {
 	public Object save(User user);
-	public Boolean isLogin(String login, HttpSession session);
-	public Boolean isEmail(String email, HttpSession session);
+	public Object isLogin(String login, HttpSession session);
+	public Object isEmail(String email, HttpSession session);
 }

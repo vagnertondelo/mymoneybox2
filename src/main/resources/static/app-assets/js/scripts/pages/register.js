@@ -80,7 +80,15 @@ function validate(form) {
  						login : function() {
  							return $("#login").val()
  						}
- 					}
+ 					},
+ 					dataFilter : function(obj) {
+ 						obj = jQuery.parseJSON(obj);
+ 						updateToken(obj.token)
+						if (obj.isvalid) {
+							return true;
+						}
+						return false;
+					}
             	 }
              },
              email: {
@@ -91,7 +99,15 @@ function validate(form) {
   						email : function() {
   							return $("#email").val()
   						}
-  					}
+  					},
+  					dataFilter : function(obj) {
+  						obj = jQuery.parseJSON(obj);
+  						updateToken(obj.token)
+						if (obj.isvalid) {
+							return true;
+						}
+						return false;
+					}
             	 } 
              }
 		},

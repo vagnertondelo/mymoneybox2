@@ -8,6 +8,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 	
+	String token;
 	String ipAddress;
 	String doLogin;
 	
