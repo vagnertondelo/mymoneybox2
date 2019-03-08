@@ -2,7 +2,6 @@ package com.adaptaconsultoria.services;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.adaptaconsultoria.models.Token;
+
+import net.minidev.json.JSONObject;
 
 @Service
 public class CbcServiceImpl implements CbcService {
@@ -80,7 +78,7 @@ public class CbcServiceImpl implements CbcService {
 	}
 
 	@Override
-	public MultiValueMap<Object, Object> getApplicationCredentials() {
+	public MultiValueMap<Object, Object> getApplicationCredentialsMultiPart() {
 		MultiValueMap<Object, Object> map = new LinkedMultiValueMap<>();
 		try {
 			map.add("appToken", getAppToken());
@@ -90,6 +88,19 @@ public class CbcServiceImpl implements CbcService {
 			log.error(e.getMessage());
 		}
 		return map;
+	}
+	
+	@Override
+	public JSONObject getApplicationCredentials() {
+		JSONObject params = new JSONObject();
+		try {
+			params.put("appToken", getAppToken());
+			params.put("appPassword", getPassword());
+			params.put("ipAddress", getIpAdress());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return params;
 	}
 
 	@Override
@@ -115,11 +126,11 @@ public class CbcServiceImpl implements CbcService {
 	}
 	
 	@Override
-	public HttpEntity<MultiValueMap<Object, Object>> getPostRequest(MultiValueMap<Object, Object> map) {
+	public HttpEntity<String> getPostRequestHeaders(JSONObject params) {
 		try {
-			HttpHeaders requestHeaders = new HttpHeaders();
-			requestHeaders.add("Accept", MediaType.APPLICATION_JSON_VALUE);
-			return new HttpEntity<>(map, requestHeaders);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			return new HttpEntity<String>(params.toString(), headers);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -150,18 +161,24 @@ public class CbcServiceImpl implements CbcService {
 
 	@Override
 	public Token requestToken() {
-		MultiValueMap<Object, Object> map = getApplicationCredentials();
-		String path = "auth";
-		Token token = new Token();
-		try {
-			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getPostRequest(map), Token.class);
-			Optional<Token> tokenOp = Optional.of(obj.getBody());
-			token = tokenOp.get();
-			return token;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+//	@Override
+//	public Token requestToken() {
+//		MultiValueMap<Object, Object> map = getApplicationCredentials();
+//		String path = "auth";
+//		Token token = new Token();
+//		try {
+//			RestTemplate restTemplate = new RestTemplate();
+//			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getPostRequest(map), Token.class);
+//			Optional<Token> tokenOp = Optional.of(obj.getBody());
+//			token = tokenOp.get();
+//			return token;
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//		}
+//		return null;
+//	}
 }

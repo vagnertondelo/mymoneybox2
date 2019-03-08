@@ -5,6 +5,8 @@ import org.springframework.util.MultiValueMap;
 
 import com.adaptaconsultoria.models.Token;
 
+import net.minidev.json.JSONObject;
+
 public interface CbcService {
 	public String getUrl();
 	
@@ -16,7 +18,7 @@ public interface CbcService {
 	
 	public String getName();
 	
-	public MultiValueMap<Object, Object> getApplicationCredentials();
+	public JSONObject getApplicationCredentials();
 	
 	public String getGetRequest(String path, MultiValueMap<String, String> parameters);
 	
@@ -26,7 +28,9 @@ public interface CbcService {
 	
 	public MultiValueMap<String, String> getBasicPublicServiceRequest();
 	
-	public HttpEntity<MultiValueMap<Object, Object>> getPostRequest(MultiValueMap<Object, Object> map);
+	public HttpEntity<String> getPostRequestHeaders(JSONObject params);
 	
 	public HttpEntity<?> requestHeaders();
+	
+	public MultiValueMap<Object, Object> getApplicationCredentialsMultiPart();
 }
