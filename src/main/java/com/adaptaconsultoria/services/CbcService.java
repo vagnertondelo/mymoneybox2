@@ -8,6 +8,7 @@ import com.adaptaconsultoria.models.Token;
 import net.minidev.json.JSONObject;
 
 public interface CbcService {
+	
 	public String getUrl();
 	
 	public String getAppToken();

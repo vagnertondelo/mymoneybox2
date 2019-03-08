@@ -21,10 +21,10 @@ function stepsValidation() {
 			next : "Próximo",
 			finish : "Salvar"
 		},
-		onStepChanging: function(e, t, i) {
-			 return form.validate().settings.ignore = ":disabled,:hidden",
-			 form.valid();
-		},
+// onStepChanging: function(e, t, i) {
+// return form.validate().settings.ignore = ":disabled,:hidden",
+// form.valid();
+// },
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
 		},
@@ -34,15 +34,21 @@ function stepsValidation() {
 	});
 }
 
-
 function save() {
+	if($("#addressCityCode").val() === '') {
+		$("#addressRegionCode").val('')
+	}
+	
 	$.ajax({
 		type : "POST",
 		data : $(formId).serializeObject(),
-		url : contextPath + "/admin/credenciado/salvar",
+		url : "saveuser",
 		success : function(obj) {
-			if (obj.sucesso) {
+			
+			if (obj) {
+				
 				savePercentage(obj.obj.id, obj);
+				
 			} else {
 				swal("Cancelado", obj.message, "error");
 				return 0;
@@ -53,11 +59,41 @@ function save() {
 }
 
 function validate(form) {
+	
 	form.validate({
 		submitHandler : function(form) {
 			$(formId)[0].submit();
 		},
-		rules : {},
+		rules : {
+			 countryIsoCode : {
+				valueNotEquals: true
+			 },
+			 passwordConfirm : {
+                 equalTo : "#password"
+             },
+             login: {
+            	 remote : {
+ 					url : "islogin",
+ 					type : "GET",
+ 					data : {
+ 						login : function() {
+ 							return $("#login").val()
+ 						}
+ 					}
+            	 }
+             },
+             email: {
+            	 remote : {
+  					url : "isemail",
+  					type : "GET",
+  					data : {
+  						email : function() {
+  							return $("#email").val()
+  						}
+  					}
+            	 } 
+             }
+		},
 		errorClass : 'help-block',
 		errorElement : 'div',
 		success : function(label, element) {
@@ -67,7 +103,11 @@ function validate(form) {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-			error.insertAfter(element).append;
+		    if (element.prop('id') === 'countryIsoCode') {
+                error.appendTo(element.parent());
+            } else {
+            	error.insertAfter(element);
+            }
 		}
 	});
 }
@@ -100,21 +140,27 @@ function setCountriesSelect2(c) {
 }
 
 function setOnChangeCountriesEvent(countries) {
-	$('.countries').change(function () {	
+	$('.countries').change(function () {
 		var selectedCountry = getWhichCountryIsSelected();
 		setSelect2RegionsByCountry(countries, selectedCountry)
-	}).change();
+	});
 }
 
 function setSelect2RegionsByCountry(countries, selectedCountry) {
+	var hasSelectedCountry = false;
 	sorop(selectedCountry)
 	countries.forEach( c => {
-			if(c.name == selectedCountry) {
-				sorop(c.regionName)
-				setRegionsSelect2(c.regions)
-				setOnChangeRegionsEvent(c.regions)
-			}
+		if(c.name === selectedCountry) {
+			sorop(c.regionName)
+			setRegionsSelect2(c.regions)
+			setOnChangeRegionsEvent(c.regions)
+			hasSelectedCountry = true;
+		}
 	})
+	if (!hasSelectedCountry) {
+		$('.state').empty()
+		$('.city').empty()
+	}
 }
 
 function sorop(regionName) {
@@ -161,10 +207,13 @@ function getWhichRegionIsSelected() {
 }
 
 function cMappedCountries(c) {
+	var mappedCountries = [{id: '', text: 'Selecione uma opção'}];
 	$('.countries').empty()
-	return c.map(c => {
+	var mapped = c.map(c => {
 		return {id: c.isoCode, text: c.name}
 	});
+	var returnedTarget = $.merge(mappedCountries, mapped);
+	return returnedTarget;
 }
 
 function cMappedCountry(c) {

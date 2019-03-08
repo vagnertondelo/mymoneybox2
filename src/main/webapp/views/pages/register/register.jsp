@@ -32,20 +32,15 @@
 								</div>
 								<div class="card-content collapse show">
 									<div class="card-body">
-										<form action="#" class="number-tab-steps wizard-notification steps-validation">
+										<form class="number-tab-steps wizard-notification steps-validation" id="${formId}">
 											<input type="hidden" class="form-control" id="accountNo" name="accountNo" placeholder="accountNo"> <input type="hidden" class="form-control" id="sponsorAccountNo" name="sponsorAccountNo" placeholder="sponsorAccountNo"> <input type="hidden" class="form-control" id="ipAddress" name="ipAddress" placeholder="ipAddress" value="${ipAddress}"> <input type="hidden"
 												class="form-control" id="doLogin" name="doLogin" placeholder="doLogin"> <input type="hidden" class="form-control" id="token" name="token" placeholder="token" value="${token}">
 											<h6>Informações Pessoais</h6>
 											<fieldset>
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-12">
 														<div class="form-group">
-															<label for="firstname">Nome:</label> <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Primeiro Nome">
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="lastname">Sobrenome:</label> <input type="text" class="form-control" id="lastname" placeholder="Sobrenome">
+															<label for="name">Nome Completo:<span class="danger">*</span></label> <input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
 														</div>
 													</div>
 												</div>
@@ -53,12 +48,13 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="taxid">ID:</label> <input type="text" class="form-control" id="taxid" name="taxid" placeholder="ID">
+															<label for="taxid">Número do Documento:</label> <input type="number" class="form-control" id="taxid" name="taxid" placeholder="Número do Documento">
 														</div>
 													</div>
 
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country" name="countryIsoCode" id="countryIsoCode">
+														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> 
+														<select class="form-control country required" name="countryIsoCode" id="countryIsoCode">
 														</select>
 													</div>
 												</div>
@@ -76,7 +72,7 @@
 													</div>
 												</div>
 											</fieldset>
-
+											
 											<h6>Endereço</h6>
 											<fieldset>
 												<div class="row">
@@ -94,23 +90,25 @@
 
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:</label> 
+														<select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+															 <option value="">Selecione um País</option>
 														</select>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:<span class="danger">*</span></label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
+														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
 													</div>
 												</div>
 
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
+														<label class="label-control" for="addressCityCode">Cidade:</label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
 														</select>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="addressZipcode">CEP:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="CEP">
+															<label for="addressZipcode">Código de Área:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
 														</div>
 													</div>
 												</div>
@@ -121,7 +119,7 @@
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="nome">Login:</label> <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+															<label for="login">Login:</label> <input type="text" class="form-control" id="login" name="login" placeholder="Login">
 														</div>
 													</div>
 												</div>
@@ -134,7 +132,7 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="password">Senha:</label> <input type="text" class="form-control" id="password" name="password" placeholder="Senha">
+															<label for="passwordConfirm">Confirme sua Senha:</label> <input type="text" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua Senha">
 														</div>
 													</div>
 												</div>

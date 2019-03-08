@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 import com.adaptaconsultoria.objects.in.CountriesIn;
 
 @Service
-public class LocationServiceImpl implements LocationService {
+public class CountryServiceImpl implements CountryService {
 
 	@Autowired
 	private CbcService cbcService;
-	private static final Logger log = LoggerFactory.getLogger(LocationServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(CountryServiceImpl.class);
 	private static final String path = "localization";
 	
 	@Override

@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import com.adaptaconsultoria.models.Bean;
 import com.adaptaconsultoria.objects.in.UserIn;
 import com.adaptaconsultoria.services.CbcService;
-import com.adaptaconsultoria.services.LocationService;
+import com.adaptaconsultoria.services.CountryService;
 import com.adaptaconsultoria.services.RequestService;
 import com.adaptaconsultoria.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,7 +43,7 @@ public class TestApplication {
 	private CbcService cbcService;
 	
 	@Autowired
-	private LocationService locationService;
+	private CountryService countryService;
 
 	@Test
 	public void contextLoads() {
@@ -51,7 +51,7 @@ public class TestApplication {
 	}
 	
 	public void getLocation() {
-		locationService.getLocationByCompany();
+		countryService.getLocationByCompany();
 	}
 
 	public void testJson() {

@@ -1,5 +1,5 @@
 package com.adaptaconsultoria.services;
 
-public interface LocationService {
+public interface CountryService {
 	public Object getLocationByCompany();
 }
