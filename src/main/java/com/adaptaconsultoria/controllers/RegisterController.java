@@ -30,13 +30,14 @@ public class RegisterController {
 	private UserService userService;
 	
 	@GetMapping(path = "register")
-	public ModelAndView register(HttpServletRequest request) {
+	public ModelAndView register(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath() + "/register"));
+		
 		pageUtil.setPageTitle("Registrar");
 		pageUtil.setTitle("Registrar");
 		pageUtil.setAttr("projectName", cbcService.getName());
-//		pageUtil.setAttr("token", cbcService.requestToken().getToken());
-//		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
+		pageUtil.setAttr("token",  cbcService.getToken(session) );
+		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		pageUtil.setJs("register.js");
 		pageUtil.setFormId("register-form");
 		return pageUtil.getModel();
@@ -54,21 +55,13 @@ public class RegisterController {
 	}
 	
 	@GetMapping(value = "islogin")
-	public ResponseEntity<?> isLogin(String login) {
-		return ResponseEntity.ok( userService.isLogin(login) );
+	public ResponseEntity<?> isLogin(String login, HttpSession session) {
+		return ResponseEntity.ok( userService.isLogin(login, session) );
 	}
 	
 	@GetMapping(value = "isemail")
-	public ResponseEntity<?> isEmail(String email) {
-		return ResponseEntity.ok( userService.isEmail(email) );
+	public ResponseEntity<?> isEmail(String email, HttpSession session) {
+		return ResponseEntity.ok( userService.isEmail(email, session) );
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

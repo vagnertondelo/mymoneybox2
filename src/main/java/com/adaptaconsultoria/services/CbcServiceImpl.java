@@ -4,6 +4,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class CbcServiceImpl implements CbcService {
 
 	@Autowired
 	private Environment env;
+	
+	@Autowired
+	private SessionService sessionService;
 
 	private static final Logger log = LoggerFactory.getLogger(CbcServiceImpl.class);
 
@@ -165,7 +170,6 @@ public class CbcServiceImpl implements CbcService {
 		}
 	}
 
-
 	@Override
 	public Token requestToken() {
 		JSONObject params = getApplicationCredentials();
@@ -183,4 +187,18 @@ public class CbcServiceImpl implements CbcService {
 		}
 		return null;
 	}
+
+	@Override
+	public String getToken(HttpSession session) {
+		try {
+			if (sessionService.getToken(session) == null || sessionService.getToken(session).isEmpty()) {
+				sessionService.setToken(requestToken().getToken(), session);
+			}
+			return sessionService.getToken(session);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
 }
