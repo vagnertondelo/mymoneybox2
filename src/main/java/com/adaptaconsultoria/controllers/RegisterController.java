@@ -32,11 +32,10 @@ public class RegisterController {
 	@GetMapping(path = "register")
 	public ModelAndView register(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath() + "/register"));
-		
 		pageUtil.setPageTitle("Registrar");
 		pageUtil.setTitle("Registrar");
 		pageUtil.setAttr("projectName", cbcService.getName());
-		pageUtil.setAttr("token",  cbcService.getToken(session) );
+		pageUtil.setAttr("token", cbcService.requestToken().getToken());
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		pageUtil.setJs("register.js");
 		pageUtil.setFormId("register-form");

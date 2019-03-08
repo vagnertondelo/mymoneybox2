@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	stepsValidation();
 	select2Initialize()
@@ -117,10 +118,15 @@ function getLocationsToFillUpSelect2Inputs() {
 		url : "locations",
 		type: 'POST',
 	}).done(function(data) {
+		updateToken(data.token);
 		var countries = data.countries;
 		setCountriesSelect2(countries)
 		setOnChangeCountriesEvent(countries)
 	});
+}
+
+function updateToken(token) {
+	$("#token").val(token)
 }
 
 function select2Initialize() {

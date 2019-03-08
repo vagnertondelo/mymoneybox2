@@ -1,7 +1,5 @@
 package com.adaptaconsultoria.services;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.util.MultiValueMap;
 
@@ -36,6 +34,4 @@ public interface CbcService {
 	public HttpEntity<?> requestHeaders();
 	
 	public MultiValueMap<Object, Object> getApplicationCredentialsMultiPart();
-	
-	public String getToken(HttpSession session);
 }
