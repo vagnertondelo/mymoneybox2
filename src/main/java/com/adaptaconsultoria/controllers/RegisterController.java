@@ -3,7 +3,6 @@ package com.adaptaconsultoria.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +34,11 @@ public class RegisterController {
 		pageUtil.setFormId("register-form");
 		return pageUtil.getModel();
 	}
+	
+//	@PostMapping(value = "/save")
+//	public ResponseEntity<?> register(Credenciado credenciado, HttpSession session) {
+//		return ResponseEntity.ok(credenciadoService.save(credenciado, session));
+//	}
 	
 	@PostMapping(path = "locations", produces = "application/json")
 	@ResponseBody

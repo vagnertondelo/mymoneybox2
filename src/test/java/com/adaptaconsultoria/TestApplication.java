@@ -26,6 +26,8 @@ import com.adaptaconsultoria.services.RequestService;
 import com.adaptaconsultoria.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import net.minidev.json.JSONObject;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestApplication {
@@ -45,7 +47,7 @@ public class TestApplication {
 
 	@Test
 	public void contextLoads() {
-		getLocation();
+		testAccount();
 	}
 	
 	public void getLocation() {
@@ -63,6 +65,21 @@ public class TestApplication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void testAccount() {
+		JSONObject request = new JSONObject();
+		request.put("firstname", "maria");
+		RestTemplate restTemplate = new RestTemplate();
+
+		// set headers
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> entity = new HttpEntity<String>(request.toString(), headers);
+
+		// send request and parse result
+		ResponseEntity<Object> r = restTemplate.exchange("http://localhost:8082/cbc/api/account", HttpMethod.POST, entity, Object.class);
+		System.out.println(r);
 	}
 
 	public void testUser() {

@@ -93,25 +93,25 @@
 												</div>
 
 												<div class="row">
-													<div class="col-md-3 form-group">
-														<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
+													<div class="col-md-6 form-group">
+														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
 														</select>
 													</div>
-													<div class="col-md-3">
-														<div class="form-group">
-															<label for="addressZipcode">CEP:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="CEP">
-														</div>
-													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressRegionCode">Estado:<span class="danger">*</span></label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
+														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:<span class="danger">*</span></label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
 													</div>
 												</div>
 
 												<div class="row">
-													<div class="col-md-12 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+													<div class="col-md-6 form-group">
+														<label class="label-control" for="addressCityCode">Cidade:<span class="danger">*</span></label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
 														</select>
+													</div>
+													<div class="col-md-6">
+														<div class="form-group">
+															<label for="addressZipcode">CEP:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="CEP">
+														</div>
 													</div>
 												</div>
 											</fieldset>

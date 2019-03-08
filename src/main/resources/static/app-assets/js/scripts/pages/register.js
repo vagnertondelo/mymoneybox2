@@ -1,88 +1,8 @@
 $(document).ready(function() {
 	stepsValidation();
-	flagsSelect2()
 	select2Initialize()
-	var input = document.querySelector("#phone");
-	getLocations()
+	getLocationsToFillUpSelect2Inputs()
 });
-
-
-
-function getLocations() {
-	$.ajax({
-		url : "locations",
-		type: 'POST',
-	}).done(function(data) {
-		var items = [];
-		var countries = data.countries;
-		
-		countries.forEach( c => {
-			$('.countries').append(new Option(c.name, c.isoCode, false, false)).trigger('change');
-        });
-
-		$(".countries").change(function () {	
-			var str = "";					
-			$(".countries option:selected").each(function () {
-				str += $(this).text();
-			});
-			
-			countries.forEach( c => {
-				if(c.name == str) {
-					var regions = c.regions;
-					$('.state').empty()
-					
-					regions.forEach( r => {
-						$('.state').append(new Option(r.name, r.isoCode, false, false)).trigger('change');
-			        });
-					
-					$(".state").change(function () {	
-						var state = "";					
-						$(".state option:selected").each(function () {
-							state += $(this).text();
-						});
-						
-						regions.forEach( r => {
-							if(r.name == state) {
-								var cities = r.cities;
-								$('.city').empty()
-								cities.forEach( r => {
-									$('.city').append(new Option(r.name, r.isoCode, false, false)).trigger('change');
-						        });
-							}
-				        });
-					}).change();
-				}
-	        });
-			
-		}).change();
-
-//		$(".state").change(function () {	
-//			var options_cidades = '';
-//			var str = "";					
-//			$(".state option:selected").each(function () {
-//				str += $(this).text();
-//			});
-//			
-//			$.each(data, function (key, val) {
-//				if(val.nome == str) {
-//					console.log(val.cidades)
-//					$('.city').empty()
-//					$(".city").select2({
-//						  data: val.cidades
-//					})
-//				}
-//			});
-//			
-//		}).change();
-		
-	});
-}
-
-function select2Initialize() {
-	$('.countries').select2()
-	$('.state').select2();
-	$('.city').select2();
-}
 
 function stepsValidation() {
 	var form = $(".steps-validation").show();
@@ -97,17 +17,13 @@ function stepsValidation() {
 			window.location.href = contextPath + "/admin/credenciado/lista";
 		},
 		labels : {
-			previous : '<i class="fa fa-chevron-left"></i> Voltar',
+			previous : 'Voltar',
 			next : "Próximo",
-			finish : "Voltar a página anterior"
+			finish : "Salvar"
 		},
-//		onStepChanging: function(e, t, i) {
-//			 return form.validate().settings.ignore = ":disabled,:hidden",
-//			 form.valid();
-//		},
-		onInit : function(event, current) {
-			$('.actions > ul > li:first-child').attr('style', 'display:none');
-			$('.actions > ul > li:last-child a').html('Salvar');
+		onStepChanging: function(e, t, i) {
+			 return form.validate().settings.ignore = ":disabled,:hidden",
+			 form.valid();
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -116,6 +32,24 @@ function stepsValidation() {
 			save()
 		}
 	});
+}
+
+
+function save() {
+	$.ajax({
+		type : "POST",
+		data : $(formId).serializeObject(),
+		url : contextPath + "/admin/credenciado/salvar",
+		success : function(obj) {
+			if (obj.sucesso) {
+				savePercentage(obj.obj.id, obj);
+			} else {
+				swal("Cancelado", obj.message, "error");
+				return 0;
+			}
+		}
+	})
+	return false;
 }
 
 function validate(form) {
@@ -135,5 +69,120 @@ function validate(form) {
 		errorPlacement : function(error, element) {
 			error.insertAfter(element).append;
 		}
+	});
+}
+
+function getLocationsToFillUpSelect2Inputs() {
+	$.ajax({
+		url : "locations",
+		type: 'POST',
+	}).done(function(data) {
+		var countries = data.countries;
+		setCountriesSelect2(countries)
+		setOnChangeCountriesEvent(countries)
+	});
+}
+
+function select2Initialize() {
+	$('.countries').select2()
+	$('.state').select2();
+	$('.city').select2();
+}
+
+function setCountriesSelect2(c) {
+	$('.countries').select2({
+		data: cMappedCountries(c)
+	})
+	
+	$('.country').select2({
+		data: cMappedCountry(c)
+	})
+}
+
+function setOnChangeCountriesEvent(countries) {
+	$('.countries').change(function () {	
+		var selectedCountry = getWhichCountryIsSelected();
+		setSelect2RegionsByCountry(countries, selectedCountry)
+	}).change();
+}
+
+function setSelect2RegionsByCountry(countries, selectedCountry) {
+	sorop(selectedCountry)
+	countries.forEach( c => {
+			if(c.name == selectedCountry) {
+				sorop(c.regionName)
+				setRegionsSelect2(c.regions)
+				setOnChangeRegionsEvent(c.regions)
+			}
+	})
+}
+
+function sorop(regionName) {
+	$('.sorop').html(regionName)
+}
+
+function setRegionsSelect2(regions){
+	$('.state').select2({
+		data: rMapped(regions)
+	})
+}
+
+function setOnChangeRegionsEvent(regions) {
+	$('.state').change(function () {	
+		selectedRegion = getWhichRegionIsSelected();
+		setSelect2CitiesByRegions(regions, selectedRegion)
+	}).change();
+}
+
+function setSelect2CitiesByRegions(regions, selectedRegion) {
+	regions.forEach( r => {
+		if(r.name == selectedRegion) {
+			$('.city').select2({
+				data: ciMapped(r.cities)
+			})
+		}
+    });
+} 
+
+function getWhichCountryIsSelected() {
+	var str = "";	
+	$('.countries option:selected').each(function () {
+		str += $(this).text();
+	});
+	return str;
+}
+
+function getWhichRegionIsSelected() {
+	var str = "";	
+	$('.state option:selected').each(function () {
+		str += $(this).text();
+	});
+	return str;
+}
+
+function cMappedCountries(c) {
+	$('.countries').empty()
+	return c.map(c => {
+		return {id: c.isoCode, text: c.name}
+	});
+}
+
+function cMappedCountry(c) {
+	return c.map(c => {
+		return {id: c.isoCode, text: c.name}
+	});
+}
+
+function rMapped(r) {
+	$('.state').empty()
+	return r.map(c => {
+		return {id: c.code, text: c.name}
+	});
+}
+
+function ciMapped(ci) {
+	$('.city').empty()
+	return ci.map(c => {
+		return {id: c.code, text: c.name}
 	});
 }
