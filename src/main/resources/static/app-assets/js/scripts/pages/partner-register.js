@@ -1,14 +1,12 @@
 const saveUrl = 'save';
-var object;
-
-const param = getParamUrl();
+const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const saveFireSwTitle = '<h1>Finalizar Registro</h1>';
+const saveFireSwText = 'Clique abaixo para continuar.';
 
 $(document).ready(function() {
-	console.log(param)
-	stepsValidation();
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
-	setSponsorAccountNo()
+	validate()
 	mask()
 });
 
@@ -19,49 +17,17 @@ function setSponsorAccountNo() {
 		console.log(e)
 	}
 }
-function stepsValidation() {
-	var form = $(".steps-validation").show();
-    validate(form)
-	$(".steps-validation").steps({
-		headerTag : "h6",
-		bodyTag : "fieldset",
-		transitionEffect : "fade",
-		titleTemplate : '<span class="step">#index#</span> #title#',
-		enablePreviusButton : true,
-		onInit: function () {
-			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" role="menuitem">Voltar a tela de Login</a></li>')
-		},
-		labels : {
-			previous : 'Voltar',
-			next : "Próximo",
-			finish : "Salvar"
-		},
-		onStepChanging: function(e, t, i) {
-			$('.actions > ul > li:first-child').attr('style', 'display:block');
-			return form.validate().settings.ignore = ":disabled,:hidden",
-			form.valid();
-		},
-		onFinishing : function(e, i) {
-			return form.validate().settings.ignore = ":disabled", form.valid()
-		},
-		onFinished : function(e, i) {
-			save()
-		}
-	});
-}
 
 function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	
-	var data = JSON.stringify($(formId).serializeObject());
-	debugger
-	var obj = saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
+	var data = JSON.stringify(obj);
+	saveFireSw(saveFireSwTitle, saveFireSwText, saveUrl, data);
+	return 0;
 }
 
 function saveFireSw(title, text, url, data) {
-	debugger
 	Swal.fire({
 		  html: HtmlSw(title, text),
 		  showLoaderOnConfirm: true,
@@ -86,7 +52,6 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			debugger
 			if (obj.value != undefined) {
 				obj = obj.value;
 				updateToken(obj.token)
@@ -94,14 +59,17 @@ function saveFireSw(title, text, url, data) {
 					successAlert(obj, title, text)
 					window.location.href = contextPath + "dashboard";
 				} else {
-					errorSw(obj.error.error)
+					errorSw(errorMessage, obj.error.error);
 				}
 			} 
 		})
 }
 
-function validate(form) {
-	form.validate({
+function validate() {
+	$(formId).validate({
+		submitHandler : function(form) {
+			save();
+		},
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
@@ -111,7 +79,7 @@ function validate(form) {
              },
              login: {
             	 remote : {
- 					url : "islogin",
+ 					url : contextPath + "freely/islogin",
  					type : "GET",
  					data : {
  						login : function() {
@@ -130,7 +98,7 @@ function validate(form) {
              },
              email: {
             	 remote : {
-  					url : "isemail",
+  					url : contextPath + "freely/isemail",
   					type : "GET",
   					data : {
   						email : function() {
@@ -176,7 +144,7 @@ function validate(form) {
 
 function getLocationsToFillUpSelect2Inputs() {
 	$.ajax({
-		url : "locations",
+		url : contextPath + "freely/locations",
 		type: 'POST',
 	}).done(function(data) {
 		updateToken(data.token);

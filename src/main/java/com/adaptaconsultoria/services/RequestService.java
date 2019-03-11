@@ -1,8 +1,7 @@
 package com.adaptaconsultoria.services;
 
-import org.springframework.util.MultiValueMap;
+import javax.servlet.http.HttpSession;
 
 public interface RequestService {
-	public Object get(String url, Object request);
-	public Object post(String url, MultiValueMap<String, String> parameters, Class<?> clazz);
+	public Object postRequest(String url, Object obj, HttpSession session);
 }

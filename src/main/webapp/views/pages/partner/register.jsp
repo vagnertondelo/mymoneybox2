@@ -28,7 +28,7 @@
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/accredited/list">Listar</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/partner/list">Listar</a></li>
 							</ol>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 								<div class="card-content collpase show">
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
-											<form:hidden path="doLogin" id="doLogin" value="true" />
+											<form:hidden path="doLogin" id="doLogin" />
 											<form:hidden path="token" id="token" value="${token}" />
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
 											<h4 class="form-section">
@@ -66,12 +66,11 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label for="name">Nome Completo:<span class="danger">*</span></label>
-															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize required" id="name" name="name" />
+															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize" id="name" name="name" />
 														</div>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> 
-														<select class="select2 form-control required" name="codeCategory" id="codeCategory">
+														<label class="label-control" for="categoria">Categoria:</label> <select class="select2 form-control" name="categoria" id="categoria">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${categories}" var="category">
@@ -83,17 +82,11 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-md-3">
+													<div class="col-md-6">
 														<div class="form-group">
 															<label for="phone">Telefone:</label>
 															<form:input path="phone" type="text" maxlength="120" class="form-control phonebrpr" id="phone" name="phone" />
 														</div>
-													</div>
-													<div class="col-md-3 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> 
-															<select class="form-control required country" name="countryIsoCode" id="countryIsoCode">
-															<option value="">Não Selecionado</option>
-															</select>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
@@ -148,8 +141,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="form-group">
-																<label for="login">Login:</label> 
-																<input type="text" class="form-control" id="login" name="login" placeholder="Login">
+																<label for="login">Login:</label> <input type="text" class="form-control" id="login" name="login" placeholder="Login">
 															</div>
 														</div>
 													</div>
@@ -167,58 +159,7 @@
 														</div>
 													</div>
 												</fieldset>
-												<h4 class="form-section">
-													<i class="ft-percent"></i> Regras
-												</h4>
-												<div class="row">
-													<input type="hidden" id="pccashback-id" />
-													<div class="col-md-3">
-														<div class="form-group">
-															<label for="description">Descrição:<span class="danger">*</span></label> <input type="text" class="form-control text-capitalize" id="description" name="description" />
-															<div id="description-error" class="danger hidden">Este campo é obrigatório.</div>
-														</div>
-													</div>
-													<div class="col-md-3 form-group">
-														<label class="label-control" for="categoria">Moeda:</label> 
-														<select class="select2 form-control" name="currency" id="currency">
-															<optgroup label="Escolha uma categoria">
-																<option value="">Não Selecionado</option>
-																<c:forEach items="${currencies}" var="currency">
-																	<option value="${currency.code}">${currency.name} ${currency.icon}</option>
-																</c:forEach>
-															</optgroup>
-														</select>
-													</div>
-													<div class="col-md-6">
-														<fieldset>
-															<label for="pcCashback">Percentual %:<span class="danger">*</span></label>
-															<div class="input-group">
-																<input type="number" class="form-control" id="pcCashback" name="pcCashback" aria-describedby="button-addon2" min="0">
-
-																<div class="input-group-append">
-																	<button class="btn btn-primary btn-glow" type="button" id="add-pccashback">
-																		<i class="step-icon ft-plus"></i>Adicionar
-																	</button>
-																	<button class="btn btn-dark btn-glow hidden" data-toggle="tooltip" data-placement="top" title="" data-original-title="Clique para limpar o Formulário" type="button" id="clear-pccashback-form">
-																		<i class="ft-refresh-cw"></i>
-																	</button>
-																	<button class="btn btn-danger btn-glow hidden" data-toggle="tooltip" data-placement="top" title="" data-original-title="Clique para remover esse registro" type="button" id="remove-pccashback">
-																		<i class="ft-x"></i>
-																	</button>
-																</div>
-															</div>
-															<div class="danger hidden" id="pcCashback-error">Campo não preenchido ou maior que 99</div>
-														</fieldset>
-													</div>
-													<div class="col-md-12 table-responsive">
-														<table class="table table-striped table-bordered" id="${tableId}">
-														</table>
-													</div>
-												</div>
 											</fieldset>
-											<div class="col-md-12 text-center">
-												<input name="rows" type="hidden">
-											</div>
 											<div class="form-actions center">
 												<a href="${pageContext.request.contextPath}/admin/credenciado/lista" class="btn btn-outline-primary btn-min-width btn-glow mr-1 mb-1"> <i class="ft-arrow-left"></i> Voltar a página anterior
 												</a>

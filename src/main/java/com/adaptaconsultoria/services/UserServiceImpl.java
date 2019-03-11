@@ -1,6 +1,5 @@
 package com.adaptaconsultoria.services;
 
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -12,12 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.ObjectIn;
+import com.adaptaconsultoria.objects.in.UserIn;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private CbcService cbcService;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	private static final String isLoginPath = "user/login";
@@ -35,17 +40,40 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Object save(User user) {
 		try {
-			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<Object> obj = restTemplate.exchange(cbcService.append(account), HttpMethod.POST,
-					cbcService.getPostRequestHeaders( objToJson(user) ), Object.class);
+			user.setToken(cbcService.requestToken().getToken());
+			user.setDoLogin(true);
 			
-			Optional<Object> object = Optional.of(obj.getBody());
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(account), HttpMethod.POST,
+					cbcService.getPostRequestHeaders( objToJson(user) ), UserIn.class);
+			
+			Optional<UserIn> object = Optional.of(obj.getBody());
 			return object.get();
+			
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return null;
 
+	}
+	
+	@Override
+	public Object saveAndLogin(User obj, HttpServletRequest request) {
+		UserIn userIn = (UserIn) save(obj);
+		Boolean isRegistered = userIn.getHasError();
+		String token = userIn.getToken();
+		if(!isRegistered) {
+			if (obj.getLogin() == null || obj.getLogin().isEmpty() || obj.getPassword() == null || obj.getPassword().isEmpty() || false ) {
+				return userIn;
+			}
+			try {
+				request.login(obj.getLogin(), obj.getPassword());
+				tokenService.updateToken(token);
+			} catch (ServletException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return userIn;
 	}
 	
 	public String objToJson(Object obj) {
@@ -58,57 +86,75 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Object isLogin(String login, HttpSession session) {
 		try {
+			MultiValueMap<String, String> map = null;
 			RestTemplate restTemplate = new RestTemplate();
-			MultiValueMap<String, String> map = cbcService.getBasicPublicServiceRequest();
+			UserIn userIn = new UserIn();
+			Boolean isLoggedIn = true;
+			try {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				userIn = (UserIn) auth.getPrincipal();
+				map = cbcService.getBasicPrivateServiceRequest();
+			} catch (Exception e) {
+				map = cbcService.getBasicPublicServiceRequest();
+				isLoggedIn = false;
+			}
 
 			map.add("login", login);
 			ResponseEntity<ObjectIn> obj = restTemplate.exchange(cbcService.getGetRequest(isLoginPath, map),
 					HttpMethod.GET, cbcService.requestHeaders(), ObjectIn.class);
-
-			Optional<ObjectIn> isLogin = Optional.of(obj.getBody());
-			return isLogin;
+			Optional<ObjectIn> objOp = Optional.of(obj.getBody());
+			
+			if (isLoggedIn) {
+				
+				if (objOp.get().getToken().isEmpty()) {
+					throw new Exception();
+				}
+				tokenService.updateToken( objOp.get().getToken() );
+			}
+			
+			System.out.println(userIn.getToken());
+			
+			return objOp.get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public Object isEmail(String email, HttpSession session) {
 		try {
+			MultiValueMap<String, String> map = null;
 			RestTemplate restTemplate = new RestTemplate();
-			MultiValueMap<String, String> map = cbcService.getBasicPublicServiceRequest();
+			UserIn userIn = new UserIn();
+			Boolean isLoggedIn = true;
+			try {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				userIn = (UserIn) auth.getPrincipal();
+				map = cbcService.getBasicPrivateServiceRequest();
+			} catch (Exception e) {
+				map = cbcService.getBasicPublicServiceRequest();
+				isLoggedIn = false;
+			}
 			map.add("email", email);
 
 			ResponseEntity<ObjectIn> obj = restTemplate.exchange(cbcService.getGetRequest(isEmailPath, map),
 					HttpMethod.GET, cbcService.requestHeaders(), ObjectIn.class);
-			Optional<ObjectIn> isEmail = Optional.of(obj.getBody());
-			return isEmail;
+			Optional<ObjectIn> objOp = Optional.of(obj.getBody());
+			
+			if (isLoggedIn) {
+				tokenService.updateToken( objOp.get().getToken() );
+			}
+			System.out.println(userIn.getToken());
+			return objOp.get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Object saveAndLogin(User obj, HttpServletRequest request) {
-		Map<Object, Object> map = (Map<Object, Object>) save(obj);
-		Boolean isRegistered = (Boolean) map.get("hasError");
-		if(!isRegistered) {
-			if (obj.getLogin() == null || obj.getLogin().isEmpty() || obj.getPassword() == null || obj.getPassword().isEmpty() || false ) {
-				return map;
-			}
-			
-			try {
-				request.login(obj.getLogin(), obj.getPassword());
-			} catch (ServletException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return map;
 	}
 }

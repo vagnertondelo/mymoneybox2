@@ -5,6 +5,7 @@
 		<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li class=" nav-item"><a href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
 			<li class=" nav-item"><a href="${pageContext.request.contextPath}/accredited/register"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
+			<li class=" nav-item"><a href="${pageContext.request.contextPath}/partner/register"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
 			
 <%-- 			<sec:authorize access="hasRole('ADMINISTRADOR')"> --%>
 <!-- 				<li class="navigation-header"><span data-i18n="nav.category.admin-panels">Painel do Administrador</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i></li> -->

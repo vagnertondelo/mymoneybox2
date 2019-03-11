@@ -1,7 +1,7 @@
 package com.adaptaconsultoria.services;
 
-import com.adaptaconsultoria.models.User;
+import com.adaptaconsultoria.objects.in.UserIn;
 
 public interface LoginService {
-	public User login(String username, String password);
+	public UserIn login(String username, String password);
 }

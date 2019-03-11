@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-import com.adaptaconsultoria.models.User;
+import com.adaptaconsultoria.objects.in.UserIn;
 import com.adaptaconsultoria.services.LoginService;
 
 @Component
@@ -30,8 +30,12 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 		try {
 			String username = authentication.getName().trim();
 			String password = authentication.getCredentials().toString().trim();
-			Optional<User> op = Optional.of(loginService.login(username, password));
-			return new UsernamePasswordAuthenticationToken(op.get().getName(), password, new ArrayList<>());
+			Optional<UserIn> op = Optional.of(loginService.login(username, password));
+			
+			if (op.get().getHasError()) {
+				throw new Exception();
+			}
+			return new UsernamePasswordAuthenticationToken(op.get(), password, new ArrayList<>());
 		} catch (Exception e) {
 			return null;
 		}

@@ -1,5 +1,6 @@
 const saveUrl = 'save';
 var table;
+const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 
 var rowIndex;
 var clearPccashbackForm = '#clear-pccashback-form';
@@ -12,12 +13,9 @@ $(document).ready(function() {
 	getLocationsToFillUpSelect2Inputs()
 	validate()
 	mask()
-	
-	
 	addPercentageClick()
 	onClickClearForm()
 	removePercentageClick()
-	
 	openTable()
 });
 
@@ -215,6 +213,44 @@ function save() {
 	return 0;
 }
 
+function saveFireSw(title, text, url, data) {
+	Swal.fire({
+		  html: HtmlSw(title, text),
+		  showLoaderOnConfirm: true,
+		  confirmButtonClass: 'btn btn-primary btn-min-width btn-glow mr-1 mb-1',
+		  confirmButtonText: 'Enviar',
+		  buttonsStyling: false,
+		  preConfirm: function() {
+		  return fetch(url, {
+			  method: 'POST',
+			  headers: {
+	               "Content-Type": "application/json",
+	          },
+			  body: data
+			})
+		  	.then(response => response.json())
+		  	.catch((obj) => {
+		  		Swal.insertQueueStep({
+		  			type: 'error',
+		  			title: 'erro'
+		  		})
+		  		return false;
+		  	})
+		  }
+		}).then(function(obj) {
+			if (obj.value != undefined) {
+				obj = obj.value;
+				updateToken(obj.token)
+				if (!obj.hasError) {
+					successAlert(obj, title, text)
+					window.location.href = contextPath + "dashboard";
+				} else {
+					errorSw(errorMessage, obj.error.error);
+				}
+			} 
+		})
+}
+
 function getColumnDefs() {
 	return [{
         targets: [0],
@@ -246,12 +282,20 @@ function validate() {
 		submitHandler : function(form) {
 			save();
 		},
+		 ignore: [],
+		onsubmit: true,
+		onkeyup: false,
+		onclick: false,
+		onfocusout: false,
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
 			 },
 			 passwordConfirm : {
                  equalTo : "#password"
+             },
+             rows: {
+            	 percentages: true
              },
              login: {
             	 remote : {
@@ -290,7 +334,13 @@ function validate() {
 						return false;
 					}
             	 } 
-             }
+             },
+             codeCategory : {
+ 				valueNotEquals: true
+ 			 },
+ 			 countryIsoCode : {
+  				valueNotEquals: true
+  			 }
 		},
 		messages: {
 			email: {
@@ -309,7 +359,7 @@ function validate() {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-		    if (element.prop('id') === 'countryIsoCode') {
+		    if ( element.prop('id') === 'countryIsoCode' || element.prop('id') === 'codeCategory' ) {
                 error.appendTo(element.parent());
             } else {
             	error.insertAfter(element);

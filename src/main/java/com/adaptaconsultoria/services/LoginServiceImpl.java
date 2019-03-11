@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.UserIn;
 
 import net.minidev.json.JSONObject;
@@ -24,7 +23,7 @@ public class LoginServiceImpl implements LoginService {
 	private static final String path = "auth";
 
 	@Override
-	public User login(String username, String password) {
+	public UserIn login(String username, String password) {
 		JSONObject params = cbcService.getApplicationCredentials();
 		UserIn userIn = new UserIn();
 		
@@ -32,10 +31,8 @@ public class LoginServiceImpl implements LoginService {
 			params.put("userName", username);
 			params.put("userPassword", password);
 			RestTemplate restTemplate = new RestTemplate();
-			
 			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(path), HttpMethod.POST, cbcService.getPostRequestHeaders(params.toString()), UserIn.class);
-//			ResponseEntity<Object> r = restTemplate.exchange("http://localhost:8082/cbc/api/account", HttpMethod.POST, entity, Object.class);
-			Optional<User> userOp = Optional.of(obj.getBody().getUser());
+			Optional<UserIn> userOp = Optional.of(obj.getBody());
 			return userOp.get();
 		} catch (Exception e) {
 			log.error(userIn.getObject().toString());

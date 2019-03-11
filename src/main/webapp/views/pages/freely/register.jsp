@@ -70,7 +70,8 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="phone">Telefone:</label> <input type="text" class="form-control" id="phone" name="phone" placeholder="Telefone">
+															<label for="phone">Telefone:</label> 
+															<input type="text" class="form-control phonebrpr" id="phone" name="phone" placeholder="Telefone">
 														</div>
 													</div>
 												</div>

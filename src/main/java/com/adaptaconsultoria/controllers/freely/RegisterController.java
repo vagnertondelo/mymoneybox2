@@ -45,7 +45,7 @@ public class RegisterController {
 		return pageUtil.getModel();
 	}
 	
-	@PostMapping(value = "saveuser")
+	@PostMapping(value = "save")
 	public Object register(@RequestBody User obj, HttpServletRequest request) {
 		return ResponseEntity.ok( userService.saveAndLogin(obj, request) );
 	}

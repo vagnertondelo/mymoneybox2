@@ -30,6 +30,9 @@ public class CbcServiceImpl implements CbcService {
 	private Environment env;
 	
 	private final String ipAPI = "https://api.ipify.org?format=json";
+	
+	@Autowired
+	private TokenService TokenService;
 
 	private static final Logger log = LoggerFactory.getLogger(CbcServiceImpl.class);
 
@@ -122,6 +125,18 @@ public class CbcServiceImpl implements CbcService {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		try {
 			map.add("token", requestToken().getToken());
+			map.add("ipAddress", getIpAdress());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return map;
+	}
+	
+	@Override
+	public MultiValueMap<String, String> getBasicPrivateServiceRequest() {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		try {
+			map.add("token", TokenService.getToken());
 			map.add("ipAddress", getIpAdress());
 		} catch (Exception e) {
 			log.error(e.getMessage());
