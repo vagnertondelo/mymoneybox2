@@ -5,7 +5,6 @@
 <head>
 <jsp:include page="../tiles/template/head.jsp"></jsp:include>
 <jsp:include page="../tiles/template/css.jsp"></jsp:include>
-
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 	<jsp:include page="../tiles/template/header.jsp"></jsp:include>

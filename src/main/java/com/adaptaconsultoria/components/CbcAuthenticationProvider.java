@@ -27,10 +27,9 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		String username = authentication.getName();
-		String password = authentication.getCredentials().toString();
-		
 		try {
+			String username = authentication.getName().trim();
+			String password = authentication.getCredentials().toString().trim();
 			Optional<User> op = Optional.of(loginService.login(username, password));
 			return new UsernamePasswordAuthenticationToken(op.get().getName(), password, new ArrayList<>());
 		} catch (Exception e) {

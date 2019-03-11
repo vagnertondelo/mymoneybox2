@@ -1,7 +1,7 @@
 package com.adaptaconsultoria.services;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -28,6 +28,8 @@ public class CbcServiceImpl implements CbcService {
 
 	@Autowired
 	private Environment env;
+	
+	private final String ipAPI = "https://api.ipify.org?format=json";
 
 	private static final Logger log = LoggerFactory.getLogger(CbcServiceImpl.class);
 
@@ -71,14 +73,22 @@ public class CbcServiceImpl implements CbcService {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String getIpAdress() {
+		InetAddress inetAddress = null;
 		try {
-			return InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) {
+			inetAddress = InetAddress.getLocalHost();
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<Object> obj = restTemplate.exchange(ipAPI, HttpMethod.GET, requestHeaders(), Object.class);
+			Optional<Object> object = Optional.of(obj.getBody());
+			Map<Object, Object> map =  (Map<Object, Object>) object.get();
+			String ipAddress = (String) map.get("ip");
+			return ipAddress;
+		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
-		return null;
+		return inetAddress.getHostAddress();
 	}
 	
 	@Override
@@ -132,11 +142,11 @@ public class CbcServiceImpl implements CbcService {
 	}
 	
 	@Override
-	public HttpEntity<String> getPostRequestHeaders(JSONObject params) {
+	public HttpEntity<String> getPostRequestHeaders(String params) {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			return new HttpEntity<String>(params.toString(), headers);
+			return new HttpEntity<String>(params, headers);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
@@ -165,12 +175,11 @@ public class CbcServiceImpl implements CbcService {
 		}
 	}
 
-
 	@Override
 	public Token requestToken() {
-		JSONObject params = getApplicationCredentials();
-		
+		String params = getApplicationCredentials().toString();
 		String path = "auth";
+		
 		Token token = new Token();
 		try {
 			RestTemplate restTemplate = new RestTemplate();

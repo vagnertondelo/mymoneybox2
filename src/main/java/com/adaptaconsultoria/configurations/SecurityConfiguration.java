@@ -32,13 +32,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
-		http.authorizeRequests().antMatchers("/login/", "/saveuser", "/register", "/locations", "/islogin", "/isemail").permitAll()
-				.anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/dashboard", true)
-				.permitAll().and().logout().and().exceptionHandling()
-				.accessDeniedPage("/login");
-
+		http.authorizeRequests().antMatchers("/freely/**").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/freely/login")
+				.loginProcessingUrl("/login")
+				.defaultSuccessUrl("/dashboard", true)
+				.failureUrl("/freely/login?error")
+				.permitAll().and().logout();
+				
 		http.csrf().disable();
 	}
 

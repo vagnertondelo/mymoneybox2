@@ -19,11 +19,13 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.Bean;
+import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.UserIn;
 import com.adaptaconsultoria.services.CbcService;
 import com.adaptaconsultoria.services.CountryService;
 import com.adaptaconsultoria.services.RequestService;
 import com.adaptaconsultoria.services.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.minidev.json.JSONObject;
@@ -47,7 +49,10 @@ public class TestApplication {
 
 	@Test
 	public void contextLoads() {
-		testAccount();
+		User user = new User();
+		user.setPassword("123");
+		user.setEmail("lightspeeodff@gmial.com");
+		
 	}
 	
 	public void getLocation() {
@@ -94,6 +99,7 @@ public class TestApplication {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+		
 //		List<UserIn> userIn = restTemplate.postForObject("http://localhost:8090/cbc/api/account", request, UserIn.class);
 //		Object object =  restTemplate.postForObject("http://localhost:8090/cbc/api/account", request, Object.class);
 

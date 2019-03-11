@@ -21,7 +21,7 @@
 			<div class="content-body">
 				<section id="number-tabs">
 					<div class="row justify-content-md-center">
-						<div class="col-md-6">
+						<div class="col-lg-6 col-md-6 col-sm-12">
 							<div class="card">
 								<div class="card-header border-0">
 									<div class="card-title text-center">
@@ -33,14 +33,18 @@
 								<div class="card-content collapse show">
 									<div class="card-body">
 										<form class="number-tab-steps wizard-notification steps-validation" id="${formId}">
-											<input type="hidden" class="form-control" id="accountNo" name="accountNo" placeholder="accountNo"> <input type="hidden" class="form-control" id="sponsorAccountNo" name="sponsorAccountNo" placeholder="sponsorAccountNo"> <input type="hidden" class="form-control" id="ipAddress" name="ipAddress" placeholder="ipAddress" value="${ipAddress}"> <input type="hidden"
-												class="form-control" id="doLogin" name="doLogin" placeholder="doLogin"> <input type="hidden" class="form-control" id="token" name="token" placeholder="token" value="${token}">
+											<input type="text" maxlength="13" class="form-control hidden" id="accountNo" name="accountNo" placeholder="accountNo"> 
+											<input type="number" class="form-control hidden" id="sponsorAccountNo" name="sponsorAccountNo" placeholder="sponsorAccountNo"> 
+											<input type="hidden" class="form-control" id="ipAddress" name="ipAddress" placeholder="ipAddress" value="${ipAddress}"> 
+											<input type="hidden" class="form-control" id="doLogin" name="doLogin" placeholder="doLogin"> 
+											<input type="hidden" class="form-control" id="token" name="token" placeholder="token" value="${token}">
 											<h6>Informações Pessoais</h6>
 											<fieldset>
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="name">Nome Completo:<span class="danger">*</span></label> <input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
+															<label for="name">Nome Completo:<span class="danger">*</span></label> 
+															<input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
 														</div>
 													</div>
 												</div>
@@ -53,8 +57,7 @@
 													</div>
 
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> 
-														<select class="form-control country required" name="countryIsoCode" id="countryIsoCode">
+														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country required" name="countryIsoCode" id="countryIsoCode">
 														</select>
 													</div>
 												</div>
@@ -72,7 +75,7 @@
 													</div>
 												</div>
 											</fieldset>
-											
+
 											<h6>Endereço</h6>
 											<fieldset>
 												<div class="row">
@@ -90,9 +93,8 @@
 
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> 
-														<select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
-															 <option value="">Selecione um País</option>
+														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+															<option value="">Selecione um País</option>
 														</select>
 													</div>
 													<div class="col-md-6 form-group">
@@ -126,13 +128,13 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="password">Senha:</label> <input type="text" class="form-control" id="password" name="password" placeholder="Senha">
+															<label for="password">Senha:</label> <input type="password" class="form-control" id="password" name="password" placeholder="Senha">
 														</div>
 													</div>
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="passwordConfirm">Confirme sua Senha:</label> <input type="text" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua Senha">
+															<label for="passwordConfirm">Confirme sua Senha:</label> <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua Senha">
 														</div>
 													</div>
 												</div>
@@ -148,9 +150,9 @@
 		</div>
 	</div>
 	<jsp:include page="../../tiles/template/js.jsp"></jsp:include>
-	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
+	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/intlTelInput/intlTelInput.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>

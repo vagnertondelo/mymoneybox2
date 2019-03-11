@@ -45,8 +45,8 @@ public class PageUtil {
 		this.model.addObject(attr, value);
 	}
 
-	public void setCommandName(String commandName) {
-		this.model.addObject("commandName", commandName);
+	public void setModelAttribute(String modelAttribute) {
+		this.model.addObject("modelAttribute", modelAttribute);
 	}
 
 	public ModelAndView getModel() {

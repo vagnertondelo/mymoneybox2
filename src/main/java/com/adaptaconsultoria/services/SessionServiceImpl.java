@@ -30,4 +30,9 @@ public class SessionServiceImpl implements SessionService {
 		}
 		return null;
 	}
+
+	@Override
+	public void setAtribute(String name, Object value, HttpSession session) {
+		session.setAttribute(name, value);
+	}
 }

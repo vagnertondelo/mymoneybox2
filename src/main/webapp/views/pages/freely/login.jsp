@@ -66,7 +66,7 @@
 										<span>Novo no ${projectName} ?</span>
 									</p>
 									<div class="card-body">
-										<a href="${pageContext.request.contextPath}/register" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Cadastrar-se </a>
+										<a href="${pageContext.request.contextPath}/freely/register" class="btn btn-outline-danger btn-block"><i class="ft-user"></i> Cadastrar-se </a>
 									</div>
 								</div>
 							</div>

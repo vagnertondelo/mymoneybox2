@@ -1,10 +1,21 @@
+const saveUrl = 'saveuser';
 
+const param = getParamUrl();
 $(document).ready(function() {
+	console.log(param)
 	stepsValidation();
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
+	setSponsorAccountNo()
 });
 
+function setSponsorAccountNo() {
+	try {
+		$(sponsorAccountNo).val(param.sponsorAccountNo);
+	} catch (e) {
+		console.log(e)
+	}
+}
 function stepsValidation() {
 	var form = $(".steps-validation").show();
     validate(form)
@@ -14,18 +25,19 @@ function stepsValidation() {
 		transitionEffect : "fade",
 		titleTemplate : '<span class="step">#index#</span> #title#',
 		enablePreviusButton : true,
-		onCanceled : function(event) {
-			window.location.href = contextPath + "/admin/credenciado/lista";
+		onInit: function () {
+			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" role="menuitem">Voltar a tela de Login</a></li>')
 		},
 		labels : {
 			previous : 'Voltar',
 			next : "Próximo",
 			finish : "Salvar"
 		},
-// onStepChanging: function(e, t, i) {
-// return form.validate().settings.ignore = ":disabled,:hidden",
-// form.valid();
-// },
+		onStepChanging: function(e, t, i) {
+			$('.actions > ul > li:first-child').attr('style', 'display:block');
+			return form.validate().settings.ignore = ":disabled,:hidden",
+			form.valid();
+		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
 		},
@@ -39,32 +51,29 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
+	var data = JSON.stringify($(formId).serializeObject());
 	
-	$.ajax({
-		type : "POST",
-		data : $(formId).serializeObject(),
-		url : "saveuser",
-		success : function(obj) {
-			
-			if (obj) {
-				
-				savePercentage(obj.obj.id, obj);
-				
-			} else {
-				swal("Cancelado", obj.message, "error");
-				return 0;
-			}
+	var obj = saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
+	
+	while (obj == undefined) {
+		
+	}
+	if (obj) {
+		if (!obj.hasError) {
+			successAlert(obj, title, text)
+			window.location.href = contextPath + "dashboard";
+		} else {
+			errorSw(obj)
 		}
-	})
-	return false;
+	}
+	return 0;
 }
 
 function validate(form) {
-	
 	form.validate({
-		submitHandler : function(form) {
-			$(formId)[0].submit();
-		},
+//		submitHandler : function(form) {
+//			$(formId)[0].submit();
+//		},
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
@@ -110,6 +119,14 @@ function validate(form) {
 					}
             	 } 
              }
+		},
+		messages: {
+			email: {
+				remote: "Email já está cadastrado no sistema"
+			},
+			login: {
+				remote: "Login já está cadastrado no sistema"
+			}
 		},
 		errorClass : 'help-block',
 		errorElement : 'div',

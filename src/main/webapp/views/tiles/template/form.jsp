@@ -17,3 +17,6 @@
 <!-- select 2 -->
 <script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/select/flags-select2.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/mask-helper.js"></script>
+<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/form-helper.js"></script>

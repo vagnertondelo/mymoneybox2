@@ -29,7 +29,7 @@ public interface CbcService {
 	
 	public MultiValueMap<String, String> getBasicPublicServiceRequest();
 	
-	public HttpEntity<String> getPostRequestHeaders(JSONObject params);
+	public HttpEntity<String> getPostRequestHeaders(String params);
 	
 	public HttpEntity<?> requestHeaders();
 	

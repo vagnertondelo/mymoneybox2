@@ -1,4 +1,4 @@
-package com.adaptaconsultoria.controllers;
+package com.adaptaconsultoria.controllers.freely;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +20,7 @@ import com.adaptaconsultoria.services.UserService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
 
 @Controller
+@RequestMapping(value = "freely")
 public class RegisterController {
 
 	@Autowired
@@ -31,7 +34,7 @@ public class RegisterController {
 	
 	@GetMapping(path = "register")
 	public ModelAndView register(HttpServletRequest request, HttpSession session) {
-		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath() + "/register"));
+		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		pageUtil.setPageTitle("Registrar");
 		pageUtil.setTitle("Registrar");
 		pageUtil.setAttr("projectName", cbcService.getName());
@@ -43,8 +46,8 @@ public class RegisterController {
 	}
 	
 	@PostMapping(value = "saveuser")
-	public ResponseEntity<?> register(User obj, HttpSession session) {
-		return ResponseEntity.ok( userService.save(obj) );
+	public Object register(@RequestBody User obj, HttpServletRequest request) {
+		return ResponseEntity.ok( userService.saveAndLogin(obj, request) );
 	}
 	
 	@PostMapping(path = "locations", produces = "application/json")
