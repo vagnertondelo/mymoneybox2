@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.adaptaconsultoria.models.Accredited;
 import com.adaptaconsultoria.models.Partner;
 import com.adaptaconsultoria.services.CategoryService;
 import com.adaptaconsultoria.services.CbcService;
+import com.adaptaconsultoria.services.CurrencyService;
 import com.adaptaconsultoria.services.PartnerService;
-import com.adaptaconsultoria.services.SessionService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
 
 @Controller
@@ -31,31 +30,35 @@ public class PartnerController {
 	private CategoryService categoryService;
 	
 	@Autowired
-	private SessionService sessionService;
+	private PartnerService partnerService;
 	
 	@Autowired
-	private PartnerService partnerService;
+	private CurrencyService currencyService;
 	
 	@GetMapping(value = "list")
 	public ModelAndView list(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		pageUtil.setPageTitle("Parceiro");
 		pageUtil.setTitle("Parceiro");
-		sessionService.setAtribute("token", cbcService.requestToken().getToken(), session);
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		return pageUtil.getModel();
 	}
 	
+	@PostMapping(value = "save")
+	public Object register(@RequestBody Partner obj, HttpSession session) {
+		return ResponseEntity.ok( partnerService.save(obj, session) );
+	}
+	
 	@GetMapping(value = "register")
-	public ModelAndView accredited(HttpServletRequest request, HttpSession session) {
+	public ModelAndView partner(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		pageUtil.setPageTitle("Parceiro");
 		pageUtil.setTitle("Parceiro");
 		pageUtil.setInnerTitle("Parceiro");
 		pageUtil.setFormId("partner-form");
 		pageUtil.setJs("partner-register.js");
-		pageUtil.setAttr("mi", "accredited");
-		Object obj = new Partner();
+		pageUtil.setAttr("mi", "partner");
+		Partner obj = new Partner();
 
 //		if (id != null) {
 //			pageUtil.setSubTitle("Editar");
@@ -71,13 +74,8 @@ public class PartnerController {
 		pageUtil.setAttr("partner", obj);
 		pageUtil.setModelAttribute("partner");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		// last call 
 		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
+		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
-	}
-	
-	@PostMapping(value = "save")
-	public Object register(@RequestBody Accredited obj, HttpSession session) {
-		return ResponseEntity.ok( partnerService.save(obj, session) );
 	}
 }

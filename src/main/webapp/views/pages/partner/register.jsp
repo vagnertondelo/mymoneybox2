@@ -28,7 +28,7 @@
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/partner/list">Listar</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/accredited/list">Listar</a></li>
 							</ol>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 								<div class="card-content collpase show">
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
-											<form:hidden path="doLogin" id="doLogin" />
+											<form:hidden path="doLogin" id="doLogin" value="true" />
 											<form:hidden path="token" id="token" value="${token}" />
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
 											<h4 class="form-section">
@@ -66,11 +66,11 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label for="name">Nome Completo:<span class="danger">*</span></label>
-															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize" id="name" name="name" />
+															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize required" id="name" name="name" />
 														</div>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="categoria">Categoria:</label> <select class="select2 form-control" name="categoria" id="categoria">
+														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> <select class="select2 form-control required" name="codeCategory" id="codeCategory">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${categories}" var="category">
@@ -82,11 +82,16 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-md-6">
+													<div class="col-md-3">
 														<div class="form-group">
 															<label for="phone">Telefone:</label>
 															<form:input path="phone" type="text" maxlength="120" class="form-control phonebrpr" id="phone" name="phone" />
 														</div>
+													</div>
+													<div class="col-md-3 form-group">
+														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control required country" name="countryIsoCode" id="countryIsoCode">
+															<option value="">Não Selecionado</option>
+														</select>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
@@ -102,12 +107,12 @@
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label for="address">Rua:</label> <input type="text" class="form-control" id="address" name="address" placeholder="Rua">
+																<label for="address">Rua:</label> <input type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua">
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
-																<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
+																<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control text-capitalize" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
 															</div>
 														</div>
 													</div>
@@ -160,6 +165,9 @@
 													</div>
 												</fieldset>
 											</fieldset>
+											<div class="col-md-12 text-center">
+												<input name="rows" type="hidden">
+											</div>
 											<div class="form-actions center">
 												<a href="${pageContext.request.contextPath}/admin/credenciado/lista" class="btn btn-outline-primary btn-min-width btn-glow mr-1 mb-1"> <i class="ft-arrow-left"></i> Voltar a página anterior
 												</a>

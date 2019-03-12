@@ -1,7 +1,5 @@
 const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
-const saveFireSwTitle = '<h1>Finalizar Registro</h1>';
-const saveFireSwText = 'Clique abaixo para continuar.';
 
 $(document).ready(function() {
 	select2Initialize()
@@ -22,8 +20,10 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
+	
+	var obj = $(formId).serializeObject()
 	var data = JSON.stringify(obj);
-	saveFireSw(saveFireSwTitle, saveFireSwText, saveUrl, data);
+	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
 	return 0;
 }
 
@@ -56,8 +56,7 @@ function saveFireSw(title, text, url, data) {
 				obj = obj.value;
 				updateToken(obj.token)
 				if (!obj.hasError) {
-					successAlert(obj, title, text)
-					window.location.href = contextPath + "dashboard";
+					successAlert(obj, 'Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.')
 				} else {
 					errorSw(errorMessage, obj.error.error);
 				}
@@ -70,6 +69,11 @@ function validate() {
 		submitHandler : function(form) {
 			save();
 		},
+		 ignore: [],
+		onsubmit: true,
+		onkeyup: false,
+		onclick: false,
+		onfocusout: false,
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
@@ -114,7 +118,13 @@ function validate() {
 						return false;
 					}
             	 } 
-             }
+             },
+             codeCategory : {
+ 				valueNotEquals: true
+ 			 },
+ 			 countryIsoCode : {
+  				valueNotEquals: true
+  			 }
 		},
 		messages: {
 			email: {
@@ -133,7 +143,7 @@ function validate() {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-		    if (element.prop('id') === 'countryIsoCode') {
+		    if ( element.prop('id') === 'countryIsoCode' || element.prop('id') === 'codeCategory' ) {
                 error.appendTo(element.parent());
             } else {
             	error.insertAfter(element);
@@ -152,16 +162,6 @@ function getLocationsToFillUpSelect2Inputs() {
 		setCountriesSelect2(countries)
 		setOnChangeCountriesEvent(countries)
 	});
-}
-
-function updateToken(token) {
-	$("#token").val(token)
-}
-
-function select2Initialize() {
-	$('.countries').select2()
-	$('.state').select2();
-	$('.city').select2();
 }
 
 function setCountriesSelect2(c) {
@@ -269,4 +269,14 @@ function ciMapped(ci) {
 	return ci.map(c => {
 		return {id: c.code, text: c.name}
 	});
+}
+
+function select2Initialize() {
+	$('.countries').select2()
+	$('.state').select2();
+	$('.city').select2();
+}
+
+function updateToken(token) {
+	$("#token").val(token)
 }
