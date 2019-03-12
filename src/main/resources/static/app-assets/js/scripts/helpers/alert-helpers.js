@@ -23,6 +23,22 @@ function errorSw(title, text) {
 	})
 }
 
+function errorGenericSw(title, text) {
+	Swal.fire({
+		  type: 'error',
+		  html: HtmlSw(title, text),
+		  showCloseButton: true,
+		  showCancelButton: false,
+		  focusConfirm: false,
+		  cancelButtonText:
+		    '<i class="fa fa-thumbs-down"></i> Sair',
+		  cancelButtonAriaLabel: 'Thumbs down',
+	}).then((result) => {
+		// do nothing
+	})
+}
+
+
 function successAlert(obj, title, text) {
 	Swal.fire({
 		  type: 'success',

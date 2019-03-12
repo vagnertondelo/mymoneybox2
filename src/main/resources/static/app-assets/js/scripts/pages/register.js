@@ -19,6 +19,7 @@ function setSponsorAccountNo() {
 		console.log(e)
 	}
 }
+
 function stepsValidation() {
 	var form = $(".steps-validation").show();
     validate(form)
@@ -38,8 +39,11 @@ function stepsValidation() {
 		},
 		onStepChanging: function(e, t, i) {
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
-			return form.validate().settings.ignore = ":disabled,:hidden",
-			form.valid();
+			form.valid()
+			
+			var a = (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
+			
+			return a;
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -56,12 +60,10 @@ function save() {
 	}
 	
 	var data = JSON.stringify($(formId).serializeObject());
-	debugger
 	var obj = saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
 }
 
 function saveFireSw(title, text, url, data) {
-	debugger
 	Swal.fire({
 		  html: HtmlSw(title, text),
 		  showLoaderOnConfirm: true,
@@ -86,7 +88,6 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			debugger
 			if (obj.value != undefined) {
 				obj = obj.value;
 				updateToken(obj.token)
@@ -102,6 +103,10 @@ function saveFireSw(title, text, url, data) {
 
 function validate(form) {
 	form.validate({
+		onsubmit: true,
+		onkeyup: false,
+		onclick: false,
+		onfocusout: false,
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
@@ -179,6 +184,9 @@ function getLocationsToFillUpSelect2Inputs() {
 		url : "locations",
 		type: 'POST',
 	}).done(function(data) {
+		if (data === '') {
+			errorGenericSw("Erro", "Países não cadastrados")
+		}
 		updateToken(data.token);
 		var countries = data.countries;
 		setCountriesSelect2(countries)

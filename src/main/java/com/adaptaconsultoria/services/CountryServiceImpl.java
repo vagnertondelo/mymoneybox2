@@ -23,10 +23,10 @@ public class CountryServiceImpl implements CountryService {
 	private CbcService cbcService;
 	private static final Logger log = LoggerFactory.getLogger(CountryServiceImpl.class);
 	private static final String path = "localization";
-	
+
 	@Autowired
 	private TokenService tokenService;
-	
+
 	@SuppressWarnings("unused")
 	@Override
 	public Object getLocationByCompany() {
@@ -34,16 +34,26 @@ public class CountryServiceImpl implements CountryService {
 			MultiValueMap<String, String> map = null;
 			RestTemplate restTemplate = new RestTemplate();
 			UserIn userIn = new UserIn();
+			Boolean isLoggedIn = true;
+
 			try {
 				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 				userIn = (UserIn) auth.getPrincipal();
 				map = cbcService.getBasicPrivateServiceRequest();
 			} catch (Exception e) {
+				isLoggedIn = false;
 				map = cbcService.getBasicPublicServiceRequest();
 			}
-			ResponseEntity<CountriesIn> obj = restTemplate.exchange(cbcService.getGetRequest(path, map), HttpMethod.GET, cbcService.requestHeaders(), CountriesIn.class);
+			ResponseEntity<CountriesIn> obj = restTemplate.exchange(cbcService.getGetRequest(path, map), HttpMethod.GET,
+					cbcService.requestHeaders(), CountriesIn.class);
 			Optional<CountriesIn> objOp = Optional.of(obj.getBody());
-			tokenService.updateToken( objOp.get().getToken() );
+
+			if (isLoggedIn) {
+				if (objOp.get().getToken().isEmpty()) {
+					throw new Exception();
+				}
+				tokenService.updateToken(objOp.get().getToken());
+			}
 			return objOp.get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
