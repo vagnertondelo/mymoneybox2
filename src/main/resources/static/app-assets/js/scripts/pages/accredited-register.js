@@ -282,7 +282,7 @@ function validate() {
 		submitHandler : function(form) {
 			save();
 		},
-		 ignore: [],
+		ignore: [],
 		onsubmit: true,
 		onkeyup: false,
 		onclick: false,
