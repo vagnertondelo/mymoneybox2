@@ -26,11 +26,10 @@ function errorSw(title, text) {
 function successAlert(obj, title, text) {
 	Swal.fire({
 		  type: 'success',
-		  html: HtmlSw('Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.'),
+		  html: HtmlSw(title, text),
 		  showCloseButton: true,
 		  focusConfirm: false,
-		  confirmButtonText:
-		    '<i class="fa fa-thumbs-up"></i> Pronto',
+		  confirmButtonText: '<i class="fa fa-thumbs-up"></i> Pronto',
 		  confirmButtonAriaLabel: 'Thumbs up, great!',
 	}).then((result) => {
 		// redirect to login page

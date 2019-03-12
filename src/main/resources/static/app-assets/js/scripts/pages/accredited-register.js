@@ -242,8 +242,7 @@ function saveFireSw(title, text, url, data) {
 				obj = obj.value;
 				updateToken(obj.token)
 				if (!obj.hasError) {
-					successAlert(obj, title, text)
-					window.location.href = contextPath + "dashboard";
+					successAlert(obj, 'Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.')
 				} else {
 					errorSw(errorMessage, obj.error.error);
 				}

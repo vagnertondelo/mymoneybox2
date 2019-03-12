@@ -109,12 +109,12 @@
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
-																<label for="address">Rua:</label> <input type="text" class="form-control" id="address" name="address" placeholder="Rua">
+																<label for="address">Rua:</label> <input type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua">
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
-																<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
+																<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control text-capitalize" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
 															</div>
 														</div>
 													</div>
