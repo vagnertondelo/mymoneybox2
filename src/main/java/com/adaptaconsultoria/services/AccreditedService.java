@@ -6,4 +6,5 @@ import com.adaptaconsultoria.models.Accredited;
 
 public interface AccreditedService {
 	public Object save(Accredited obj, HttpSession session);
+	public Object list();
 }

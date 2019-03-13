@@ -14,10 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.User;
+import com.adaptaconsultoria.objects.in.AccountIn;
+import com.adaptaconsultoria.objects.in.AccreditedIn;
 import com.adaptaconsultoria.objects.in.ObjectIn;
 import com.adaptaconsultoria.objects.in.UserIn;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,6 +34,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private TokenService tokenService;
+	
+	@Autowired
+	private RequestService requestService;
+	
+	@Autowired
+	private SessionService sessionService;
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	private static final String isLoginPath = "user/login";
@@ -154,6 +163,21 @@ public class UserServiceImpl implements UserService {
 			return objOp.get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public Object getAcccount(HttpSession session) {
+		try {
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.set("login", sessionService.getUser(session).getLogin());
+			ObjectMapper mapped = new ObjectMapper();
+			
+			Optional<AccountIn> objOp = (Optional<AccountIn>) requestService.getRequest(account, true, map);
+			objOp.get().getAccount();
+		} catch (Exception e) {
+			log.info(e.getMessage());
 		}
 		return null;
 	}

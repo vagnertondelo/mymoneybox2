@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.UserIn;
 
 
@@ -29,5 +30,14 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public void setProjectName(HttpSession session) {
 		setAtribute("projectName", cbcService.getName(), session);
+	}
+	
+	@Override
+	public User getUser(HttpSession session) {
+		try {
+			return (User) session.getAttribute("user");
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

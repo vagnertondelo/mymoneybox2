@@ -17,7 +17,7 @@
         "sLast": "Último"
     },
     "select": {
-		"rows": ""
+		"rows": " "
 	},
     "oAria": {
         "sSortAscending": ": Ordenar colunas de forma ascendente",

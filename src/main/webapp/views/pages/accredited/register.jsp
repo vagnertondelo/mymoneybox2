@@ -8,7 +8,7 @@
 <html class="loading" lang="en" data-textdirection="ltr">
 <head>
 <jsp:include page="../../tiles/template/head.jsp"></jsp:include>
-<jsp:include page="../../tiles/template/css.jsp"></jsp:include><base>
+<jsp:include page="../../tiles/template/css.jsp"></jsp:include>
 <!-- Select2 -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/select/select2.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/wizard.min.css">

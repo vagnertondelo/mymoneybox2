@@ -21,11 +21,9 @@ import org.springframework.web.client.RestTemplate;
 import com.adaptaconsultoria.models.Bean;
 import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.UserIn;
-import com.adaptaconsultoria.services.CbcService;
+import com.adaptaconsultoria.services.AccreditedService;
 import com.adaptaconsultoria.services.CountryService;
 import com.adaptaconsultoria.services.RequestService;
-import com.adaptaconsultoria.services.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.minidev.json.JSONObject;
@@ -37,22 +35,20 @@ public class TestApplication {
 	@Autowired
 	public RequestService requestService;
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
-
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private CbcService cbcService;
 	
 	@Autowired
 	private CountryService countryService;
+	
+	@Autowired
+	private AccreditedService accreditedService;
 
 	@Test
 	public void contextLoads() {
-		User user = new User();
-		user.setPassword("123");
-		user.setEmail("lightspeeodff@gmial.com");
 		
+	}
+	
+	public void accreditedService() {
+		System.out.println(accreditedService.list());
 	}
 	
 	public void getLocation() {

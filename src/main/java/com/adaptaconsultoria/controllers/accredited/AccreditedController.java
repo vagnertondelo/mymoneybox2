@@ -40,8 +40,17 @@ public class AccreditedController {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		pageUtil.setPageTitle("Credenciado");
 		pageUtil.setTitle("Credenciado");
+		pageUtil.setSubTitle("Credenciado");
+		pageUtil.setTableId("accredited-table");
+		pageUtil.setJs("accredited-list.js");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
+		pageUtil.setAttr("mi", "accredited");
 		return pageUtil.getModel();
+	}
+	
+	@GetMapping(value = "getlist")
+	public ResponseEntity<?> getList() {
+		return ResponseEntity.ok( accreditedService.list() );
 	}
 	
 	@PostMapping(value = "save")
