@@ -20,7 +20,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.AccountIn;
-import com.adaptaconsultoria.objects.in.AccreditedIn;
 import com.adaptaconsultoria.objects.in.ObjectIn;
 import com.adaptaconsultoria.objects.in.UserIn;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,6 +39,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private SessionService sessionService;
+	
+	@Autowired
+	private JsonService jsonService;
 
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	private static final String isLoginPath = "user/login";
@@ -172,8 +174,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 			map.set("login", sessionService.getUser(session).getLogin());
-			ObjectMapper mapped = new ObjectMapper();
 			
+			
+			jsonService.objToJsonString(requestService.getRequest(account, true, map))
 			Optional<AccountIn> objOp = (Optional<AccountIn>) requestService.getRequest(account, true, map);
 			objOp.get().getAccount();
 		} catch (Exception e) {
