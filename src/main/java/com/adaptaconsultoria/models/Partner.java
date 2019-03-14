@@ -1,5 +1,7 @@
 package com.adaptaconsultoria.models;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -25,4 +27,5 @@ public class Partner extends Token {
 	private String addressDistrict;
 	private String addressZipcode;
 	private String codeCategory;
+	private List<Rule> rules;
 }

@@ -24,10 +24,10 @@ public class JsonServiceImpl implements JsonService {
 	}
 	
 	@Override
-	public Object objToObj(Object obj) {
+	public Object objToObj(Object source, Object dest) {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			return objectMapper.convertValue(obj, obj.getClass());
+			return objectMapper.convertValue(source, dest.getClass());
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}

@@ -10,5 +10,4 @@ public interface UserService {
 	public Object saveAndLogin(User user, HttpServletRequest request);
 	public Object isLogin(String login, HttpSession session);
 	public Object isEmail(String email, HttpSession session);
-	public Object getAcccount(HttpSession session);
 }
