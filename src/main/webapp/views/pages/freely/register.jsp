@@ -94,7 +94,8 @@
 
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:</label> 
+														<select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
 															<option value="">Selecione um País</option>
 														</select>
 													</div>

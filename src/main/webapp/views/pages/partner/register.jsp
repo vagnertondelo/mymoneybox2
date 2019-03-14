@@ -27,8 +27,8 @@
 					<div class="row breadcrumbs-top d-inline-block">
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/accredited/list">Listar</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/partner/list">Listar</a></li>
 							</ol>
 						</div>
 					</div>
@@ -169,8 +169,6 @@
 												<input name="rows" type="hidden">
 											</div>
 											<div class="form-actions center">
-												<a href="${pageContext.request.contextPath}/admin/credenciado/lista" class="btn btn-outline-primary btn-min-width btn-glow mr-1 mb-1"> <i class="ft-arrow-left"></i> Voltar a página anterior
-												</a>
 												<button type="submit" class="btn btn-outline-success btn-min-width btn-glow mr-1 mb-1">
 													<i class="la la-check-square-o"></i> Salvar
 												</button>

@@ -12,12 +12,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Sale extends Token {
-	private String documentno;
+	private String documentNo;
 	private Integer codeRule;
 	private BigDecimal saleAmount;
 	private Date localTime = new Date();
-	private String codeAccount;
-	private Long accountNo;
+	
+	// Codigo da conta
+	private Long codeAccount;
+	
+	// Número da conta
+	private String accountNo;
+	
+	// Documento
 	private String taxid;
+	
+	// Telefone
 	private String phone; 
 }

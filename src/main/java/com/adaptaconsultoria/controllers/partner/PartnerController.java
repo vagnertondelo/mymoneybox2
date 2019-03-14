@@ -40,13 +40,22 @@ public class PartnerController {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		pageUtil.setPageTitle("Parceiro");
 		pageUtil.setTitle("Parceiro");
+		pageUtil.setSubTitle("Parceiro");
+		pageUtil.setTableId("partner-table");
+		pageUtil.setJs("partner-list.js");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
+		pageUtil.setAttr("mi", "partner");
 		return pageUtil.getModel();
 	}
 	
 	@PostMapping(value = "save")
 	public Object register(@RequestBody Partner obj, HttpSession session) {
 		return ResponseEntity.ok( partnerService.save(obj, session) );
+	}
+	
+	@GetMapping(value = "getlist")
+	public ResponseEntity<?> getList() {
+		return ResponseEntity.ok( partnerService.list() );
 	}
 	
 	@GetMapping(value = "register")

@@ -3,10 +3,11 @@
 <div class="main-menu menu-accordion menu-shadow menu-fixed expanded menu-light" data-scroll-to-active="true">
 	<div class="main-menu-content">
 		<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-			<li class=" nav-item"><a id="dashboard" href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
-			<li class=" nav-item"><a id="accredited" href="${pageContext.request.contextPath}/accredited/list"><i class="ft-user-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
-			<li class=" nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Parceiro</span></a>
-			
+			<li class="nav-item"><a id="dashboard" href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
+			<li class="nav-item"><a id="accredited" href="${pageContext.request.contextPath}/accredited/list"><i class="ft-user-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
+			<li class="nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Parceiro</span></a>
+			<li class="nav-item"><a id="sale" href="${pageContext.request.contextPath}/sale/register"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Compra</span></a>
+				
 <%-- 			<sec:authorize access="hasRole('ADMINISTRADOR')"> --%>
 <!-- 				<li class="navigation-header"><span data-i18n="nav.category.admin-panels">Painel do Administrador</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i></li> -->
 <!-- 				<li class="nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title" data-i18n="nav.templates.main">Cadastros</span></a> -->

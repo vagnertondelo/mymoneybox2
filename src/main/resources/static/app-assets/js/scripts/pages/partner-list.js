@@ -9,7 +9,7 @@ function table() {
         .DataTable({
         	ajax: {
 				type: "GET",
-				url: contextPath + "accredited/getlist",
+				url: contextPath + "partner/getlist",
 				dataSrc:""
 			},
             language: getLanguage(),
@@ -118,7 +118,7 @@ function getButtons() {
 		        className: 'btn-sm btn btn-info round  box-shadow-2 px-2',
 		        action: function(e, dt, node, config) {
 		            window.location.href = contextPath +
-		                "accredited/register";
+		                "partner/register";
 		        },
 		        enabled: true
 		    }, {
@@ -192,20 +192,13 @@ function getColumns() {
         {
             title: "codeCategory",
             data: "codeCategory",
-        },
-        {
-            title: "rules",
-            data: "rules",
-            render: function(data, type, full) {
-            	return "";
-            }
         }
     ];
 }
 
 function getColumnDefs() {
 	return [{
-        targets: [1 ,3, 4, 6, 10, 2, 16, 0, 13, 14, 15, 16, 12, 5],
+        targets: [1 ,3, 4, 6, 10, 2, 0, 13, 14, 15, 12, 5],
         visible: false
     },{
         className: "text-capitalize text-truncate",

@@ -118,7 +118,7 @@ function getButtons() {
 		        className: 'btn-sm btn btn-info round  box-shadow-2 px-2',
 		        action: function(e, dt, node, config) {
 		            window.location.href = contextPath +
-		                "partner/register";
+		                "accredited/register";
 		        },
 		        enabled: true
 		    }, {

@@ -56,56 +56,73 @@
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
+											<h4 class="form-section">
+												<i class="la la-user"></i> Informações Pessoais
+											</h4>
+
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<label for="name">Número do Documentos:<span class="danger">*</span></label>
-														<form:input path="documentno" maxlength="120" type="text" class="form-control text-capitalize required" id="documentno" name="documentno" />
-													</div>
-												</div>
-												<div class="col-md-6 form-group">
-													<label class="label-control" for="codeRule">Percentual:<span class="danger">*</span></label> <select class="select2 form-control required" name="codeRule" id="codeRule">
-														<optgroup label="Escolha uma categoria">
-															<option value="">Não Selecionado</option>
-															<c:forEach items="${codeRules}" var="codeRule">
-																<option value="${codeRule.description}">${codeRule.description}</option>
-															</c:forEach>
-														</optgroup>
-													</select>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="saleAmount">Valor:</label>
-														<form:input path="saleAmount" type="text" maxlength="120" class="form-control" id="saleAmount" name="saleAmount" />
+														<label for="accountNo">Número da Conta:</label>
+														<form:input path="accountNo" maxlength="13" minlength="13" type="text" class="form-control" id="accountNo" name="accountNo" />
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label for="codeAccount">codeAccount:<span class="danger">*</span></label>
-														<form:input path="codeAccount" maxlength="120" type="text" class="form-control" id="codeAccount" name="codeAccount" />
+														<label for="taxid">Documento do Consumidor:</label> <input type="text" class="form-control" id="taxid" name="taxid">
 													</div>
 												</div>
 											</div>
+
 											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label for="taxid">Documento:</label> <input type="text" class="form-control" id="taxid" name="taxid" placeholder="taxid">
-													</div>
-												</div>
 												<div class="col-md-6	">
 													<div class="form-group">
 														<label for="phone">Telefone:</label>
 														<form:input path="phone" type="text" maxlength="120" class="form-control phonebrpr" id="phone" name="phone" />
 													</div>
 												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="codeAccount">Código da Conta:</label>
+														<form:input path="codeAccount" type="text" class="form-control" id="codeAccount" name="codeAccount" />
+													</div>
+												</div>
+												<div class="col-md-12 text-center">
+													<input name="identity" type="hidden">
+												</div>
 											</div>
+											<h4 class="form-section">
+												<i class="ft-shopping-cart"></i> Informações da Compra
+											</h4>
+
+											<div class="row">
+												<div class="col-md-6 form-group">
+													<label class="label-control" for="codeRule">Percentual:<span class="danger">*</span></label> <select class="select2 form-control required" name="codeRule" id="codeRule">
+														<optgroup label="Escolha uma categoria">
+															<option value="">Não Selecionado</option>
+															<c:forEach items="${rules}" var="rule">
+																<option value="${rule.code}">${rule.description}/${rule.currency}</option>
+															</c:forEach>
+														</optgroup>
+													</select>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="saleAmount">Valor da Compra:</label>
+														<form:input path="saleAmount" type="text" maxlength="120" class="form-control brlmask required" id="saleAmount" name="saleAmount" />
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="name">Número do Documentos:</label>
+														<form:input path="documentNo" maxlength="120" type="text" class="form-control" id="documentno" name="documentno" />
+													</div>
+												</div>
+											</div>
+
 											<div class="form-actions center">
-												<a href="${pageContext.request.contextPath}/admin/credenciado/lista" class="btn btn-outline-primary btn-min-width btn-glow mr-1 mb-1"> <i class="ft-arrow-left"></i> Voltar a página anterior
-												</a>
 												<button type="submit" class="btn btn-outline-success btn-min-width btn-glow mr-1 mb-1">
-													<i class="la la-check-square-o"></i> Salvar
+													<i class="la la-check-square-o"></i> Enviar
 												</button>
 											</div>
 										</form:form>

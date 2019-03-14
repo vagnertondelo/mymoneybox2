@@ -30,7 +30,7 @@
 					<div class="row breadcrumbs-top d-inline-block">
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/home">Home</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
 							</ol>
 						</div>
 					</div>

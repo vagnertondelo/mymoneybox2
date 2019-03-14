@@ -387,6 +387,7 @@ function select2Initialize() {
 	$('.countries').select2()
 	$('.state').select2();
 	$('.city').select2();
+	$('.codeCategory').select2();
 }
 
 function setCountriesSelect2(c) {

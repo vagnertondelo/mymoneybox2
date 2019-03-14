@@ -10,7 +10,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.adaptaconsultoria.models.Partner;
-import com.adaptaconsultoria.objects.in.AccountIn;
+import com.adaptaconsultoria.objects.in.AccreditedIn;
 import com.adaptaconsultoria.objects.in.PartnerIn;
 
 @Service
@@ -51,6 +51,18 @@ public class PartnerServiceImpl implements PartnerService {
 			log.info(e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public Object list() {
+		try {
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			Object o = requestService.getRequest(url, true, map);
+			AccreditedIn objOp = (AccreditedIn) jsonService.objToObj(o, new AccreditedIn());
+			return objOp.getAccrediteds();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }
 
