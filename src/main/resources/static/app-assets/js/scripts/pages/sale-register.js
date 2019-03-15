@@ -7,12 +7,8 @@ $(document).ready(function() {
 	mask()
 });
 
-
 function save() {
-	if($("#addressCityCode").val() === '') {
-		$("#addressRegionCode").val('')
-	}
-	
+	$('#saleAmount').val(realToNumber( $('#saleAmount').val() ))
 	var obj = $(formId).serializeObject()
 	var data = JSON.stringify(obj);
 	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
@@ -36,6 +32,7 @@ function saveFireSw(title, text, url, data) {
 			})
 		  	.then(response => response.json())
 		  	.catch((obj) => {
+		  		debugger
 		  		Swal.insertQueueStep({
 		  			type: 'error',
 		  			title: 'erro'
@@ -44,14 +41,17 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			if (obj.value != undefined) {
+			debugger
+			if (obj.value != undefined && obj.value.status === undefined) {
 				obj = obj.value;
 				if (!obj.hasError) {
 					successAlert(obj, 'Sucesso!', 'Compra registrada como sucesso.')
 				} else {
 					errorSw(errorMessage, obj.error.error);
 				}
-			} 
+			} else {
+				errorSw(errorMessage, obj.value.status);
+			}
 		})
 }
 

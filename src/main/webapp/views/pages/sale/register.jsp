@@ -144,9 +144,7 @@
 	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
-	<jsp:include page="../../tiles/template/datatable.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/money-helper.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

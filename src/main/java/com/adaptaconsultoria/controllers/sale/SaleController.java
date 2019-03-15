@@ -44,7 +44,6 @@ public class SaleController {
 	public ModelAndView partner(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
 		Sale obj = new Sale();
-
 		pageUtil.setPageTitle("Registro de Compra");
 		pageUtil.setTitle("Registro de Compra");
 		pageUtil.setInnerTitle("Registro de Compra");
