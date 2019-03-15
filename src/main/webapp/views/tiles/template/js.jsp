@@ -12,7 +12,7 @@
 <script src="${pageContext.request.contextPath}/resources/app-assets/js/core/app-menu.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/app-assets/js/core/app.min.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/customizer.min.js"></script> --%>
-<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/menu.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/menu.js"></script> --%>
 
 
 

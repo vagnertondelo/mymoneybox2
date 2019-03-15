@@ -30,7 +30,7 @@ function stepsValidation() {
 		titleTemplate : '<span class="step">#index#</span> #title#',
 		enablePreviusButton : true,
 		onInit: function () {
-			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" role="menuitem">Voltar a tela de Login</a></li>')
+			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" role="menuitem" title="Voltar para página de login"><i class="ft-corner-up-left"></i></a></li>')
 		},
 		labels : {
 			previous : 'Voltar',
@@ -43,7 +43,7 @@ function stepsValidation() {
 			
 			var a = (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
 			
-			return a;
+			return false;
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -135,22 +135,27 @@ function validate(form) {
              },
              email: {
             	 remote : {
+            		beforeSend: function() {
+            			block()
+                    },
   					url : "isemail",
   					type : "GET",
+//  					async: false,
   					data : {
   						email : function() {
   							return $("#email").val()
   						}
   					},
-  					dataFilter : function(obj) {
+  					complete : function(obj) {
+  						$(".steps-validation").steps('next')
+  						$('.blockit').unblock()
   						obj = jQuery.parseJSON(obj);
-  						updateToken(obj.token)
 						if (obj.isvalid) {
 							return true;
 						}
 						return false;
-					}
-            	 } 
+					},
+            	 }
              }
 		},
 		messages: {
@@ -183,7 +188,11 @@ function getLocationsToFillUpSelect2Inputs() {
 	$.ajax({
 		url : "locations",
 		type: 'POST',
+		beforeSend: function() {
+			block()
+	    },
 	}).done(function(data) {
+		$('.blockit').unblock()
 		if (data === '') {
 			errorGenericSw("Erro", "Países não cadastrados")
 		}

@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/extensions/flag-icon.min-adjust.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/intlTelInput/intlTelInput.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/css/plugins/loaders/loaders.min.css">
+<link rel="stylesheet" type="text/css" href="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/css/core/colors/palette-loader.min.css">
+
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 	<div class="app-content">
@@ -21,7 +24,7 @@
 			<div class="content-body">
 				<section id="number-tabs">
 					<div class="row justify-content-md-center">
-						<div class="col-lg-6 col-md-6 col-sm-12">
+						<div class="col-lg-6 col-md-6 col-sm-12 blockit"> 
 							<div class="card">
 								<div class="card-header border-0">
 									<div class="card-title text-center">
@@ -33,22 +36,18 @@
 								<div class="card-content collapse show">
 									<div class="card-body">
 										<form class="number-tab-steps wizard-notification steps-validation" id="${formId}">
-											<input type="text" maxlength="13" class="form-control hidden" id="accountNo" name="accountNo" placeholder="accountNo"> 
-											<input type="number" class="form-control hidden" id="sponsorAccountNo" name="sponsorAccountNo" placeholder="sponsorAccountNo"> 
-											<input type="hidden" class="form-control" id="ipAddress" name="ipAddress" placeholder="ipAddress" value="${ipAddress}"> 
-											<input type="hidden" class="form-control" id="doLogin" name="doLogin" placeholder="doLogin"> 
-											<input type="hidden" class="form-control" id="token" name="token" placeholder="token" value="${token}">
+											<input type="text" maxlength="13" class="form-control hidden" id="accountNo" name="accountNo" placeholder="accountNo"> <input type="number" class="form-control hidden" id="sponsorAccountNo" name="sponsorAccountNo" placeholder="sponsorAccountNo"> <input type="hidden" class="form-control" id="ipAddress" name="ipAddress" placeholder="ipAddress" value="${ipAddress}">
+											<input type="hidden" class="form-control" id="doLogin" name="doLogin" placeholder="doLogin"> <input type="hidden" class="form-control" id="token" name="token" placeholder="token" value="${token}">
 											<h6>Informações Pessoais</h6>
+
 											<fieldset>
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="name">Nome Completo:<span class="danger">*</span></label> 
-															<input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
+															<label for="name">Nome Completo:<span class="danger">*</span></label> <input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
 														</div>
 													</div>
 												</div>
-
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
@@ -56,10 +55,14 @@
 														</div>
 													</div>
 
-													<div class="col-md-6 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control country required" name="countryIsoCode" id="countryIsoCode">
+													<div class="col-md-6 form-group" >
+														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span>
+														</label> 
+														<select class="form-control country required" name="countryIsoCode" id="countryIsoCode">
+															<option value="">Selecione um País</option>
 														</select>
 													</div>
+
 												</div>
 												<div class="row">
 													<div class="col-md-6">
@@ -70,8 +73,7 @@
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="phone">Telefone:</label> 
-															<input type="text" class="form-control phonebrpr" id="phone" name="phone" placeholder="Telefone">
+															<label for="phone">Telefone:</label> <input type="text" class="form-control phonebrpr" id="phone" name="phone" placeholder="Telefone">
 														</div>
 													</div>
 												</div>
@@ -94,8 +96,7 @@
 
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> 
-														<select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
 															<option value="">Selecione um País</option>
 														</select>
 													</div>
@@ -156,6 +157,7 @@
 	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/intlTelInput/intlTelInput.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
