@@ -40,9 +40,7 @@ function stepsValidation() {
 		onStepChanging: function(e, t, i) {
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
 			form.valid()
-			
 			var a = (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
-			
 			return a;
 		},
 		onFinishing : function(e, i) {
@@ -113,44 +111,6 @@ function validate(form) {
 			 },
 			 passwordConfirm : {
                  equalTo : "#password"
-             },
-             login: {
-            	 remote : {
- 					url : "islogin",
- 					type : "GET",
- 					data : {
- 						login : function() {
- 							return $("#login").val()
- 						}
- 					},
- 					dataFilter : function(obj) {
- 						obj = jQuery.parseJSON(obj);
- 						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 }
-             },
-             email: {
-            	 remote : {
-  					url : "isemail",
-  					type : "GET",
-  					data : {
-  						email : function() {
-  							return $("#email").val()
-  						}
-  					},
-  					dataFilter : function(obj) {
-  						obj = jQuery.parseJSON(obj);
-  						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 } 
              }
 		},
 		messages: {
@@ -184,9 +144,10 @@ function getLocationsToFillUpSelect2Inputs() {
 		url : "locations",
 		type: 'POST',
 		beforeSend: function() {
-			block()
+			block('.blockit')
 	    },
 	}).done(function(data) {
+		unblock('.blockit')
 		if (data === '') {
 			errorGenericSw("Erro", "Países não cadastrados")
 		}

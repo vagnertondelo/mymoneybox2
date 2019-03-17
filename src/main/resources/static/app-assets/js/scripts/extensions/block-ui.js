@@ -1,5 +1,5 @@
-function block() {
-	$('.blockit').block({
+function block(input) {
+	$(input).block({
 		message : loaderHtml(),
 		overlayCSS : {
 			backgroundColor : '#FFF',
@@ -24,4 +24,8 @@ function loaderHtml() {
 			'			</div>'+
 			'		</div>'+
 			'	</div>';
+}
+
+function unblock(input) {
+	$(input).unblock()
 }

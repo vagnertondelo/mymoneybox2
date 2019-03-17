@@ -56,6 +56,24 @@ public class SaleController {
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		return pageUtil.getModel();
 	}
+	
+	@GetMapping(value = "list")
+	public ModelAndView list(HttpServletRequest request, HttpSession session) {
+		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
+		pageUtil.setPageTitle("Lista de Compras");
+		pageUtil.setTitle("Lista de Compras");
+		pageUtil.setSubTitle("Lista de Compras");
+		pageUtil.setTableId("sale-table");
+		pageUtil.setJs("sale-list.js");
+		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
+		pageUtil.setAttr("mi", "sale");
+		return pageUtil.getModel();
+	}
+	
+	@GetMapping(value = "getlist")
+	public ResponseEntity<?> getList() {
+		return ResponseEntity.ok( saleService.list() );
+	}
 
 	private List<Rule> getRules(HttpSession session) {
 		try {

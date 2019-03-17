@@ -6,7 +6,7 @@
 			<li class="nav-item"><a id="dashboard" href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
 			<li class="nav-item"><a id="accredited" href="${pageContext.request.contextPath}/accredited/list"><i class="ft-user-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
 			<li class="nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Parceiro</span></a>
-			<li class="nav-item"><a id="sale" href="${pageContext.request.contextPath}/sale/register"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Compra</span></a>
+			<li class="nav-item"><a id="sale" href="${pageContext.request.contextPath}/sale/list"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Compra</span></a>
 				
 <%-- 			<sec:authorize access="hasRole('ADMINISTRADOR')"> --%>
 <!-- 				<li class="navigation-header"><span data-i18n="nav.category.admin-panels">Painel do Administrador</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i></li> -->
