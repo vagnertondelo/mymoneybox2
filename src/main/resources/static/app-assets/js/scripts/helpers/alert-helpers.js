@@ -34,22 +34,25 @@ function errorGenericSw(title, text) {
 		    '<i class="fa fa-thumbs-down"></i> Sair',
 		  cancelButtonAriaLabel: 'Thumbs down',
 	}).then((result) => {
-		// do nothing
-	})
-}
-
-
-function successAlert(obj, title, text) {
-	Swal.fire({
-		  type: 'success',
-		  html: HtmlSw(title, text),
-		  showCloseButton: true,
-		  focusConfirm: false,
-		  confirmButtonText: '<i class="fa fa-thumbs-up"></i> Pronto',
-		  confirmButtonAriaLabel: 'Thumbs up, great!',
-	}).then((result) => {
-		// redirect to login page
 		
 	})
 }
 
+function successAlert(obj, title, text, resolve) {
+	Swal.fire({
+		  type: 'success',
+		  html: HtmlSw(title, text),
+		  showCloseButton: true,
+		  showCancelButton: true,
+		  focusConfirm: true,
+		  confirmButtonText: '<i class="ft-fast-forward"></i> Continuar',
+		  cancelButtonText: ' <i class="ft-rotate-ccw"></i> Novo Cadastro',
+		  confirmButtonAriaLabel: 'Thumbs up, great!',
+	}).then((result) => {
+		if (result.dismiss === undefined) {
+			resolve(true)
+		} else {
+			resolve(false)
+		}
+	})
+}

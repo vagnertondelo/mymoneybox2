@@ -276,97 +276,6 @@ function getColumns() {
 		  ];
 }
 
-function validate() {
-	$(formId).validate({
-		submitHandler : function(form) {
-			save();
-		},
-		ignore: [],
-		onsubmit: true,
-		onkeyup: false,
-		onclick: false,
-		onfocusout: false,
-		rules : {
-			 countryIsoCode : {
-				valueNotEquals: true
-			 },
-			 passwordConfirm : {
-                 equalTo : "#password"
-             },
-             rows: {
-            	 percentages: true
-             },
-             login: {
-            	 remote : {
- 					url : contextPath + "freely/islogin",
- 					type : "GET",
- 					data : {
- 						login : function() {
- 							return $("#login").val()
- 						}
- 					},
- 					dataFilter : function(obj) {
- 						obj = jQuery.parseJSON(obj);
- 						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 }
-             },
-             email: {
-            	 remote : {
-  					url : contextPath + "freely/isemail",
-  					type : "GET",
-  					data : {
-  						email : function() {
-  							return $("#email").val()
-  						}
-  					},
-  					dataFilter : function(obj) {
-  						obj = jQuery.parseJSON(obj);
-  						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 } 
-             },
-             codeCategory : {
- 				valueNotEquals: true
- 			 },
- 			 countryIsoCode : {
-  				valueNotEquals: true
-  			 }
-		},
-		messages: {
-			email: {
-				remote: "Email já está cadastrado no sistema"
-			},
-			login: {
-				remote: "Login já está cadastrado no sistema"
-			}
-		},
-		errorClass : 'help-block',
-		errorElement : 'div',
-		success : function(label, element) {
-			label.parent().removeClass('error')
-		},
-		highlight : function(element, errorClass, validClass) {
-			$(element).parent().addClass('error')
-		},
-		errorPlacement : function(error, element) {
-		    if ( element.prop('id') === 'countryIsoCode' || element.prop('id') === 'codeCategory' ) {
-                error.appendTo(element.parent());
-            } else {
-            	error.insertAfter(element);
-            }
-		}
-	});
-}
-
 function getLocationsToFillUpSelect2Inputs() {
 	$.ajax({
 		url : contextPath + "freely/locations",
@@ -494,5 +403,96 @@ function ciMapped(ci) {
 	$('.city').empty()
 	return ci.map(c => {
 		return {id: c.code, text: c.name}
+	});
+}
+
+function validate() {
+	$(formId).validate({
+		submitHandler : function(form) {
+			save();
+		},
+		ignore: [],
+		onsubmit: true,
+		onkeyup: false,
+		onclick: false,
+		onfocusout: false,
+		rules : {
+			 countryIsoCode : {
+				valueNotEquals: true
+			 },
+			 passwordConfirm : {
+                 equalTo : "#password"
+             },
+             rows: {
+            	 percentages: true
+             },
+             login: {
+            	 remote : {
+ 					url : contextPath + "freely/islogin",
+ 					type : "GET",
+ 					data : {
+ 						login : function() {
+ 							return $("#login").val()
+ 						}
+ 					},
+ 					dataFilter : function(obj) {
+ 						obj = jQuery.parseJSON(obj);
+ 						updateToken(obj.token)
+						if (obj.isvalid) {
+							return true;
+						}
+						return false;
+					}
+            	 }
+             },
+             email: {
+            	 remote : {
+  					url : contextPath + "freely/isemail",
+  					type : "GET",
+  					data : {
+  						email : function() {
+  							return $("#email").val()
+  						}
+  					},
+  					dataFilter : function(obj) {
+  						obj = jQuery.parseJSON(obj);
+  						updateToken(obj.token)
+						if (obj.isvalid) {
+							return true;
+						}
+						return false;
+					}
+            	 } 
+             },
+             codeCategory : {
+ 				valueNotEquals: true
+ 			 },
+ 			 countryIsoCode : {
+  				valueNotEquals: true
+  			 }
+		},
+		messages: {
+			email: {
+				remote: "Email já está cadastrado no sistema"
+			},
+			login: {
+				remote: "Login já está cadastrado no sistema"
+			}
+		},
+		errorClass : 'help-block',
+		errorElement : 'div',
+		success : function(label, element) {
+			label.parent().removeClass('error')
+		},
+		highlight : function(element, errorClass, validClass) {
+			$(element).parent().addClass('error')
+		},
+		errorPlacement : function(error, element) {
+		    if ( element.prop('id') === 'countryIsoCode' || element.prop('id') === 'codeCategory' ) {
+                error.appendTo(element.parent());
+            } else {
+            	error.insertAfter(element);
+            }
+		}
 	});
 }

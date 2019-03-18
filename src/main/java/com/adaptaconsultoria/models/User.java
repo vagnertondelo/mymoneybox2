@@ -31,5 +31,9 @@ public class User extends Token {
 	private String accountNo;
 
 	private String sponsorAccountNo;
+	
+	private String role;
+	
+	
 
 }

@@ -1,6 +1,7 @@
 package com.adaptaconsultoria.components;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.adaptaconsultoria.objects.in.UserIn;
@@ -35,7 +38,11 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 			if (op.get().getHasError()) {
 				throw new Exception();
 			}
-			return new UsernamePasswordAuthenticationToken(op.get(), password, new ArrayList<>());
+			
+			List<GrantedAuthority> listAuthorities = new ArrayList<GrantedAuthority>();
+			listAuthorities.add(new SimpleGrantedAuthority(op.get().getUser().getRole() ));
+			
+			return new UsernamePasswordAuthenticationToken(op.get(), password, listAuthorities);
 		} catch (Exception e) {
 			return null;
 		}

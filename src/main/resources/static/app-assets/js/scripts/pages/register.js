@@ -22,7 +22,9 @@ function setSponsorAccountNo() {
 
 function stepsValidation() {
 	var form = $(".steps-validation").show();
+	
     validate(form)
+    
 	$(".steps-validation").steps({
 		headerTag : "h6",
 		bodyTag : "fieldset",
@@ -30,7 +32,7 @@ function stepsValidation() {
 		titleTemplate : '<span class="step">#index#</span> #title#',
 		enablePreviusButton : true,
 		onInit: function () {
-			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" role="menuitem">Voltar a tela de Login</a></li>')
+			$('.app-content .wizard>.actions>ul').prepend('<li aria-hidden="false" aria-disabled="false"><a href="login" title="Voltar para a página de Login" role="menuitem"><i class="ft-corner-up-left"> </i></a></li>')
 		},
 		labels : {
 			previous : 'Voltar',
@@ -39,9 +41,7 @@ function stepsValidation() {
 		},
 		onStepChanging: function(e, t, i) {
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
-			form.valid()
-			var a = (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
-			return a;
+			return (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -69,38 +69,55 @@ function saveFireSw(title, text, url, data) {
 		  confirmButtonText: 'Enviar',
 		  buttonsStyling: false,
 		  preConfirm: function() {
-		  return fetch(url, {
-			  method: 'POST',
-			  headers: {
-	               "Content-Type": "application/json",
-	          },
-			  body: data
-			})
-		  	.then(response => response.json())
-		  	.catch((obj) => {
-		  		Swal.insertQueueStep({
-		  			type: 'error',
-		  			title: 'erro'
-		  		})
-		  		return false;
-		  	})
+			  
+			  return fetch(url, {
+				  method: 'POST',
+				  headers: {
+			           "Content-Type": "application/json",
+			      },
+				  body: data
+				})
+			  	.then(response => response.json())
+			  	.catch((obj) => {
+			  		Swal.insertQueueStep({
+			  			type: 'error',
+			  			title: 'erro'
+			  		})
+			  		return false;
+			  	})
 		  }
-		}).then(function(obj) {
-			if (obj.value != undefined) {
-				obj = obj.value;
-				updateToken(obj.token)
-				if (!obj.hasError) {
-					successAlert(obj, title, text)
-					window.location.href = contextPath + "dashboard";
-				} else {
-					errorSw(obj.error.error)
-				}
-			} 
+		}).then( function(obj) {
+			return new Promise(resolve => {
+				if (obj.value != undefined) {
+					obj = obj.value;
+					updateToken(obj.token)
+					if (!obj.hasError) {
+						successAlert(obj, title, text, resolve)
+					} else {
+						errorSw(obj.error.error)
+					}
+				} 
+			})
+		}).then(function (r) {
+			debugger
+			if (r) {
+				window.location.href = contextPath + "dashboard";
+			} else {
+				window.location.href = contextPath + "freely/register";
+			}
 		})
 }
 
-function validate(form) {
-	form.validate({
+function foo() {
+	return function (title, text) { 
+		return new Promise(resolve => {
+			r(title, text, resolve)
+		})
+	}
+}
+
+function validate() {
+	$(formId).validate({
 		onsubmit: true,
 		onkeyup: false,
 		onclick: false,
