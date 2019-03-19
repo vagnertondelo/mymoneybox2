@@ -44,6 +44,7 @@ function addPercentageClick() {
 
 function addPercentage() {
 	var id = $(addPccashback).val();
+	
 	if ( validatePercentageFields()) {
 		if (rowIndex === null || rowIndex === undefined || rowIndex === '') {
 			table.row.add( {
