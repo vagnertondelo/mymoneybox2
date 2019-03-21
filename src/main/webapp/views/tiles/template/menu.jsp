@@ -4,11 +4,12 @@
 	<div class="main-menu-content">
 		<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 			<li class="nav-item"><a id="dashboard" href="${pageContext.request.contextPath}/dashboard"><i class="la la-home"></i><span class="menu-title" data-i18n="nav.dash.main">Dashboard</span></a>
-			<li class="nav-item"><a id="accredited" href="${pageContext.request.contextPath}/accredited/list"><i class="ft-user-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Credenciado</span></a>
-			<li class="nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Parceiro</span></a>
+			<li class="nav-item"><a id="accredited" href="${pageContext.request.contextPath}/accredited/list"><i class="ft-user-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Credenciado</span></a>
+			<li class="nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Parceiro</span></a>
 			<li class="nav-item"><a id="sale" href="${pageContext.request.contextPath}/sale/list"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Compra</span></a>
 			<li class="nav-item"><a id="entity" href="${pageContext.request.contextPath}/entity/register"><i class="la la-institution"></i><span class="menu-title" data-i18n="nav.dash.main">Entidade</span></a>
-				
+			<li class="nav-item"><a id="cashback" href="${pageContext.request.contextPath}/cashback/list"><i class="ft-clipboard"></i><span class="menu-title" data-i18n="nav.dash.main">Extrato de Compras</span></a>
+			
 <%-- 			<sec:authorize access="hasRole('ADMINISTRADOR')"> --%>
 <!-- 				<li class="navigation-header"><span data-i18n="nav.category.admin-panels">Painel do Administrador</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i></li> -->
 <!-- 				<li class="nav-item"><a href="#"><i class="la la-television"></i><span class="menu-title" data-i18n="nav.templates.main">Cadastros</span></a> -->

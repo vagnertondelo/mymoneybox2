@@ -1,20 +1,23 @@
 var table;
+var baseUrl = "cashback";
 
 $(document).ready(function() {
 	table()
 })
 
 function table() {
+	var url = contextPath + baseUrl + "/getlist";
+	
+	debugger
     table = $(tableId)
         .DataTable({
         	ajax: {
 				type: "GET",
-				url: contextPath + "sale/getlist",
+				url: contextPath + baseUrl + "/getlist",
 				dataSrc:""
 			},
             language: getLanguage(),
             columns: getColumns(),
-            buttons: getButtons(),
             columnDefs: getColumnDefs(),
             initComplete: function(settings, json) {
                 selectTableConfig(this.DataTable());
@@ -155,36 +158,45 @@ function getColumns() {
 	
     return [{
             title: "Número Documento",
-            data: "documentNo"
+            data: "sale",
+            render: function(data, type, full) {
+            	return data.documentNo;
+            }
         }, {
             title: "Valor",
-            data: "saleAmount",
+            data: "sale",
             render: function(data, type, full) {
-            	return data +"/"+ full.saleCurrency;
+            	return data.saleAmount +"/"+ data.currency;
             }
         }, {
             title: "Data Registrada",
-            data: "localTime",
+            data: "dateSale",
             render: function(data, type, full) {
             	return formatDate(new Date(data));
             }
         }, {
             title: "Número da Conta",
-            data: "accountNo"
-        }, {
-            title: "Cashback da Compra",
-            data: "saleCashback",
+            data: "sale",
             render: function(data, type, full) {
-            	return data +"/"+ full.saleCurrency;
+            	return data.accountNo;
             }
         }, {
-            title: "País",
-            data: "countryIsoCode",
-        }, {
-            title: "Cashback",
-            data: "cashback",
+            title: "Cashback da Compra",
+            data: "sale",
             render: function(data, type, full) {
-            	return data +"/"+ full.currency;
+            	return data.cashback +"/"+ data.currency;
+            }
+        }, {
+            title: "Nível",
+            data: "level"
+        }, {
+            title: "%",
+            data: "rate"
+        }, {
+            title: "País",
+            data: "sale",
+            render: function(data, type, full) {
+            	return data.countryIsoCode;
             }
         }
     ];

@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/validation/form-validation.css">
 
 </head>
-<body class="vertical-layout vertical-menu-modern 1-column menu-expanded blank-page blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+<body class="vertical-layout vertical-menu-modern 1-column bg-full-screen-image blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
 	<!-- ////////////////////////////////////////////////////////////////////////////-->
 	<div class="app-content content">
 		<div class="content-wrapper">
@@ -24,7 +24,7 @@
 								<div class="card-header border-0">
 									<div class="card-title text-center">
 										<div class="p-1">
-											<img src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png" style="width: 124px;" alt="branding logo">
+											<img src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png" style="width: 160px;" alt="branding logo">
 										</div>
 									</div>
 								</div>
