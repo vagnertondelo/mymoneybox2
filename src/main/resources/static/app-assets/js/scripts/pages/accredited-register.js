@@ -61,6 +61,7 @@ function addPercentage() {
 		        "pcCashback": $("#pcCashback").val()
 		    }).draw()
 		}
+		
 		resetAddButton()
 		clearPercentageFields()
 	}
@@ -135,15 +136,21 @@ function savePercentage(id, obj) {
 
 function selectTableConfig(table) {
 	$('#' +table.tables().nodes().to$().attr('id')+ ' tbody').on('dblclick', 'tr', function () {
+		
 		table.rows(this).select()
+		
 		rowIndex = table.row( this ).index();
+		
 		var obj = table.row({
 			selected : true
 		}).data();
 		
 		$(clearPccashbackForm).removeClass("hidden")
+		
 		$(removePccashback).removeClass("hidden")
+		
 		$(addPccashback).html("Editar");
+		
 		tableClick(obj) 
 	});
 }
@@ -215,6 +222,7 @@ function save() {
 }
 
 function saveFireSw(title, text, url, data) {
+	
 	Swal.fire({
 		  html: HtmlSw(title, text),
 		  showLoaderOnConfirm: true,

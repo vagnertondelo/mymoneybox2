@@ -2,19 +2,30 @@ const saveUrl = 'save';
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 var entityName;
+var rowIndex;
+var code = 0;
+var dataEntity;
 
 var rowIndex;
 var clearItemForm = '#clear-item-form';
 var removeItem = '#remove-item';
 var addItem = '#add-item';
 var itemId = '#item-id';
+var saveButton = $('#save-button');
 
 $(document).ready(function() {
 	select2Initialize()
 	table()
 	validate()
 	percentageSum()
+	onClickSaveButton()
 });
+
+function onClickSaveButton() {
+	saveButton.click(function() {
+		save();
+	})
+}
 
 function select2Initialize() {
 	$('.select2').select2()
@@ -49,33 +60,67 @@ function table() {
 
 function selectDeselectTable(table) {
 	var selectedRows = table.rows( { selected: true } ).count();
-    table.buttons( [1,2] ).enable( selectedRows > 0 );
+    table.buttons( [1] ).enable( selectedRows > 0 );
+    table.buttons( [0] ).enable( selectedRows == 0 );
 }
 
 function selectTableConfig(table) {
-	genericTableId = (table);
-	table.on( 'select deselect', function () {
-		 selectDeselectTable(table)
+	table.on( 'select', function () {
+		selectDeselectTable(table)
 	});
 	
-	$(genericTableId + ' tbody').on(
-			'dblclick',
-			'tr',
-			function() {
-				table.rows(this).select()
-				var obj = table.row({
-					selected : true
-				}).data();
-				
-				window.location.href = contextPath
-						+ "/admin/socio/socio?id=" + obj.id;
-				
-			});
+	table.on( 'deselect', function () {
+		clearForm();
+		$('#entityCode').val('').trigger('change');
+		selectDeselectTable(table)
+	});
 	
-	$(genericTableId).on( 'length.dt', function ( e, settings, newlen ) {
-	    len = newlen;
-	    table.ajax.reload();
-	} );
+	$(tableId + ' tbody').on( 'dblclick', 'tr', function() {
+		table.rows(this).select()
+		rowIndex = table.row( this ).index();
+		var obj = table.row({
+			selected : true
+		}).data();
+		tableClick(obj)
+	});
+	
+}
+
+function tableClick(data) {
+	dataEntity = data.entity;
+	
+	setValueSelect2(dataEntity)
+	
+	data.code ? code = data.code : code = ''; 
+	$("#pcEntity").val(data.pcEntity)
+	$("#entityCode").val(data.entityCode)
+	return 0;
+}
+
+function edition(data) {
+	entityName = $(".select2 option:selected").text();
+	
+	if ($(formId).valid()) {
+		table.row(rowIndex).data({
+			"code": code,
+	        "pcEntity": $("#pcEntity").val(),
+	        "entityCode": $("#entityCode").val(),
+	        "entity": dataEntity
+	    }).draw()
+	}
+}
+
+function clearForm() {
+	$("#pcEntity").val("")
+}
+
+function setValueSelect2(data) {
+	if ($('#entityCode').find("option[value='" + data.code + "']").length) {
+	    $('#entityCode').val(data.code).trigger('change');
+	} else { 
+	    var newOption = new Option(data.name, data.code, true, true);
+	    $('#entityCode').append(newOption).trigger('change');
+	} 
 }
 
 function addPercentage() {
@@ -84,17 +129,14 @@ function addPercentage() {
 		table.row.add( {
 	        "code": "",
 	        "entityCode": $("#entityCode").val(),
-	        "pcEntity": $("#pcEntity").val()
+	        "pcEntity": $("#pcEntity").val(),
 	    } ).draw();
-		
-//		resetAddButton()
-//		clearPercentageFields()
+		clearForm()
 	}
 	return 0;
 }
 
 function save() {
-	addPercentage()
 	var obj = getItems();
 	var data = JSON.stringify(obj);
 	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
@@ -110,7 +152,6 @@ function getItems() {
 	var mappedItems = items.map(c => {
 		return {code: c.code, pcEntity: c.pcEntity, entityCode: c.entityCode}
 	});
-
 	return { entities: mappedItems };
 }
 
@@ -152,7 +193,7 @@ function saveFireSw(title, text, url, data) {
 
 function getColumnDefs() {
 	return [{
-        targets: [0],
+        targets: [0, 3],
         visible: false
     }, {
         className: "dt-center",
@@ -163,15 +204,15 @@ function getColumnDefs() {
 function getColumns() {
 	 return [ { 
 		 		data: "code"
-		 	},{ 
-		 		title: "Percentual %",
-		 		data: "pcEntity" 
 		 	}, {
-		 		title: "entity",
+		 		title: "Entidade",
 		 		data: "entity",
 		 		render: function(data, type, full) {
 	            	return data != undefined ? data.name : entityName; 
 	            }
+		 	}, { 
+		 		title: "Percentual %",
+		 		data: "pcEntity" 
 		 	}, {
 		 		title: "entityCode",
 		 		data: "entityCode"
@@ -182,12 +223,9 @@ function getColumns() {
 function validate() {
 	$(formId).validate({
 		submitHandler : function(form) {
-			save();
+			addPercentage();
 		},
 		rules : {
-			pcEntity: {
-				percentageSum: true
-			}
 		},
 		messages: {},
 		errorClass : 'help-block',
@@ -219,6 +257,14 @@ function percentageSum() {
 	}, "A soma de todas as porcentagens adicionadas não pode ultrapassar a 100!");
 }
 
+function foo() {
+	var x = getItems();
+	var b = 0;
+	x.entities.forEach(y => {
+		b += y.pcEntity; 
+	})
+    console.log(b)
+}
 
 function getButtons() {
 	return  [ {
@@ -237,22 +283,7 @@ function getButtons() {
 		        	 'data-tooltip': 'Limpar Formulário'
 		        },
 		        action: function ( e, dt, node, config ) {
-		        	var obj = dt.row( { selected: true } ).data();
-		        	promtpRemove(obj.id)
-		        },
-		        enabled: false
-		    },
-		    {
-		        text: '<i class="ft-trash-2 font-small-2"></i>',
-		        className : 'btn btn-danger box-shadow-2 btn-min-width pull-left',
-		        attr:  {
-		        	 'data-position':'top', 
-		        	 'data-delay':'50',
-		        	 'data-tooltip': 'Limpar Formulário'
-		        },
-		        action: function ( e, dt, node, config ) {
-		        	var obj = dt.row( { selected: true } ).data();
-		        	promtpRemove(obj.id)
+		        	edition()
 		        },
 		        enabled: false
 		    }];

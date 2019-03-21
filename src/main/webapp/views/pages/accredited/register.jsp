@@ -181,7 +181,8 @@
 														</div>
 													</div>
 													<div class="col-md-3 form-group">
-														<label class="label-control" for="categoria">Moeda:</label> <select class="select2 form-control" name="currency" id="currency">
+														<label class="label-control" for="categoria">Moeda:</label> 
+														<select class="select2 form-control" name="currency" id="currency">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${currencies}" var="currency">
