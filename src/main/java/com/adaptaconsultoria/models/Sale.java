@@ -3,7 +3,6 @@ package com.adaptaconsultoria.models;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
@@ -17,7 +16,7 @@ public class Sale extends Token {
 	private Integer codeRule;
 	private BigDecimal saleAmount;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Date localTime = new Date();
 
 	// Codigo da conta

@@ -1,4 +1,7 @@
 const saveUrl = 'save';
+const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const confirmButton = 'Entrar no Sistema';
+const cancelButton = 'Cadastrar Outro Usuário';
 var object;
 
 const param = getParamUrl();
@@ -86,18 +89,21 @@ function saveFireSw(title, text, url, data) {
 			  		return false;
 			  	})
 		  }
+	
 		}).then( function(obj) {
+			
 			return new Promise(resolve => {
 				if (obj.value != undefined) {
 					obj = obj.value;
 					updateToken(obj.token)
 					if (!obj.hasError) {
-						successAlert(obj, title, text, resolve)
+						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
 					} else {
 						errorSw(obj.error.error)
 					}
 				} 
 			})
+			
 		}).then(function (r) {
 			debugger
 			if (r) {

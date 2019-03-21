@@ -38,15 +38,15 @@ function errorGenericSw(title, text) {
 	})
 }
 
-function successAlert(obj, title, text, resolve) {
+function successAlert(obj, title, text, resolve, confirmButtonText, cancelButtonText) {
 	Swal.fire({
 		  type: 'success',
 		  html: HtmlSw(title, text),
 		  showCloseButton: true,
 		  showCancelButton: true,
 		  focusConfirm: true,
-		  confirmButtonText: '<i class="ft-fast-forward"></i> Continuar',
-		  cancelButtonText: ' <i class="ft-rotate-ccw"></i> Novo Cadastro',
+		  confirmButtonText: '<i class="ft-fast-forward"></i> ' +confirmButtonText+ '',
+		  cancelButtonText: ' <i class="ft-rotate-ccw"></i> ' +cancelButtonText+ ' ',
 		  confirmButtonAriaLabel: 'Thumbs up, great!',
 	}).then((result) => {
 		if (result.dismiss === undefined) {

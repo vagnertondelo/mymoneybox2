@@ -61,7 +61,7 @@ public class RequestServiceImpl implements RequestService {
 				map = cbcService.getBasicPublicServiceRequest();
 			}
 			
-			if (params != null)
+			if (!params.isEmpty())
 				map.addAll(params);
 			
 			ResponseEntity<?> objIn = restTemplate.exchange(cbcService.getGetRequest(url, map), HttpMethod.GET,

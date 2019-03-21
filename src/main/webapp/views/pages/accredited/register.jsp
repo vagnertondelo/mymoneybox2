@@ -186,7 +186,7 @@
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${currencies}" var="currency">
-																	<option value="${currency.code}">${currency.name}${currency.icon}</option>
+																	<option value="${currency.code}">${currency.name}</option>
 																</c:forEach>
 															</optgroup>
 														</select>

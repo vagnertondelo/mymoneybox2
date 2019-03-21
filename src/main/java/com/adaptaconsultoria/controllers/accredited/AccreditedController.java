@@ -90,7 +90,7 @@ public class AccreditedController {
 		pageUtil.setModelAttribute("accredited");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		// last call 
-		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
+ 		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
 		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
 	}

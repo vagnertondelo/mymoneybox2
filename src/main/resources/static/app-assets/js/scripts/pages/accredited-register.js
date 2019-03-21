@@ -1,6 +1,8 @@
 const saveUrl = 'save';
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const confirmButton = 'Cadastrar Novo';
+const cancelButton = 'Listar';
 
 var rowIndex;
 var clearPccashbackForm = '#clear-pccashback-form';
@@ -212,7 +214,6 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	
 	var obj = $(formId).serializeObject()
 	var obj2 = getPercentages();
 	var object = $.extend(obj, {rules: obj2});
@@ -247,15 +248,25 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			if (obj.value != undefined) {
-				obj = obj.value;
-				updateToken(obj.token)
-				if (!obj.hasError) {
-					successAlert(obj, 'Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.')
-				} else {
-					errorSw(errorMessage, obj.error.error);
-				}
-			} 
+			
+			return new Promise(resolve => {
+				if (obj.value != undefined) {
+					obj = obj.value;
+					updateToken(obj.token)
+					if (!obj.hasError) {
+						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
+					} else {
+						errorSw(obj.error.error)
+					}
+				} 
+			})
+			
+		}).then(function (r) {
+			if (r) {
+				window.location.href = contextPath + "accredited/register";
+			} else {
+				window.location.href = contextPath + "accredited/list";
+			}
 		})
 }
 

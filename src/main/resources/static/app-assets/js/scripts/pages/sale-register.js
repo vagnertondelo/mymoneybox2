@@ -1,5 +1,7 @@
 const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const confirmButton = 'Cadastrar Novo';
+const cancelButton = 'Listar';
 
 $(document).ready(function() {
 	select2Initialize()
@@ -41,16 +43,21 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			debugger
-			if (obj.value != undefined && obj.value.status === undefined) {
-				obj = obj.value;
-				if (!obj.hasError) {
-					successAlert(obj, 'Sucesso!', 'Compra registrada como sucesso.')
-				} else {
-					errorSw(errorMessage, obj.error.error);
-				}
+			return new Promise(resolve => {
+				if (obj.value != undefined) {
+					obj = obj.value;
+					if (!obj.hasError) {
+						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
+					} else {
+						errorSw(obj.error.error)
+					}
+				} 
+			})
+		}).then(function (r) {
+			if (r) {
+				window.location.href = contextPath + "sale/register";
 			} else {
-				errorSw(errorMessage, obj.value.status);
+				window.location.href = contextPath + "sale/list";
 			}
 		})
 }

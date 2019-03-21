@@ -1,5 +1,7 @@
 const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const confirmButton = 'Cadastrar Novo';
+const cancelButton = 'Listar';
 
 $(document).ready(function() {
 	select2Initialize()
@@ -20,7 +22,6 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	
 	var obj = $(formId).serializeObject()
 	var data = JSON.stringify(obj);
 	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
@@ -52,15 +53,23 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			if (obj.value != undefined) {
-				obj = obj.value;
-				updateToken(obj.token)
-				if (!obj.hasError) {
-					successAlert(obj, 'Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.')
-				} else {
-					errorSw(errorMessage, obj.error.error);
-				}
-			} 
+			return new Promise(resolve => {
+				if (obj.value != undefined) {
+					obj = obj.value;
+					updateToken(obj.token)
+					if (!obj.hasError) {
+						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
+					} else {
+						errorSw(obj.error.error)
+					}
+				} 
+			})
+		}).then(function (r) {
+			if (r) {
+				window.location.href = contextPath + "partner/register";
+			} else {
+				window.location.href = contextPath + "partner/list";
+			}
 		})
 }
 

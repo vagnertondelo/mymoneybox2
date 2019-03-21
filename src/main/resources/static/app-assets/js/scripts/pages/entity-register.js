@@ -1,6 +1,8 @@
 const saveUrl = 'save';
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
+const confirmButton = 'Fechar';
+
 var entityName;
 var rowIndex;
 var code = 0;
@@ -40,6 +42,7 @@ function table() {
 				url: contextPath + "entity/getlist",
 				dataSrc:""
 			},
+			autoWidth: false,
 			searching: false,
 			dom : 'Bfrtip',
 			select : 'single',
@@ -180,15 +183,44 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			if (obj.value != undefined) {
-				obj = obj.value;
-				if (!obj.hasError) {
-					successAlert(obj, 'Cadastrado com sucesso!', 'Parabéns você agora está cadastrado no sistema.')
-				} else {
-					errorSw(errorMessage, obj.error.error);
-				}
-			} 
+			
+			return new Promise(resolve => {
+				if (obj.value != undefined) {
+					obj = obj.value;
+					if (!obj.hasError) {
+						success(title, text, resolve, confirmButton)
+					} else {
+						errorSw(obj.error.error)
+					}
+				} 
+			})
+			
+		}).then(function (r) {
+			if (r) {
+//				window.location.href = contextPath + "entity/register";
+			} else {
+//				window.location.href = contextPath + "entut/list";
+			}
 		})
+}
+
+function success(title, text, resolve, confirmButtonText) {
+	debugger
+	Swal.fire({
+		  type: 'success',
+		  html: HtmlSw(title, text),
+		  showCloseButton: true,
+		  showCancelButton: false,
+		  focusConfirm: true,
+		  confirmButtonText: '<i class="ft-thumbs-up"></i> ' +confirmButtonText+ '',
+		  confirmButtonAriaLabel: 'Thumbs up, great!',
+	}).then((result) => {
+		if (result.dismiss === undefined) {
+			resolve(true)
+		} else {
+			resolve(false)
+		}
+	})
 }
 
 function getColumnDefs() {
