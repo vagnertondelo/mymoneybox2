@@ -35,7 +35,7 @@ public class CashBackController {
 		pageUtil.setTableId("cashback-table");
 		pageUtil.setJs("cashback-list.js");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		pageUtil.setAttr("mi", "sale");
+		pageUtil.setAttr("mi", "cashback");
 		return pageUtil.getModel();
 	}
 

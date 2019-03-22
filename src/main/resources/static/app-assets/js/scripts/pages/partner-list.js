@@ -2,6 +2,7 @@ var table;
 
 $(document).ready(function() {
 	table()
+	
 })
 
 function table() {
