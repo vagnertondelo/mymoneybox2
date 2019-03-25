@@ -1,7 +1,9 @@
 const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
-const confirmButton = 'Cadastrar Novo';
-const cancelButton = 'Listar';
+const confirmButton = 'Registrar Nova Compra';
+const cancelButton = 'Sair';
+
+var codeRule = $('#codeRule');
 
 $(document).ready(function() {
 	select2Initialize()
@@ -10,11 +12,23 @@ $(document).ready(function() {
 });
 
 function save() {
-	$('#saleAmount').val(realToNumber( $('#saleAmount').val() ))
+	
+	let floatSaleAmountTempt = brlToFloat( $('#saleAmount').val() ).toFixed(2)
+	let floatSaleAmount = parseFloat(floatSaleAmountTempt)
+	var brlSaleAmount = floatToBrl( floatSaleAmount );
+	$('#saleAmount').val( floatSaleAmount )
+	
 	var obj = $(formId).serializeObject()
 	var data = JSON.stringify(obj);
-	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
+	saveFireSw('<h1>Finalizar Compra</h1>', '<br><h5>Valor da doação: '+brlSaleAmount+' </5> <h5>Valor da final: '+getCashBack(floatSaleAmount)+' </5>', saveUrl, data);
 	return 0;
+}
+
+function getCashBack(value) {
+	let cashBack = parseFloat($("#codeRule option:selected").data("cashback"));
+	let p = cashBack * value;
+	let r  = p/100;
+	return floatToBrl(r);
 }
 
 function saveFireSw(title, text, url, data) {
@@ -47,7 +61,7 @@ function saveFireSw(title, text, url, data) {
 				if (obj.value != undefined) {
 					obj = obj.value;
 					if (!obj.hasError) {
-						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
+						successAlert(obj, 'Sucesso!', 'Compra Registrada com Sucesso', resolve, confirmButton, cancelButton)
 					} else {
 						errorSw(obj.error.error)
 					}

@@ -36,11 +36,12 @@ public class CashBackController {
 		pageUtil.setJs("cashback-list.js");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		pageUtil.setAttr("mi", "cashback");
+		pageUtil.setFormId("cashback-list-form");
 		return pageUtil.getModel();
 	}
 
 	@GetMapping(value = "getlist")
-	public ResponseEntity<?> getList(Date dateStart, Date dateEnd) {
-		return ResponseEntity.ok(cashBackService.list(dateStart, dateEnd));
+	public ResponseEntity<?> getList(Date dateFrom, Date dateTo) {
+		return ResponseEntity.ok(cashBackService.list(dateFrom, dateTo));
 	}
 }

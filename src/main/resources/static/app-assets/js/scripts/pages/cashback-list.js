@@ -1,32 +1,69 @@
 var table;
 var baseUrl = "cashback";
+var dateFrom = $('#dp-date-range-from')
+var dateTo = $('#dp-date-range-to')
 
 $(document).ready(function() {
 	table()
-	filterByDate()
+	datePickerInitializer()
+	validate()
+	setInitialDates()
+	onProcessingDataTable()
+	datePickerPtBr()
 })
 
-function filterByDate() {
-	$.fn.dataTable.ext.search.push(
-		    function( settings, data, dataIndex ) {
-		        var min = parseInt( $('#min').val(), 10 );
-		        var max = parseInt( $('#max').val(), 10 );
-		        var age = parseFloat( data[3] ) || 0; // use data for the age column
-		 
-		        if ( ( isNaN( min ) && isNaN( max ) ) ||
-		             ( isNaN( min ) && age <= max ) ||
-		             ( min <= age   && isNaN( max ) ) ||
-		             ( min <= age   && age <= max ) )
-		        {
-		            return true;
-		        }
-		        return false;
-		    }
-		);
-	
-	$('#min, #max').keyup( function() {
-		debugger
-        table.draw();
+function setInitialDates() {
+	dateFrom.datepicker("setDate", defaultFromDate() );
+	dateTo.datepicker("setDate", defaultToDate() );
+}
+
+function defaultToDate() {
+	let date = new Date();
+	 return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+}
+
+function defaultFromDate() {
+	let date = new Date();
+	 return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
+function datePickerInitializer() {
+    var e = $(".dp-date-range-from").datepicker({
+            defaultDate: "+1w",
+            dateFormat: "dd/mm/yy",
+            changeMonth: !0
+        }).on("change", function() {
+            t.datepicker("option", "minDate", a(this))
+        }),
+        t = $(".dp-date-range-to").datepicker({
+            defaultDate: "+1w",
+            changeMonth: !0,
+            dateFormat: "dd/mm/yy",
+        }).on("change", function() {
+        	// call the api and refresh the data
+        	let parsedDate =  a(this)
+        	if ($(formId).valid()) {
+        		table.ajax.reload();
+        	}
+            e.datepicker("option", "maxDate", parsedDate);
+        });
+
+    function a(e) {
+        var t;
+        try {
+            t = $.datepicker.parseDate('dd/mm/yy', e.value)
+        } catch (e) {
+            t = null
+        }
+        return t
+    }
+    
+    $(".ui-datepicker").wrap('<div class="dp-skin"/>')
+}
+
+function onProcessingDataTable() {
+	table.on( 'processing.dt', function ( e, settings, processing ) {
+        $('#cashback-table_processing').removeClass( 'card' );
     } )
 }
 
@@ -37,8 +74,17 @@ function table() {
         	ajax: {
 				type: "GET",
 				url: contextPath + baseUrl + "/getlist",
+				data: {
+					dateFrom: function() {
+						return dateFrom.datepicker('getDate');
+					},
+					dateTo: function() {
+						return dateTo.datepicker('getDate');
+					}
+				},
 				dataSrc:""
 			},
+	        processing: true,
             language: getLanguage(),
             columns: getColumns(),
             columnDefs: getColumnDefs(),
@@ -165,7 +211,7 @@ function getButtons() {
 
 function formatDate(date) {
 	var dd = date.getDate();
-	var mm = date.getMonth() + 1; //January is 0!
+	var mm = date.getMonth() + 1; // January is 0!
 
 	var yyyy = date.getFullYear();
 	if (dd < 10) {
@@ -233,4 +279,33 @@ function getColumnDefs() {
         className: "text-capitalize text-truncate text-center",
         targets: "_all"
     }];
+}
+
+function validate() {
+	$(formId).validate({
+		rules : {
+			'dp-date-range-from': {
+				validDate: true
+			},
+			'dp-date-range-to': {
+				validDate: true
+			}
+		},
+		messages: {},
+		errorClass : 'help-block',
+		errorElement : 'div',
+		success : function(label, element) {
+			label.parent().removeClass('error')
+		},
+		highlight : function(element, errorClass, validClass) {
+			$(element).parent().addClass('error')
+		},
+		errorPlacement : function(error, element) {
+		    if ( element.prop('id') === 'entityCode') {
+                error.appendTo(element.parent());
+            } else {
+            	error.insertAfter(element);
+            }
+		}
+	});
 }

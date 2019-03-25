@@ -97,11 +97,12 @@
 
 											<div class="row">
 												<div class="col-md-6 form-group">
-													<label class="label-control" for="codeRule">Percentual:<span class="danger">*</span></label> <select class="select2 form-control required" name="codeRule" id="codeRule">
+													<label class="label-control" for="codeRule">Percentual:<span class="danger">*</span></label> 
+													<select class="select2 form-control required" name="codeRule" id="codeRule">
 														<optgroup label="Escolha uma categoria">
 															<option value="">Não Selecionado</option>
 															<c:forEach items="${rules}" var="rule">
-																<option value="${rule.code}">${rule.description}/${rule.currency}</option>
+																<option value="${rule.code}" data-cashback="${rule.pcCashback}">${rule.description}/${rule.currency}</option>
 															</c:forEach>
 														</optgroup>
 													</select>

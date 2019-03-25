@@ -166,7 +166,7 @@ function getColumns() {
             title: "Telefone",
             data: "phone",
         }, {
-            title: "address",
+            title: "Rua",
             data: "address",
         },
         {

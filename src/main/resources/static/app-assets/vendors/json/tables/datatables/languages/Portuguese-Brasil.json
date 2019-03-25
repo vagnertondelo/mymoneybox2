@@ -6,8 +6,7 @@
     "sInfoPostFix": "",
     "sInfoThousands": ".",
     "sLengthMenu": "_MENU_ Resultados por página",
-    "sLoadingRecords": "Carregando...",
-    "sProcessing": "Processando...",
+    "sLoadingRecords": "&nbsp;",
     "sZeroRecords": "Nenhum registro encontrado",
     "sSearch": "Pesquisar",
     "oPaginate": {

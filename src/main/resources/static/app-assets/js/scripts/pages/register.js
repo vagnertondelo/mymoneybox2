@@ -105,7 +105,6 @@ function saveFireSw(title, text, url, data) {
 			})
 			
 		}).then(function (r) {
-			debugger
 			if (r) {
 				window.location.href = contextPath + "dashboard";
 			} else {
