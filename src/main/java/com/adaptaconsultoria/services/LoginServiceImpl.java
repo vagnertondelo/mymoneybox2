@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.objects.in.UserIn;
@@ -19,6 +21,13 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private CbcService cbcService;
+	
+	@Autowired
+	private RequestService requestService;
+	
+	@Autowired
+	private JsonService jsonService;
+	
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	private static final String path = "auth";
 
@@ -39,6 +48,21 @@ public class LoginServiceImpl implements LoginService {
 			log.error(e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public UserIn remoteLogin(String token) {
+		try {
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("token", token);
+			map.add("ipAddress", cbcService.getIpAdress());
+			Object o = requestService.getRequestNoParams(path, map);
+			UserIn objOp = (UserIn) jsonService.objToObj(o, new UserIn());
+			return objOp;
+		} catch (Exception e) {
+			log.debug(e.getMessage());
+			return null;
+		}
 	}
 
 }

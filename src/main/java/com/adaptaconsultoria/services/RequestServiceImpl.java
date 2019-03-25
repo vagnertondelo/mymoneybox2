@@ -75,6 +75,25 @@ public class RequestServiceImpl implements RequestService {
 		return null;
 	}
 	
+	public Object getRequestNoParams(String url, MultiValueMap<String, String> params) {
+		try {
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			RestTemplate restTemplate = new RestTemplate();
+			
+			if (!params.isEmpty())
+				map.addAll(params);
+			
+			ResponseEntity<?> objIn = restTemplate.exchange(cbcService.getGetRequest(url, map), HttpMethod.GET,
+					cbcService.requestHeaders(), Object.class);
+			Optional<Object> obj = Optional.of(objIn.getBody());
+			updateToken(obj);
+			return obj.get();
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private void updateToken(Optional<Object> obj) {
 		try {

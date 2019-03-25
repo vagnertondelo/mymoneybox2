@@ -16,6 +16,8 @@ public class Country {
 	private String isoLanguage;
 	private Integer code;
 	private String regionName;
+	private String taxidLabel;
+	private String taxidMandatory;
 	
 	@JsonProperty("regions")
 	private List<Region> regions;

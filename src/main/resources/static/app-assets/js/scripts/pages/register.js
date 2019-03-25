@@ -2,11 +2,17 @@ const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Entrar no Sistema';
 const cancelButton = 'Cadastrar Outro Usuário';
+var nextButton = false;
 var object;
+
+var addressCityCode = $("#addressCityCode")
+
+var isBrazil = false;
 
 const param = getParamUrl();
 
 $(document).ready(function() {
+	isCpfOrCnpjAndBrazil()
 	console.log(param)
 	stepsValidation();
 	select2Initialize()
@@ -25,9 +31,7 @@ function setSponsorAccountNo() {
 
 function stepsValidation() {
 	var form = $(".steps-validation").show();
-	
     validate(form)
-    
 	$(".steps-validation").steps({
 		headerTag : "h6",
 		bodyTag : "fieldset",
@@ -44,7 +48,7 @@ function stepsValidation() {
 		},
 		onStepChanging: function(e, t, i) {
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
-			return (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
+			return ( form.validate().settings.ignore = ":disabled,:hidden", form.valid(), nextButton  );
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -113,27 +117,35 @@ function saveFireSw(title, text, url, data) {
 		})
 }
 
-function foo() {
-	return function (title, text) { 
-		return new Promise(resolve => {
-			r(title, text, resolve)
-		})
-	}
-}
-
 function validate() {
 	$(formId).validate({
-		onsubmit: true,
-		onkeyup: false,
-		onclick: false,
-		onfocusout: false,
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
 			 },
 			 passwordConfirm : {
                  equalTo : "#password"
-             }
+             },
+             taxid: {
+ 				cpfcnpjandbrazil: true,
+ 				digits: true
+ 			 },
+ 			 email: {
+ 				remote : {
+					url : contextPath + "freely/isemail",
+					type : "GET",
+					data : {
+						email : function() {
+							return $("#email").val()
+						}, 
+					},
+					dataFilter : function(response) {
+						var response = jQuery.parseJSON(response);
+						nextButton = response.isvalid;
+						return nextButton;
+					}
+				}
+ 			 }
 		},
 		messages: {
 			email: {
@@ -203,7 +215,13 @@ function setCountriesSelect2(c) {
 function setOnChangeCountriesEvent(countries) {
 	$('.countries').change(function () {
 		var selectedCountry = getWhichCountryIsSelected();
+		if (selectedCountry == 'Brazil') {
+			isBrazil = true;
+		} else {
+			isBrazil = false;
+		}
 		setSelect2RegionsByCountry(countries, selectedCountry)
+		
 	});
 }
 
@@ -215,6 +233,7 @@ function setSelect2RegionsByCountry(countries, selectedCountry) {
 			sorop(c.regionName)
 			setRegionsSelect2(c.regions)
 			setOnChangeRegionsEvent(c.regions)
+			setTaxidLabel(c.taxidLabel);
 			hasSelectedCountry = true;
 		}
 	})
@@ -222,6 +241,10 @@ function setSelect2RegionsByCountry(countries, selectedCountry) {
 		$('.state').empty()
 		$('.city').empty()
 	}
+}
+
+function setTaxidLabel(text) {
+	$('#taxid-label').text(text)
 }
 
 function sorop(regionName) {
@@ -296,3 +319,32 @@ function ciMapped(ci) {
 		return {id: c.code, text: c.name}
 	});
 }
+
+function isCpfOrCnpjAndBrazil() {
+	jQuery.validator.addMethod("cpfcnpjandbrazil", function (value, element, options) {
+		if (isBrazil) {
+			if ( isCpf(value) || isCnpj(value) ) {
+		    	return true;
+		    } else {
+		    	return false;
+		    }
+		}
+		return true;
+	}, "CPF inválido ou CNPJ inválido!");
+}
+
+
+	
+
+  
+  
+
+
+
+
+
+
+
+
+
+

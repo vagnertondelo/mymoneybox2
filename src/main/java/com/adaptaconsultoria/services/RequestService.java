@@ -7,4 +7,5 @@ import org.springframework.util.MultiValueMap;
 public interface RequestService {
 	public Object postRequest(String url, Object obj, HttpSession session);
 	public Object getRequest(String url, Boolean isLoggedIn, MultiValueMap<String, String> params);
+	public Object getRequestNoParams(String url, MultiValueMap<String, String> params);
 }

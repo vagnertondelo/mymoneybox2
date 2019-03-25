@@ -28,10 +28,11 @@ public class CashBackServiceImpl implements CashBackService {
 	public Object list(Date dateStart, Date dateEnd) {
 		try {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-			String format = "dd-MM-yyyy";
+			String format = "yyyy-MM-dd";
 			map.add("dateStart", DateUtil.dateToString(dateStart, format));
 			map.add("dateEnd", DateUtil.dateToString(dateEnd, format));
 			Object o = requestService.getRequest(url, true, map);
+			
 			CashBackIn objOp = (CashBackIn) jsonService.objToObj(o, new CashBackIn());
 			return objOp.getCashbacks();
 		} catch (Exception e) {
