@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/select/select2.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/wizard.min.css">
 
+<!-- Loaders -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/loaders/loaders.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/core/colors/palette-loader.min.css">
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 	<jsp:include page="../../tiles/template/header.jsp"></jsp:include>
@@ -58,24 +61,23 @@
 											<form:hidden path="doLogin" id="doLogin" value="true" />
 											<form:hidden path="token" id="token" value="${token}" />
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
+											<input name="countryIsoCode" id="countryIsoCode" type="hidden">
 											<h4 class="form-section">
-												<i class="la la-user"></i> Informações Pessoais
+												<i class="la la-user"></i> Informações Gerais
 											</h4>
-											<fieldset>
+											
+											<fieldset class="blockit">
 												<div class="row">
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="name">Nome Completo:<span class="danger">*</span></label>
-															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize required" id="name" name="name" />
-														</div>
+													<div class="col-md-6 form-group">
+														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+															<option value="">Selecione um País</option>
+														</select>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> 
-														<select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
+														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> <select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${categories}" var="category">
-																	<%-- 																	<option <c:if test='${not empty user && credenciado.categoria.id == categoria.id}'> selected </c:if> value="${categoria.id}">${categoria.nome}</option> --%>
 																	<option value="${category.code}">${category.name}</option>
 																</c:forEach>
 															</optgroup>
@@ -85,14 +87,15 @@
 												<div class="row">
 													<div class="col-md-3">
 														<div class="form-group">
+															<label for="name">Nome Completo:<span class="danger">*</span></label>
+															<form:input path="name" maxlength="120" type="text" class="form-control text-capitalize required" id="name" name="name" />
+														</div>
+													</div>
+													<div class="col-md-3">
+														<div class="form-group">
 															<label for="phone">Telefone:</label>
 															<form:input path="phone" type="text" maxlength="120" class="form-control phonebrpr" id="phone" name="phone" />
 														</div>
-													</div>
-													<div class="col-md-3 form-group">
-														<label class="label-control" for="countryIsoCode">País:<span class="danger">*</span></label> <select class="form-control required country" name="countryIsoCode" id="countryIsoCode">
-															<option value="">Não Selecionado</option>
-														</select>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
@@ -106,26 +109,13 @@
 												<i class="la la-location-arrow"></i> Endereço
 											</h4>
 											<fieldset>
+
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="address">Rua:</label> <input type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua">
+															<label for="addressZipcode">CEP:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
 														</div>
 													</div>
-													<div class="col-md-6">
-														<div class="form-group">
-															<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control text-capitalize" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
-														</div>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
-															<option value="">Selecione um País</option>
-														</select>
-													</div>
-
 													<div class="col-md-6 form-group">
 														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
@@ -138,10 +128,19 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="addressZipcode">Código de Área:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
+															<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control text-capitalize" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
 														</div>
 													</div>
 												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group">
+															<label for="address">Rua:</label> <input type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua">
+														</div>
+													</div>
+												</div>
+
 											</fieldset>
 											<h4 class="form-section">
 												<i class="ft-user-plus"></i> Conta
@@ -168,6 +167,7 @@
 													</div>
 												</div>
 											</fieldset>
+											
 											<h4 class="form-section">
 												<i class="ft-percent"></i> Regras
 											</h4>
@@ -177,7 +177,7 @@
 													<div class="col-md-3">
 														<div class="form-group">
 															<label for="description">Descrição:<span class="danger">*</span></label> <input type="text" class="form-control text-capitalize" id="description" name="description" />
-															<div id="description-error" class="danger hidden">Este campo é obrigatório.</div>
+															<div id="description-error" class="help-block hidden">Este campo é obrigatório.</div>
 														</div>
 													</div>
 													<div class="col-md-3 form-group">
@@ -190,13 +190,13 @@
 																</c:forEach>
 															</optgroup>
 														</select>
+														<div id="currency-error" class="help-block hidden">Este campo é obrigatório.</div>
 													</div>
 													<div class="col-md-6">
 														<fieldset>
 															<label for="pcCashback">Percentual %:<span class="danger">*</span></label>
 															<div class="input-group">
 																<input type="number" class="form-control" id="pcCashback" name="pcCashback" aria-describedby="button-addon2" min="0">
-
 																<div class="input-group-append">
 																	<button class="btn btn-primary btn-glow" type="button" id="add-pccashback">
 																		<i class="step-icon ft-plus"></i>Adicionar
@@ -209,7 +209,7 @@
 																	</button>
 																</div>
 															</div>
-															<div class="danger hidden" id="pcCashback-error">Campo não preenchido ou maior que 99</div>
+															<div class="help-block hidden" id="pcCashback-error">Campo não preenchido ou maior que 99</div>
 														</fieldset>
 													</div>
 													<div class="col-md-12 table-responsive">
@@ -250,6 +250,9 @@
 	<jsp:include page="../../tiles/template/datatable.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

@@ -10,6 +10,8 @@ var removePccashback = '#remove-pccashback';
 var addPccashback = '#add-pccashback';
 var pccashbackId = '#pccashback-id';
 
+var isBrazil = false;
+
 $(document).ready(function() {
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
@@ -19,9 +21,10 @@ $(document).ready(function() {
 	onClickClearForm()
 	removePercentageClick()
 	openTable()
+	changeAddressZipcode()
 });
 
-//percentage begin ////////////////////////////////////////
+//percentage begin //////////////////////
 function openTable() {
 	$.ajax({
 		url : contextPath + "accredited/rules",
@@ -47,7 +50,7 @@ function addPercentageClick() {
 function addPercentage() {
 	var id = $(addPccashback).val();
 	
-	if ( validatePercentageFields()) {
+	if ( validatePercentageFields() ) {
 		if (rowIndex === null || rowIndex === undefined || rowIndex === '') {
 			table.row.add( {
 		        "id": '',
@@ -68,44 +71,6 @@ function addPercentage() {
 		clearPercentageFields()
 	}
 	return 0;
-}
-
-function validatePercentageFields() {
-	var isValid = true;
-	if ( $('#description').val() === '' || $('#description').val() === null || $('#description').val() === undefined) {
-		$("#description-error").removeClass('hidden');
-		$("#description-error").parent().addClass('error');
-		return false;
-	}
-	if ( $('#pcCashback').val() > 99 || $('#pcCashback').val() === '' || $('#pcCashback').val() === null || $('#pcCashback').val() === undefined) {
-		$("#pcCashback-error").removeClass('hidden');
-		return false;
-	}
-	$("#description-error").parent().removeClass('error');
-	$("#description-error").addClass("hidden");
-	$("#pcCashback-error").addClass("hidden");
-	return isValid;
-}
-
-function tableItself(obj) {
-    console.log(obj)
-    table = $(tableId)
-        .DataTable({
-            data: obj,
-            language: getLanguage(),
-            columns: getColumns(),
-            columnDefs: getColumnDefs(),
-            initComplete: function(settings, json) {
-                selectTableConfig(this.DataTable());
-            },
-            dom: 'Bfrtip',
-            paging	: false,
-            searching: false,
-            select: true,
-            order: [
-                [1, 'asc']
-            ]
-        });
 }
 
 function removePercentageClick() {
@@ -136,33 +101,29 @@ function savePercentage(id, obj) {
 	setTimeout(function(){ print(obj) }, 1000)
 }
 
-function selectTableConfig(table) {
-	$('#' +table.tables().nodes().to$().attr('id')+ ' tbody').on('dblclick', 'tr', function () {
-		
-		table.rows(this).select()
-		
-		rowIndex = table.row( this ).index();
-		
-		var obj = table.row({
-			selected : true
-		}).data();
-		
-		$(clearPccashbackForm).removeClass("hidden")
-		
-		$(removePccashback).removeClass("hidden")
-		
-		$(addPccashback).html("Editar");
-		
-		tableClick(obj) 
-	});
-}
-
-function tableClick(data) {
-	$(pccashbackId).val(data.id)
-	$("#description").val(data.description)
-	$("#currency").val(data.currency)
-	$("#pcCashback").val(data.pcCashback)
-	return 0;
+function validatePercentageFields() {
+	var isValid = true;
+	
+	$("#description-error").addClass('hidden');
+	$("#pcCashback-error").addClass('hidden');
+	$("#currency-error").addClass('hidden');
+	
+	if ( $('#description').val() === '' || $('#description').val() === null || $('#description').val() === undefined) {
+		$("#description-error").removeClass('hidden');
+		isValid = false;
+	}
+	
+	if ( $('#pcCashback').val() > 99 || $('#pcCashback').val() === '' || $('#pcCashback').val() === null || $('#pcCashback').val() === undefined) {
+		$("#pcCashback-error").removeClass('hidden');
+		isValid = false;
+	}
+	
+	if ( $('#currency').val() === '' || $('#currency').val() === null || $('#currency').val() === undefined) {
+		$("#currency-error").removeClass('hidden');
+		isValid = false;
+	}
+	
+	return isValid;
 }
 
 function onClickClearForm() {
@@ -177,7 +138,7 @@ function clearPercentageFields() {
 	$(pccashbackId).val("")
 	$("#description").val("")
 	$("#pcCashback").val("")
-	$("#currency").val("")
+	$('#currency').val('').trigger('change');
 	table.rows('.selected').deselect();
 }
 
@@ -200,7 +161,129 @@ function getPercentages() {
 	} );
 	return credenciadoPercentualDoacaos;
 }
-//percentage end ////////////////////////////////////////
+//percentage end ////////////////////////
+
+//cep begin ////////////////////////
+function changeAddressZipcode() {
+	$('#addressZipcode').change(() => {
+		if (isBrazil) {
+			getByCep( $('#addressZipcode').val() )
+		}
+	})
+}
+
+function setSelect2ValuesAutomaticallyByZipCode(obj) {
+	var regionSelect = select2SearchAutomatically(regionSelect2, obj.estado_info.nome)
+	
+	regionSelect.then((r) => {
+		select2SearchAutomatically(citySelect2, obj.cidade)
+		setAdressByCep(obj)
+	})
+}
+
+function setAdressByCep(obj) {
+	let addressDistrict = $('#addressDistrict')
+	if (obj.bairro !== '') {
+		addressDistrict.val(obj.bairro)
+	}
+}
+
+function getByCep(zipCode) {
+	var cep = new Cep();
+	cep.getCepData( zipCode ).then(r => {
+		setSelect2ValuesAutomaticallyByZipCode(r)
+	})
+}
+
+function select2SearchAutomatically($el, term) {
+	return new Promise((res, reg) => {
+		$el.select2('open');
+		var $search = $el.data('select2').dropdown.$search || $el.data('select2').selection.$search;
+		$search.val(term);
+		$search.trigger('input');
+		
+		setTimeout(function() { 
+			$('.select2-results__option').trigger("mouseup"); 
+			res(true)
+		}, 10);
+	});
+}
+
+//percentage table begin////////////////////////
+function tableItself(obj) {
+    console.log(obj)
+    table = $(tableId)
+        .DataTable({
+            data: obj,
+            language: getLanguage(),
+            columns: getColumns(),
+            columnDefs: getColumnDefs(),
+            initComplete: function(settings, json) {
+                selectTableConfig(this.DataTable());
+            },
+            dom: 'Bfrtip',
+            paging	: false,
+            searching: false,
+            select: true,
+            order: [
+                [1, 'asc']
+            ]
+        });
+}
+
+function selectTableConfig(table) {
+	$('#' +table.tables().nodes().to$().attr('id')+ ' tbody').on('dblclick', 'tr', function () {
+		table.rows(this).select()
+		rowIndex = table.row( this ).index();
+		
+		var obj = table.row({
+			selected : true
+		}).data();
+		
+		$(clearPccashbackForm).removeClass("hidden")
+		
+		$(removePccashback).removeClass("hidden")
+		
+		$(addPccashback).html("Editar");
+		
+		tableClick(obj) 
+	});
+}
+
+function tableClick(data) {
+	$(pccashbackId).val(data.id)
+	$("#description").val(data.description)
+	$("#currency").val(data.currency).trigger('change');
+	$("#pcCashback").val(data.pcCashback)
+	return 0;
+}
+
+function getColumnDefs() {
+	return [{
+        targets: [0],
+        visible: false
+    }, {
+        className: "dt-center",
+        "targets": []
+    }];
+}
+
+function getColumns() {
+	 return [ { 
+		 		data: "id" 
+		 	},{ 
+		 		title: "Descrição",
+		 		data: "description" 
+		 	},{ 
+		 		title: "Moeda",
+		 		data: "currency" 
+		 	}, { 
+		 		title: "Percentual %",
+		 		data: "pcCashback" 
+		 	}
+		  ];
+}
+//percentage table end////////////////////////
 
 function setSponsorAccountNo() {
 	try {
@@ -214,6 +297,8 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
+	$('#countryIsoCode').val( $('#addressCountryIsoCode').val() )
+	
 	var obj = $(formId).serializeObject()
 	var obj2 = getPercentages();
 	var object = $.extend(obj, {rules: obj2});
@@ -270,53 +355,51 @@ function saveFireSw(title, text, url, data) {
 		})
 }
 
-function getColumnDefs() {
-	return [{
-        targets: [0],
-        visible: false
-    }, {
-        className: "dt-center",
-        "targets": []
-    }];
-}
-
-function getColumns() {
-	 return [ { 
-		 		data: "id" 
-		 	},{ 
-		 		title: "Descrição",
-		 		data: "description" 
-		 	},{ 
-		 		title: "Moeda",
-		 		data: "currency" 
-		 	}, { 
-		 		title: "Percentual %",
-		 		data: "pcCashback" 
-		 	}
-		  ];
-}
-
-function getLocationsToFillUpSelect2Inputs() {
-	$.ajax({
-		url : contextPath + "freely/locations",
-		type: 'POST',
-	}).done(function(data) {
-		updateToken(data.token);
-		var countries = data.countries;
-		setCountriesSelect2(countries)
-		setOnChangeCountriesEvent(countries)
-	});
-}
-
 function updateToken(token) {
 	$("#token").val(token)
 }
 
 function select2Initialize() {
-	$('.countries').select2()
-	$('.state').select2();
-	$('.city').select2();
+	countrySelect2 = $('.countries').select2();
+	regionSelect2 = $('.state').select2();
+	citySelect2 = $('.city').select2();
+	
 	$('.codeCategory').select2();
+	$('#currency').select2();
+}
+
+//select countries begin ////////////////////////
+function getLocationsToFillUpSelect2Inputs() {
+	let getCountriesPromise = getCountries();
+	getCountriesPromise.then(c => {
+		if (c) {
+			let countries = c.countries;
+			setCountriesSelect2(countries)
+			setOnChangeCountriesEvent(countries)
+		} else {
+			getLocationsToFillUpSelect2Inputs()
+		}
+	})
+}
+
+function getCountries() {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			url : contextPath + "freely/locations",
+			type: 'POST',
+			beforeSend: function() {
+				block('.blockit')
+		    },
+		}).done(function(data) {
+			if (data != undefined && data != '') {
+				unblock('.blockit')
+				resolve(data);
+			}
+			setTimeout(function() {
+				resolve(false);
+			}, 5000);
+		});
+	});
 }
 
 function setCountriesSelect2(c) {
@@ -332,6 +415,11 @@ function setCountriesSelect2(c) {
 function setOnChangeCountriesEvent(countries) {
 	$('.countries').change(function () {
 		var selectedCountry = getWhichCountryIsSelected();
+		if (selectedCountry == 'Brazil') {
+			isBrazil = true;
+		} else {
+			isBrazil = false;
+		}
 		setSelect2RegionsByCountry(countries, selectedCountry)
 	});
 }
@@ -353,14 +441,15 @@ function setSelect2RegionsByCountry(countries, selectedCountry) {
 	}
 }
 
-function sorop(regionName) {
-	$('.sorop').html(regionName)
-}
-
 function setRegionsSelect2(regions){
 	$('.state').select2({
 		data: rMapped(regions)
 	})
+}
+//select countries end ////////////////////////
+
+function sorop(regionName) {
+	$('.sorop').html(regionName)
 }
 
 function setOnChangeRegionsEvent(regions) {

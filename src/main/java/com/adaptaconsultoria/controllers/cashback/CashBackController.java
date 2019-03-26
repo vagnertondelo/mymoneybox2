@@ -29,9 +29,9 @@ public class CashBackController {
 	@GetMapping(value = "list")
 	public ModelAndView list(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
-		pageUtil.setPageTitle("Extrato de Compras");
-		pageUtil.setTitle("Extrato de Compras");
-		pageUtil.setSubTitle("Extrato de Compras");
+		pageUtil.setPageTitle("Extrato Cashback");
+		pageUtil.setTitle("Extrato Cashback");
+		pageUtil.setSubTitle("Extrato Cashback");
 		pageUtil.setTableId("cashback-table");
 		pageUtil.setJs("cashback-list.js");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());

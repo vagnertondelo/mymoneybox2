@@ -2,10 +2,13 @@ const saveUrl = 'save';
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Entrar no Sistema';
 const cancelButton = 'Cadastrar Outro Usuário';
-var nextButton = false;
 var object;
+var countrySelect2;
+var regionSelect2;
+var citySelect2;
+const addressCityCode = $("#addressCityCode")
 
-var addressCityCode = $("#addressCityCode")
+var isReturning = false;
 
 var isBrazil = false;
 
@@ -18,8 +21,28 @@ $(document).ready(function() {
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
 	setSponsorAccountNo()
+	changeAddressZipcode()
 	mask()
+	onChangeRemoveErrorManually()
 });
+
+function changeAddressZipcode() {
+	$('#addressZipcode').change(() => {
+		if (isBrazil) {
+			getCepData()
+		}
+	})
+}
+
+function onChangeRemoveErrorManually() {
+	$("#email, #login").change(() => {
+		if (isReturning) {
+			isReturning = false;
+			$(formId).validate().showErrors({email: null})
+			$(formId).validate().showErrors({login: null})
+		}
+	})
+}
 
 function setSponsorAccountNo() {
 	try {
@@ -48,7 +71,8 @@ function stepsValidation() {
 		},
 		onStepChanging: function(e, t, i) {
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
-			return ( form.validate().settings.ignore = ":disabled,:hidden", form.valid(), nextButton  );
+//			return true;
+			return (form.validate().settings.ignore = ":disabled,:hidden", form.valid());
 		},
 		onFinishing : function(e, i) {
 			return form.validate().settings.ignore = ":disabled", form.valid()
@@ -63,7 +87,7 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	
+	$('#countryIsoCode').val($('#addressCountryIsoCode').val())
 	var data = JSON.stringify($(formId).serializeObject());
 	var obj = saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
 }
@@ -76,7 +100,6 @@ function saveFireSw(title, text, url, data) {
 		  confirmButtonText: 'Enviar',
 		  buttonsStyling: false,
 		  preConfirm: function() {
-			  
 			  return fetch(url, {
 				  method: 'POST',
 				  headers: {
@@ -95,7 +118,6 @@ function saveFireSw(title, text, url, data) {
 		  }
 	
 		}).then( function(obj) {
-			
 			return new Promise(resolve => {
 				if (obj.value != undefined) {
 					obj = obj.value;
@@ -103,7 +125,7 @@ function saveFireSw(title, text, url, data) {
 					if (!obj.hasError) {
 						successAlert(obj, title, text, resolve, confirmButton, cancelButton)
 					} else {
-						errorSw(obj.error.error)
+						errorSwRegister(obj.error.error, text, obj)
 					}
 				} 
 			})
@@ -117,8 +139,40 @@ function saveFireSw(title, text, url, data) {
 		})
 }
 
+function errorSwRegister(title, text, obj) {
+	Swal.fire({
+		  type: 'error',
+		  html: HtmlSw(title, text),
+		  showCloseButton: true,
+		  showCancelButton: true,
+		  focusConfirm: false,
+		  confirmButtonText:
+		    '<i class="fa fa-thumbs-up"></i> Tentar Novamente!',
+		  confirmButtonAriaLabel: 'Thumbs up, great!',
+		  cancelButtonText:
+		    '<i class="fa fa-thumbs-down"></i> Sair para Tela de Login',
+		  cancelButtonAriaLabel: 'Thumbs down',
+	}).then((result) => {
+		if (result) {
+			isReturning = true;
+			if (title.indexOf('e-mail') != -1) {
+				$(".steps-validation").steps("setStep", 0);
+				$(formId).validate().showErrors({email: 'Email já esta sendo utilizado no sistema'})
+			} else {
+				$(formId).validate().showErrors({login: 'Login já esta sendo utilizado no sistema'})
+			}
+		} else {
+			
+		}
+	})
+}
+
 function validate() {
 	$(formId).validate({
+		onsubmit: true,
+		onkeyup: false,
+		onclick: false,
+		onfocusout: false,
 		rules : {
 			 countryIsoCode : {
 				valueNotEquals: true
@@ -127,25 +181,9 @@ function validate() {
                  equalTo : "#password"
              },
              taxid: {
- 				cpfcnpjandbrazil: true,
- 				digits: true
+            	required: false,
+ 				cpfcnpjandbrazil: true
  			 },
- 			 email: {
- 				remote : {
-					url : contextPath + "freely/isemail",
-					type : "GET",
-					data : {
-						email : function() {
-							return $("#email").val()
-						}, 
-					},
-					dataFilter : function(response) {
-						var response = jQuery.parseJSON(response);
-						nextButton = response.isvalid;
-						return nextButton;
-					}
-				}
- 			 }
 		},
 		messages: {
 			email: {
@@ -197,9 +235,9 @@ function updateToken(token) {
 }
 
 function select2Initialize() {
-	$('.countries').select2()
-	$('.state').select2();
-	$('.city').select2();
+	countrySelect2 = $('.countries').select2();
+	regionSelect2 = $('.state').select2();
+	citySelect2 = $('.city').select2();
 }
 
 function setCountriesSelect2(c) {
@@ -322,7 +360,7 @@ function ciMapped(ci) {
 
 function isCpfOrCnpjAndBrazil() {
 	jQuery.validator.addMethod("cpfcnpjandbrazil", function (value, element, options) {
-		if (isBrazil) {
+		if (isBrazil && value !== '') {
 			if ( isCpf(value) || isCnpj(value) ) {
 		    	return true;
 		    } else {
@@ -333,15 +371,57 @@ function isCpfOrCnpjAndBrazil() {
 	}, "CPF inválido ou CNPJ inválido!");
 }
 
+//outter services
+function getCepData() {
+	let zipCode = $('#addressZipcode').val().replace(/\D/g,'');
+	try {
+		$.ajax({
+			type : "GET",
+			url : "https://api.postmon.com.br/v1/cep/" + zipCode,
+			success : function(zipCodeObj) {
+				setSelect2ValuesAutomaticallyByZipCode(zipCodeObj)
+			},
+			error: function (request, status, error) {
+		        console.log(request)
+		    }
+		})
+    }
+	catch(err) {
+		console.log(err)
+		return 0;
+	}
+	return 0;
+}
 
+function setSelect2ValuesAutomaticallyByZipCode(zipCode) {
+	var regionSelect = select2SearchAutomatically(regionSelect2, zipCode.estado_info.nome)
 	
+	regionSelect.then((r) => {
+		select2SearchAutomatically(citySelect2, zipCode.cidade)
+		setAdressByCep(zipCode)
+	})
+}
 
-  
-  
+function setAdressByCep(zipCode) {
+	let addressDistrict = $('#addressDistrict')
+	if (zipCode.bairro !== '') {
+		addressDistrict.val(zipCode.bairro)
+	}
+}
 
-
-
-
+function select2SearchAutomatically($el, term) {
+	return new Promise((res, reg) => {
+		$el.select2('open');
+		var $search = $el.data('select2').dropdown.$search || $el.data('select2').selection.$search;
+		$search.val(term);
+		$search.trigger('input');
+		
+		setTimeout(function() { 
+			$('.select2-results__option').trigger("mouseup"); 
+			res(true)
+		}, 10);
+	});
+}
 
 
 

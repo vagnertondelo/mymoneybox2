@@ -43,34 +43,38 @@
 											<fieldset>
 												<div class="row">
 													<div class="col-md-12 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries required" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:</label> 
+														<select class="form-control countries required" name="addressCountryIsoCode" id="addressCountryIsoCode">
 															<option value="">Selecione um País</option>
 														</select>
 													</div>
 												</div>
-
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="name">Nome Completo:<span class="danger">*</span></label> <input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
+															<label for="name">Nome Completo:<span class="danger">*</span></label> 
+															<input type="text" class="form-control required text-capitalize" id="name" name="name" placeholder="Nome Completo">
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="taxid" id="taxid-label">Número do Documento:</label> <input type="text" class="form-control" id="taxid" name="taxid">
+															<label for="taxid" id="taxid-label">Número do Documento:</label> 
+															<input type="text" class="form-control" id="taxid" name="taxid">
 														</div>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="email">Email:<span class="danger">*</span></label> <input type="email" class="form-control required" id="email" name="email" placeholder="Email">
+															<label for="email">Email:<span class="danger">*</span></label> 
+															<input type="email" class="form-control required" id="email" name="email" placeholder="Email">
 														</div>
 													</div>
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="phone">Telefone:</label> <input type="text" class="form-control phonebrpr" id="phone" name="phone" placeholder="Telefone">
+															<label for="phone">Telefone:</label>  
+															<input type="text" class="form-control phonebrpr" id="phone" name="phone" placeholder="Telefone">
 														</div>
 													</div>
 												</div>
@@ -81,11 +85,13 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="addressZipcode">CEP:</label> <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
+															<label for="addressZipcode">CEP:</label> 
+															<input type="number" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
 														</div>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
+														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> 
+														<select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
 													</div>
 												</div>
@@ -96,14 +102,16 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
+															<label for="addressDistrict">Bairro:</label> 
+															<input type="text" class="form-control" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
 														</div>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="address">Rua:</label> <input type="text" class="form-control" id="address" name="address" placeholder="Rua">
+															<label for="address">Rua:</label> 
+															<input type="text" class="form-control" id="address" name="address" placeholder="Rua">
 														</div>
 													</div>
 												</div>
@@ -114,23 +122,27 @@
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="login">Login:</label> <input type="text" class="form-control" id="login" name="login" placeholder="Login">
+															<label for="login">Login:</label> 
+															<input type="text" class="form-control" id="login" name="login" placeholder="Login">
 														</div>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="password">Senha:</label> <input type="password" class="form-control" id="password" name="password" placeholder="Senha">
+															<label for="password">Senha:</label> 
+															<input type="password" class="form-control" id="password" name="password" placeholder="Senha">
 														</div>
 													</div>
 
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="passwordConfirm">Confirme sua Senha:</label> <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua Senha">
+															<label for="passwordConfirm">Confirme sua Senha:</label> 
+															<input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirme sua Senha">
 														</div>
 													</div>
 												</div>
+												<input class="hidden" name="countryIsoCode" id="countryIsoCode">
 											</fieldset>
 										</form>
 									</div>
@@ -149,6 +161,9 @@
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/intlTelInput/intlTelInput.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/steps-helpers.js"></script>
+	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
 			<li class="nav-item"><a id="partner" href="${pageContext.request.contextPath}/partner/register"><i class="ft-users"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Parceiro</span></a>
 			<li class="nav-item"><a id="sale" href="${pageContext.request.contextPath}/sale/list"><i class="la la-cart-plus"></i><span class="menu-title" data-i18n="nav.dash.main">Registrar Compra</span></a>
 			<li class="nav-item"><a id="entity" href="${pageContext.request.contextPath}/entity/register"><i class="la la-institution"></i><span class="menu-title" data-i18n="nav.dash.main">Entidade</span></a>
-			<li class="nav-item"><a id="cashback" href="${pageContext.request.contextPath}/cashback/list"><i class="ft-clipboard"></i><span class="menu-title" data-i18n="nav.dash.main">Extrato de Compras</span></a>
+			<li class="nav-item"><a id="cashback" href="${pageContext.request.contextPath}/cashback/list"><i class="ft-clipboard"></i><span class="menu-title" data-i18n="nav.dash.main">Extrato Cashback</span></a>
 			
 <%-- 			<sec:authorize access="hasRole('ADMINISTRADOR')"> --%>
 <!-- 				<li class="navigation-header"><span data-i18n="nav.category.admin-panels">Painel do Administrador</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Admin Panels"></i></li> -->
