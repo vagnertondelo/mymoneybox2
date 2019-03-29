@@ -74,23 +74,12 @@ public class AccreditedController {
 		pageUtil.setTableId("accreditedpercentagedonation-table");
 		pageUtil.setAttr("mi", "accredited");
 		Accredited obj = new Accredited();
-
-//		if (id != null) {
-//			pageUtil.setSubTitle("Editar");
-//			try {
-//				obj = credenciadoDao.findOne(id);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			pageUtil.setSubTitle("Adicionar");
-//		}
 		
 		pageUtil.setAttr("accredited", obj);
 		pageUtil.setModelAttribute("accredited");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
 		// last call 
- 		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
+ 		pageUtil.setAttr("categories", categoryService.getSellerCategoryByCompany(session));
 		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
 	}

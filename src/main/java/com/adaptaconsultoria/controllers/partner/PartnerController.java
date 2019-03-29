@@ -83,7 +83,7 @@ public class PartnerController {
 		pageUtil.setAttr("partner", obj);
 		pageUtil.setModelAttribute("partner");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
+		pageUtil.setAttr("categories", categoryService.getPartnerCategoryByCompany(session));
 		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
 	}

@@ -136,10 +136,11 @@ public class CbcServiceImpl implements CbcService {
 	public MultiValueMap<String, String> getBasicPrivateServiceRequest() {
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 		try {
-			map.add("token", tokenService.getToken());
+			map.add("token", Optional.of(tokenService.getToken()).get());
 			map.add("ipAddress", getIpAdress());
 		} catch (Exception e) {
 			log.error(e.getMessage());
+			throw e;
 		}
 		return map;
 	}
@@ -201,6 +202,7 @@ public class CbcServiceImpl implements CbcService {
 			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getPostRequestHeaders(params), Token.class);
 			Optional<Token> tokenOp = Optional.of(obj.getBody());
 			token = tokenOp.get();
+			token.setIpAddress(getIpAdress());
 			return token;
 		} catch (Exception e) {
 			log.error(e.getMessage());

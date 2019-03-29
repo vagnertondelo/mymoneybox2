@@ -45,8 +45,8 @@ function successAlert(obj, title, text, resolve, confirmButtonText, cancelButton
 		  showCloseButton: true,
 		  showCancelButton: true,
 		  focusConfirm: true,
-		  confirmButtonText: '<i class="ft-fast-forward"></i> ' +confirmButtonText+ '',
-		  cancelButtonText: ' <i class="ft-rotate-ccw"></i> ' +cancelButtonText+ ' ',
+		  confirmButtonText: confirmButtonText,
+		  cancelButtonText:  cancelButtonText,
 		  confirmButtonAriaLabel: 'Thumbs up, great!',
 	}).then((result) => {
 		if (result.dismiss === undefined) {

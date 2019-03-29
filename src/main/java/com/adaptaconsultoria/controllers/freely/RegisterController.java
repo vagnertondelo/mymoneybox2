@@ -5,8 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import com.adaptaconsultoria.components.CbcAuthenticationProvider;
 import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.services.CbcService;
 import com.adaptaconsultoria.services.CountryService;
@@ -35,9 +31,6 @@ public class RegisterController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private CbcAuthenticationProvider cbcAuthenticationProvider;
 
 	@GetMapping(path = "register")
 	public ModelAndView register(HttpServletRequest request, HttpSession session) {
@@ -59,8 +52,8 @@ public class RegisterController {
 
 	@PostMapping(path = "locations", produces = "application/json")
 	@ResponseBody
-	public Object getLocations() {
-		return countryService.getLocationByCompany();
+	public ResponseEntity<?> getLocations() {
+		return ResponseEntity.ok(countryService.getLocationByCompany());
 	}
 
 	@GetMapping(value = "islogin")
@@ -72,12 +65,4 @@ public class RegisterController {
 	public ResponseEntity<?> isEmail(String email, HttpSession session) {
 		return ResponseEntity.ok(userService.isEmail(email, session));
 	}
-
-	@GetMapping(value = "remoteauthenticate")
-	public RedirectView remoteAuthenticate(String token, HttpSession session, HttpServletRequest request) {
-		SecurityContextHolder.getContext().setAuthentication(
-				cbcAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(cbcService.getAppToken(), token)));
-		return new RedirectView(request.getContextPath() + "/dashboard");
-	}
-
 }

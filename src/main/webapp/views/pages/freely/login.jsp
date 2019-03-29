@@ -54,7 +54,7 @@
 													<fieldset></fieldset>
 												</div>
 												<div class="col-md-6 col-12 float-sm-left text-center text-sm-right">
-													<a href="#" class="card-link">Esqueci a minha senha?</a>
+													<a href="${pageContext.request.contextPath}/freely/recoverypassword" class="card-link">Esqueci a minha senha?</a>
 												</div>
 											</div>
 											<button type="submit" class="btn btn-outline-info btn-block">

@@ -28,11 +28,12 @@ public class CategoryServiceImpl implements CategoryService {
 	private TokenService tokenService;
 	
 	private static final Logger log = LoggerFactory.getLogger(CategoryServiceImpl.class);
-	private static final String path = "seller/category";
+	private static final String pathseller = "seller/category";
+	private static final String pathpartner = "partner/category";
 	
 	@SuppressWarnings("unused")
 	@Override
-	public Object getCategoryByCompany(HttpSession session) {
+	public Object getSellerCategoryByCompany(HttpSession session) {
 		try {
 			
 			MultiValueMap<String, String> map = null;
@@ -45,7 +46,34 @@ public class CategoryServiceImpl implements CategoryService {
 			} catch (Exception e) {
 				map = cbcService.getBasicPublicServiceRequest();
 			}
-			ResponseEntity<CategoriesIn> obj = restTemplate.exchange(cbcService.getGetRequest(path, map), HttpMethod.GET, cbcService.requestHeaders(), CategoriesIn.class);
+			ResponseEntity<CategoriesIn> obj = restTemplate.exchange(cbcService.getGetRequest(pathseller, map), HttpMethod.GET, cbcService.requestHeaders(), CategoriesIn.class);
+			Optional<CategoriesIn> objOp = Optional.of(obj.getBody());
+			
+			tokenService.updateToken(objOp.get().getToken());
+			
+			return objOp.get().getCategories();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
+	
+	@SuppressWarnings("unused")
+	@Override
+	public Object getPartnerCategoryByCompany(HttpSession session) {
+		try {
+			
+			MultiValueMap<String, String> map = null;
+			RestTemplate restTemplate = new RestTemplate();
+			UserIn userIn = new UserIn();
+			try {
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				userIn = (UserIn) auth.getPrincipal();
+				map = cbcService.getBasicPrivateServiceRequest();
+			} catch (Exception e) {
+				map = cbcService.getBasicPublicServiceRequest();
+			}
+			ResponseEntity<CategoriesIn> obj = restTemplate.exchange(cbcService.getGetRequest(pathpartner, map), HttpMethod.GET, cbcService.requestHeaders(), CategoriesIn.class);
 			Optional<CategoriesIn> objOp = Optional.of(obj.getBody());
 			
 			tokenService.updateToken(objOp.get().getToken());

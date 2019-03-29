@@ -1,0 +1,14 @@
+.swal2-container {
+    display: flex !important;
+    position: fixed !important;
+    z-index: 1060 !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: -14px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 6.625em !important;
+    justify-content: center !important;
+    overflow-x: hidden !important;
+}

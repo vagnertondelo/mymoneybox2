@@ -65,7 +65,6 @@
 											<h4 class="form-section">
 												<i class="la la-user"></i> Informações Gerais
 											</h4>
-											
 											<fieldset class="blockit">
 												<div class="row">
 													<div class="col-md-6 form-group">

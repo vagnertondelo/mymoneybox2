@@ -167,7 +167,7 @@ function getLocationsToFillUpSelect2Inputs() {
 		type: 'POST',
 	}).done(function(data) {
 		updateToken(data.token);
-		var countries = data.countries;
+		var countries = data;
 		setCountriesSelect2(countries)
 		setOnChangeCountriesEvent(countries)
 	});
@@ -284,6 +284,8 @@ function select2Initialize() {
 	$('.countries').select2()
 	$('.state').select2();
 	$('.city').select2();
+	$('#codeCategory').select2();
+
 }
 
 function updateToken(token) {

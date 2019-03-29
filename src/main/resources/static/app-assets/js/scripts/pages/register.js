@@ -223,8 +223,7 @@ function getLocationsToFillUpSelect2Inputs() {
 		if (data === '') {
 			errorGenericSw("Erro", "Países não cadastrados")
 		}
-		updateToken(data.token);
-		var countries = data.countries;
+		var countries = data;
 		setCountriesSelect2(countries)
 		setOnChangeCountriesEvent(countries)
 	});
@@ -380,6 +379,7 @@ function getCepData() {
 			url : "https://api.postmon.com.br/v1/cep/" + zipCode,
 			success : function(zipCodeObj) {
 				setSelect2ValuesAutomaticallyByZipCode(zipCodeObj)
+				setAddressesFields(zipCodeObj)
 			},
 			error: function (request, status, error) {
 		        console.log(request)
@@ -391,6 +391,11 @@ function getCepData() {
 		return 0;
 	}
 	return 0;
+}
+
+function setAddressesFields(r) {
+	$('#addressDistrictr').val( r.bairro )
+	$('#address').val( r.logradouro )
 }
 
 function setSelect2ValuesAutomaticallyByZipCode(zipCode) {

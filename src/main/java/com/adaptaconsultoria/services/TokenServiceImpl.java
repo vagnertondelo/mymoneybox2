@@ -14,15 +14,18 @@ public class TokenServiceImpl implements TokenService {
 
 	@Override
 	public void updateToken(String token) {
-		
-		UserIn userIn = new UserIn();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		userIn = (UserIn) auth.getPrincipal();
-		userIn.setToken(token);
-		
-		Authentication newAuth = new UsernamePasswordAuthenticationToken(userIn, auth.getCredentials(),
-				new ArrayList<>());
-		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		try {
+			UserIn userIn = new UserIn();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			userIn = (UserIn) auth.getPrincipal();
+			userIn.setToken(token);
+			
+			Authentication newAuth = new UsernamePasswordAuthenticationToken(userIn, auth.getCredentials(),
+					new ArrayList<>());
+			SecurityContextHolder.getContext().setAuthentication(newAuth);
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	@Override

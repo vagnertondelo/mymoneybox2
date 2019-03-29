@@ -14,9 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.adaptaconsultoria.models.Entity;
 import com.adaptaconsultoria.objects.in.EntityToPersistIn;
-import com.adaptaconsultoria.services.CategoryService;
 import com.adaptaconsultoria.services.CbcService;
-import com.adaptaconsultoria.services.CurrencyService;
 import com.adaptaconsultoria.services.EntityService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
 
@@ -28,13 +26,8 @@ public class EntityController {
 	private CbcService cbcService;
 	
 	@Autowired
-	private CategoryService categoryService;
-	
-	@Autowired
 	private EntityService entityService;
 	
-	@Autowired
-	private CurrencyService currencyService;
 	
 	@GetMapping(value = "list")
 	public ModelAndView list(HttpServletRequest request, HttpSession session) {
@@ -58,11 +51,6 @@ public class EntityController {
 		return ResponseEntity.ok( entityService.save(obj, session) );
 	}
 	
-//	@GetMapping(value = "rules")
-//	public ResponseEntity<?> getRules(HttpServletRequest request, String id) {
-//		return ResponseEntity.ok( "" );
-//	}
-	
 	@GetMapping(value = "register")
 	public ModelAndView entity(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
@@ -76,23 +64,9 @@ public class EntityController {
 		pageUtil.setAttr("mi", "entity");
 		Entity obj = new Entity();
 
-//		if (id != null) {
-//			pageUtil.setSubTitle("Editar");
-//			try {
-//				obj = credenciadoDao.findOne(id);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			pageUtil.setSubTitle("Adicionar");
-//		}
-		
 		pageUtil.setAttr("entity", obj);
 		pageUtil.setModelAttribute("entity");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		// last call 
-		pageUtil.setAttr("categories", categoryService.getCategoryByCompany(session));
-		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
 	}
 }

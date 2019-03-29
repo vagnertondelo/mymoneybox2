@@ -191,8 +191,14 @@ function setAdressByCep(obj) {
 function getByCep(zipCode) {
 	var cep = new Cep();
 	cep.getCepData( zipCode ).then(r => {
+		setAddressesFields(r)
 		setSelect2ValuesAutomaticallyByZipCode(r)
 	})
+}
+
+function setAddressesFields(r) {
+	$('#addressDistrictr').val( r.bairro )
+	$('#address').val( r.logradouro )
 }
 
 function select2SearchAutomatically($el, term) {
@@ -308,7 +314,6 @@ function save() {
 }
 
 function saveFireSw(title, text, url, data) {
-	
 	Swal.fire({
 		  html: HtmlSw(title, text),
 		  showLoaderOnConfirm: true,
@@ -373,7 +378,7 @@ function getLocationsToFillUpSelect2Inputs() {
 	let getCountriesPromise = getCountries();
 	getCountriesPromise.then(c => {
 		if (c) {
-			let countries = c.countries;
+			let countries = c;
 			setCountriesSelect2(countries)
 			setOnChangeCountriesEvent(countries)
 		} else {

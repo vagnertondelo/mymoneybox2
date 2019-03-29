@@ -37,10 +37,8 @@ public class RequestServiceImpl implements RequestService {
 			ResponseEntity<Object> o = restTemplate.exchange(cbcService.append(url), HttpMethod.POST,
 					cbcService.getPostRequestHeaders(jsonService.objToJsonString(obj)), Object.class);
 			Optional<Object> object = Optional.of(o.getBody());
-
 			Map<Object, Object> map = (Map<Object, Object>) object.get();
 			tokenService.updateToken(map.get("token").toString());
-
 			return object.get();
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -61,8 +59,9 @@ public class RequestServiceImpl implements RequestService {
 				map = cbcService.getBasicPublicServiceRequest();
 			}
 			
-			if (!params.isEmpty())
+			if (Optional.ofNullable(params).isPresent()) {
 				map.addAll(params);
+			}
 			
 			ResponseEntity<?> objIn = restTemplate.exchange(cbcService.getGetRequest(url, map), HttpMethod.GET,
 					cbcService.requestHeaders(), Object.class);
@@ -80,7 +79,7 @@ public class RequestServiceImpl implements RequestService {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
 			RestTemplate restTemplate = new RestTemplate();
 			
-			if (!params.isEmpty())
+			if (Optional.ofNullable(params).isPresent())
 				map.addAll(params);
 			
 			ResponseEntity<?> objIn = restTemplate.exchange(cbcService.getGetRequest(url, map), HttpMethod.GET,
