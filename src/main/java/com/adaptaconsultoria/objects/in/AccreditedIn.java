@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true, allowGetters = true)
 public class AccreditedIn extends Token {
 	@JsonProperty("partners")
 	private List<Accredited> accrediteds;

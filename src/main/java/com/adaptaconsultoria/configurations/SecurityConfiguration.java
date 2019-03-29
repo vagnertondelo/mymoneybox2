@@ -41,7 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.defaultSuccessUrl("/dashboard", true)
 				.failureUrl("/freely/login?error")
 				.permitAll().and().logout();
-				
 		http.csrf().disable();
 	}
 
