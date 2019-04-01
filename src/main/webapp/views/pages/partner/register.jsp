@@ -74,7 +74,6 @@
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
 																<c:forEach items="${categories}" var="category">
-																	<%-- 																	<option <c:if test='${not empty user && credenciado.categoria.id == categoria.id}'> selected </c:if> value="${categoria.id}">${categoria.nome}</option> --%>
 																	<option value="${category.code}">${category.name}</option>
 																</c:forEach>
 															</optgroup>

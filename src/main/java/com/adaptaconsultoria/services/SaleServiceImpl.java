@@ -26,7 +26,7 @@ public class SaleServiceImpl implements SaleService {
 
 	private static final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
 	private static final String url = "sale";
-
+	
 	@Override
 	public Object save(Sale obj, HttpSession session) {
 		try {
@@ -49,5 +49,4 @@ public class SaleServiceImpl implements SaleService {
 			return null;
 		}
 	}
-
 }

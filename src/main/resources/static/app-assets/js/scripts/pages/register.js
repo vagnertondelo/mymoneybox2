@@ -202,7 +202,7 @@ function validate() {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-		    if (element.prop('id') === 'countryIsoCode') {
+		    if (element.prop('id') === 'addressCountryIsoCode') {
                 error.appendTo(element.parent());
             } else {
             	error.insertAfter(element);
