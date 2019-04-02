@@ -53,11 +53,6 @@ public class PartnerController {
 		return ResponseEntity.ok( partnerService.save(obj, session) );
 	}
 	
-	@GetMapping(value = "getlist")
-	public ResponseEntity<?> getList() {
-		return ResponseEntity.ok( partnerService.list() );
-	}
-	
 	@GetMapping(value = "register")
 	public ModelAndView partner(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
@@ -68,23 +63,21 @@ public class PartnerController {
 		pageUtil.setJs("partner-register.js");
 		pageUtil.setAttr("mi", "partner");
 		Partner obj = new Partner();
-
-//		if (id != null) {
-//			pageUtil.setSubTitle("Editar");
-//			try {
-//				obj = credenciadoDao.findOne(id);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} else {
-//			pageUtil.setSubTitle("Adicionar");
-//		}
 		
 		pageUtil.setAttr("partner", obj);
 		pageUtil.setModelAttribute("partner");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		pageUtil.setAttr("categories", categoryService.getPartnerCategoryByCompany(session));
 		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
+	}
+	
+	@GetMapping(value = "getcategories")
+	public ResponseEntity<?> getCategories(HttpSession session) {
+		return ResponseEntity.ok( categoryService.getPartnerCategoryByCompany(session) );
+	}
+	
+	@GetMapping(value = "getlist")
+	public ResponseEntity<?> getList() {
+		return ResponseEntity.ok( partnerService.list() );
 	}
 }
