@@ -178,7 +178,6 @@ function savePercentage(id, obj) {
 
 function validatePercentageFields() {
 	var isValid = true;
-	
 	$("#description-error").addClass('hidden');
 	$("#pcCashback-error").addClass('hidden');
 	$("#currency-error").addClass('hidden');
@@ -197,7 +196,6 @@ function validatePercentageFields() {
 		$("#currency-error").removeClass('hidden');
 		isValid = false;
 	}
-	
 	return isValid;
 }
 
@@ -322,9 +320,7 @@ function selectTableConfig(table) {
 		}).data();
 		
 		$(clearPccashbackForm).removeClass("hidden")
-		
 		$(removePccashback).removeClass("hidden")
-		
 		$(addPccashback).html("Editar");
 		
 		tableClick(obj) 

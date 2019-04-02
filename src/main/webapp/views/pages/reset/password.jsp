@@ -32,13 +32,13 @@
 									<div class="card-body">
 										<form class="form-horizontal" action="login-simple.html" id="${formId}">
 											<fieldset class="form-group position-relative has-icon-left">
-												<input type="password" class="form-control required" id="password" name="password" placeholder="Senha">
+												<input type="password" class="form-control required" id="newPassword" name="newPassword" placeholder="Senha">
 												<div class="form-control-position">
 													<i class="ft-circle"></i>
 												</div>
 											</fieldset>
 											<fieldset class="form-group position-relative has-icon-left">
-												<input type="text" class="form-control required" id="password-again" name="password-again" placeholder="Repetir Senha">
+												<input type="password" class="form-control required" id="confirmNewPassword" name="confirmNewPassword" placeholder="Repetir Senha">
 												<div class="form-control-position">
 													<i class="ft-circle"></i>
 												</div>

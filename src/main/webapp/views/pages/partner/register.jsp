@@ -73,13 +73,9 @@
 														</select>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> 
-														<select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
+														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> <select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
-<%-- 																<c:forEach items="${categories}" var="category"> --%>
-<%-- 																	<option value="${category.code}">${category.name}</option> --%>
-<%-- 																</c:forEach> --%>
 															</optgroup>
 														</select>
 													</div>
@@ -117,8 +113,7 @@
 														</div>
 													</div>
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> 
-														<select class="form-control state" name="addressRegionCode" id="addressRegionCode">
+														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
 													</div>
 												</div>
@@ -198,7 +193,7 @@
 	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
-	
+
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>

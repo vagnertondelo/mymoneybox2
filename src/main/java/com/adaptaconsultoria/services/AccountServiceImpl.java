@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.adaptaconsultoria.objects.in.AccountAutoCompleteIn;
 import com.adaptaconsultoria.objects.in.AccountIn;
 
 @Service
@@ -25,6 +26,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 	private static final String account = "account";
+	private static final String find = account + "/find";
 	
 	@Override
 	public Object getAcccount(HttpSession session) {
@@ -38,5 +40,18 @@ public class AccountServiceImpl implements AccountService {
 			log.info(e.getMessage());
 		}
 		return null;
+	}
+
+	@Override
+	public Object findAccount(String query) {
+		try {
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+			map.add("query", query);
+			Object o = requestService.getRequest(find, true, map);
+			AccountAutoCompleteIn objOp = (AccountAutoCompleteIn) jsonService.objToObj(o, new AccountAutoCompleteIn());
+			return objOp.getAccounts();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

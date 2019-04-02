@@ -1,7 +1,5 @@
 package com.adaptaconsultoria.controllers.sale;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.adaptaconsultoria.models.Account;
-import com.adaptaconsultoria.models.Rule;
 import com.adaptaconsultoria.models.Sale;
 import com.adaptaconsultoria.objects.in.Seller;
 import com.adaptaconsultoria.services.AccountService;
@@ -74,12 +71,18 @@ public class SaleController {
 	public ResponseEntity<?> getList() {
 		return ResponseEntity.ok( saleService.list() );
 	}
+	
+	@PostMapping(value = "getaccounts")
+	public ResponseEntity<?> getAccountsAutoComplete(String query) {
+		return ResponseEntity.ok( accountService.findAccount(query) );
+	}
 
-	private List<Rule> getRules(HttpSession session) {
+	@PostMapping(value = "getrules")
+	private ResponseEntity<?> getRules(HttpSession session) {
 		try {
 			Account account = (Account) accountService.getAcccount(session);
 			Seller seller = (Seller) accreditedService.findByAccountNo(account.getAccountNo());
-			return seller.getRules();
+			return ResponseEntity.ok(seller.getRules());
 		} catch (Exception e) {
 			return null;
 		}

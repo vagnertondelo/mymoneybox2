@@ -25,10 +25,10 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private LoginService loginService;
-	
+
 	@Autowired
 	private CbcService cbcService;
-	
+
 	@Autowired
 	ObjectFactory<HttpSession> httpSessionFactory;
 
@@ -37,28 +37,34 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 		try {
 			String username = authentication.getName().trim();
 			String password = authentication.getCredentials().toString().trim();
-			
+
 			Optional<UserIn> op = null;
 			if (username.equals(cbcService.getAppToken())) {
-				op =  Optional.of(loginService.remoteLogin(password));
+				op = Optional.of(loginService.remoteLogin(password));
 			} else {
 				op = Optional.of(loginService.login(username, password));
 			}
-			
+
 			if (op.get().getHasError()) {
 				throw new Exception();
 			}
-			
+
 			List<GrantedAuthority> listAuthorities = new ArrayList<GrantedAuthority>();
-			listAuthorities.add(new SimpleGrantedAuthority(op.get().getUser().getRole() ));
+			
+			listAuthorities.add(new SimpleGrantedAuthority(getRolePrefix() + op.get().getUser().getRole()));
+			
 			return new UsernamePasswordAuthenticationToken(op.get(), password, listAuthorities);
 		} catch (Exception e) {
 			return null;
 		}
-	}	
+	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
+	
+	public String getRolePrefix() {
+		return "ROLE_";
 	}
 }

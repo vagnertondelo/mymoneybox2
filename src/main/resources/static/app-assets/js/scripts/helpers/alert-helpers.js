@@ -56,3 +56,20 @@ function successAlert(obj, title, text, resolve, confirmButtonText, cancelButton
 		}
 	})
 }
+
+function successAlertConfirm(obj, title, text, resolve, confirmButtonText) {
+	Swal.fire({
+		  type: 'success',
+		  html: HtmlSw(title, text),
+		  showCloseButton: true,
+		  focusConfirm: true,
+		  confirmButtonText: confirmButtonText,
+		  confirmButtonAriaLabel: 'Thumbs up, great!',
+	}).then((result) => {
+		if (result.dismiss === undefined) {
+			resolve(true)
+		} else {
+			resolve(false)
+		}
+	})
+}
