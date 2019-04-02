@@ -31,7 +31,7 @@
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Home</a></li>
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/accredited/list">Listar</a></li>
+								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/sale/list">Listar</a></li>
 							</ol>
 						</div>
 					</div>
