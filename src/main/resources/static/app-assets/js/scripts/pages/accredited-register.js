@@ -1,4 +1,7 @@
 const saveUrl = 'save';
+const categoriesUrl = 'getcategories';
+const currenciesUrl = 'getcurrencies';
+
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Cadastrar Novo';
@@ -22,8 +25,81 @@ $(document).ready(function() {
 	removePercentageClick()
 	openTable()
 	changeAddressZipcode()
+	getCategoriesSelect2()
+	getCurrenciesSelect2()
 });
+//getCategoriesSelect2 begin //////////////////////
+function getCategoriesSelect2() {
+	getCategories().then(c => {
+		if (c == null || c == '') 
+			getCategoriesSelect2()
+		let data = getCategoriesSelect2Data(c);
+		$("#codeCategory").select2({
+			  data: data
+		})
+	})
+}
 
+function getCategoriesSelect2Data(data) {
+	return data.map(c => {
+		return { 
+			id: c.code, 
+			text: c.name
+		}
+	});
+}
+
+function getCategories() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: contextPath + "accredited/getcategories",
+            type: 'GET',
+            success: obj => {
+                resolve(obj);
+            },
+            error: e => {
+                console.log(e)
+            }
+        });
+    });
+}
+//getCategoriesSelect2 end //////////////////////
+//getCurrenciesSelect2 end //////////////////////
+function getCurrenciesSelect2() {
+	getCurrencies().then(c => {
+		if (c == null || c == '') 
+			getCurrenciesSelect2()
+		let data = getCategoriesSelect2Data(c);
+		$("#currency").select2({
+			  data: data
+		})
+	})
+}
+
+function getCurrenciesSelect2Data() {
+	return data.map(c => {
+		return { 
+			id: c.code, 
+			text: c.name
+		}
+	});
+}
+
+function getCurrencies() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: contextPath + "accredited/getcurrencies",
+            type: 'GET',
+            success: obj => {
+                resolve(obj);
+            },
+            error: e => {
+                console.log(e)
+            }
+        });
+    });
+}
+//getCurrenciesSelect2 end //////////////////////
 //percentage begin //////////////////////
 function openTable() {
 	$.ajax({
@@ -89,7 +165,6 @@ function removePercentageClick() {
 
 function savePercentage(id, obj) {
 	var percentageList = getPercentages();
-	
 	if (percentageList.length > 0) {
 		percentageList.forEach(p => {
 			savePercentageFinal(p, id);
@@ -162,7 +237,6 @@ function getPercentages() {
 	return credenciadoPercentualDoacaos;
 }
 //percentage end ////////////////////////
-
 //cep begin ////////////////////////
 function changeAddressZipcode() {
 	$('#addressZipcode').change(() => {
@@ -221,6 +295,7 @@ function tableItself(obj) {
     table = $(tableId)
         .DataTable({
             data: obj,
+            autoWidth: false,
             language: getLanguage(),
             columns: getColumns(),
             columnDefs: getColumnDefs(),
@@ -370,7 +445,7 @@ function select2Initialize() {
 	citySelect2 = $('.city').select2();
 	
 	$('.codeCategory').select2();
-	$('#currency').select2();
+	$('.currency').select2();
 }
 
 //select countries begin ////////////////////////
@@ -410,10 +485,6 @@ function getCountries() {
 function setCountriesSelect2(c) {
 	$('.countries').select2({
 		data: cMappedCountries(c)
-	})
-	
-	$('.country').select2({
-		data: cMappedCountry(c)
 	})
 }
 
@@ -500,24 +571,24 @@ function cMappedCountries(c) {
 	return returnedTarget;
 }
 
-function cMappedCountry(c) {
-	return c.map(c => {
-		return {id: c.isoCode, text: c.name}
-	});
-}
-
 function rMapped(r) {
 	$('.state').empty()
-	return r.map(c => {
+	var mappedRegions = [{id: '', text: 'Selecione uma opção'}];
+	var mapped = r.map(c => {
 		return {id: c.code, text: c.name}
 	});
+	var returnedTarget = $.merge(mappedRegions, mapped);
+	return returnedTarget;
 }
 
 function ciMapped(ci) {
 	$('.city').empty()
-	return ci.map(c => {
+	var mappedCities = [{id: '', text: 'Selecione uma opção'}];
+	var mapped =  ci.map(c => {
 		return {id: c.code, text: c.name}
 	});
+	var returnedTarget = $.merge(mappedCities, mapped);
+	return returnedTarget;
 }
 
 function validate() {
@@ -602,7 +673,7 @@ function validate() {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-		    if ( element.prop('id') === 'countryIsoCode' || element.prop('id') === 'codeCategory' ) {
+		    if ( element.prop('id') === 'addressCountryIsoCode' || element.prop('id') === 'addressCountryIsoCode' ) {
                 error.appendTo(element.parent());
             } else {
             	error.insertAfter(element);

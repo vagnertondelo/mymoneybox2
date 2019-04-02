@@ -70,8 +70,8 @@ public class RequestServiceImpl implements RequestService {
 			return obj.get();
 		} catch (Exception e) {
 			log.info(e.getMessage());
+			throw e;
 		}
-		return null;
 	}
 	
 	public Object getRequestNoParams(String url, MultiValueMap<String, String> params) {

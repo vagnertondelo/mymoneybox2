@@ -25,16 +25,16 @@ public class AccreditedController {
 
 	@Autowired
 	private CbcService cbcService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private AccreditedService accreditedService;
-	
+
 	@Autowired
 	private CurrencyService currencyService;
-	
+
 	@GetMapping(value = "list")
 	public ModelAndView list(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
@@ -47,22 +47,22 @@ public class AccreditedController {
 		pageUtil.setAttr("mi", "accredited");
 		return pageUtil.getModel();
 	}
-	
+
 	@GetMapping(value = "getlist")
 	public ResponseEntity<?> getList() {
-		return ResponseEntity.ok( accreditedService.list() );
+		return ResponseEntity.ok(accreditedService.list());
 	}
-	
+
 	@PostMapping(value = "save")
 	public Object register(@RequestBody Accredited obj, HttpSession session) {
-		return ResponseEntity.ok( accreditedService.save(obj, session) );
+		return ResponseEntity.ok(accreditedService.save(obj, session));
 	}
-	
+
 	@GetMapping(value = "rules")
 	public ResponseEntity<?> getRules(HttpServletRequest request, String id) {
-		return ResponseEntity.ok( "" );
+		return ResponseEntity.ok("");
 	}
-	
+
 	@GetMapping(value = "register")
 	public ModelAndView accredited(HttpServletRequest request, HttpSession session) {
 		PageUtil pageUtil = new PageUtil(new ModelAndView(request.getServletPath()));
@@ -74,13 +74,20 @@ public class AccreditedController {
 		pageUtil.setTableId("accreditedpercentagedonation-table");
 		pageUtil.setAttr("mi", "accredited");
 		Accredited obj = new Accredited();
-		
+
 		pageUtil.setAttr("accredited", obj);
 		pageUtil.setModelAttribute("accredited");
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-		// last call 
- 		pageUtil.setAttr("categories", categoryService.getSellerCategoryByCompany(session));
-		pageUtil.setAttr("currencies", currencyService.getCurrencyByCompany(session));
 		return pageUtil.getModel();
+	}
+
+	@GetMapping(value = "getcategories")
+	public ResponseEntity<?> getCategories(HttpSession session) {
+		return ResponseEntity.ok(categoryService.getSellerCategoryByCompany(session));
+	}
+	
+	@GetMapping(value = "getcurrencies")
+	public ResponseEntity<?> getCurrencyByCompany(HttpSession session) {
+		return ResponseEntity.ok(currencyService.getCurrencyByCompany(session));
 	}
 }

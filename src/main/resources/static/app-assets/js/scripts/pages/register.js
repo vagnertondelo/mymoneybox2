@@ -29,7 +29,7 @@ $(document).ready(function() {
 function changeAddressZipcode() {
 	$('#addressZipcode').change(() => {
 		if (isBrazil) {
-			getCepData()
+			getByCep( $('#addressZipcode').val() )
 		}
 	})
 }
@@ -202,7 +202,7 @@ function validate() {
 			$(element).parent().addClass('error')
 		},
 		errorPlacement : function(error, element) {
-		    if (element.prop('id') === 'countryIsoCode') {
+		    if (element.prop('id') === 'addressCountryIsoCode') {
                 error.appendTo(element.parent());
             } else {
             	error.insertAfter(element);
@@ -345,16 +345,22 @@ function cMappedCountry(c) {
 
 function rMapped(r) {
 	$('.state').empty()
-	return r.map(c => {
+	var mappedRegions = [{id: '', text: 'Selecione uma opção'}];
+	var mapped = r.map(c => {
 		return {id: c.code, text: c.name}
 	});
+	var returnedTarget = $.merge(mappedRegions, mapped);
+	return returnedTarget;
 }
 
 function ciMapped(ci) {
 	$('.city').empty()
-	return ci.map(c => {
+	var mappedCities = [{id: '', text: 'Selecione uma opção'}];
+	var mapped =  ci.map(c => {
 		return {id: c.code, text: c.name}
 	});
+	var returnedTarget = $.merge(mappedCities, mapped);
+	return returnedTarget;
 }
 
 function isCpfOrCnpjAndBrazil() {
@@ -371,26 +377,12 @@ function isCpfOrCnpjAndBrazil() {
 }
 
 //outter services
-function getCepData() {
-	let zipCode = $('#addressZipcode').val().replace(/\D/g,'');
-	try {
-		$.ajax({
-			type : "GET",
-			url : "https://api.postmon.com.br/v1/cep/" + zipCode,
-			success : function(zipCodeObj) {
-				setSelect2ValuesAutomaticallyByZipCode(zipCodeObj)
-				setAddressesFields(zipCodeObj)
-			},
-			error: function (request, status, error) {
-		        console.log(request)
-		    }
-		})
-    }
-	catch(err) {
-		console.log(err)
-		return 0;
-	}
-	return 0;
+function getByCep(zipCode) {
+	var cep = new Cep();
+	cep.getCepData( zipCode ).then(r => {
+		setAddressesFields(r)
+		setSelect2ValuesAutomaticallyByZipCode(r)
+	})
 }
 
 function setAddressesFields(r) {

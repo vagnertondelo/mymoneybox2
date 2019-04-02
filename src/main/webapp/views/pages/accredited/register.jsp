@@ -16,6 +16,7 @@
 <!-- Loaders -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/loaders/loaders.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/core/colors/palette-loader.min.css">
+
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
 	<jsp:include page="../../tiles/template/header.jsp"></jsp:include>
@@ -59,7 +60,6 @@
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
 											<form:hidden path="doLogin" id="doLogin" value="true" />
-											<form:hidden path="token" id="token" value="${token}" />
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
 											<input name="countryIsoCode" id="countryIsoCode" type="hidden">
 											<h4 class="form-section">
@@ -68,7 +68,7 @@
 											<fieldset class="blockit">
 												<div class="row">
 													<div class="col-md-6 form-group">
-														<label class="label-control" for="addressCountryIsoCode">País:</label> <select class="form-control countries" name="addressCountryIsoCode" id="addressCountryIsoCode">
+														<label class="label-control" for="addressCountryIsoCode">País:<span class="danger">*</span></label><select class="form-control countries required" name="addressCountryIsoCode" id="addressCountryIsoCode">
 															<option value="">Selecione um País</option>
 														</select>
 													</div>
@@ -76,9 +76,9 @@
 														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> <select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
-																<c:forEach items="${categories}" var="category">
-																	<option value="${category.code}">${category.name}</option>
-																</c:forEach>
+																<%-- 																<c:forEach items="${categories}" var="category"> --%>
+																<%-- 																	<option value="${category.code}">${category.name}</option> --%>
+																<%-- 																</c:forEach> --%>
 															</optgroup>
 														</select>
 													</div>
@@ -166,7 +166,7 @@
 													</div>
 												</div>
 											</fieldset>
-											
+
 											<h4 class="form-section">
 												<i class="ft-percent"></i> Regras
 											</h4>
@@ -180,13 +180,9 @@
 														</div>
 													</div>
 													<div class="col-md-3 form-group">
-														<label class="label-control" for="categoria">Moeda:</label> 
-														<select class="select2 form-control" name="currency" id="currency">
+														<label class="label-control" for="categoria">Moeda:</label> <select class="select2 form-control currency" name="currency" id="currency">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
-																<c:forEach items="${currencies}" var="currency">
-																	<option value="${currency.code}">${currency.name}</option>
-																</c:forEach>
 															</optgroup>
 														</select>
 														<div id="currency-error" class="help-block hidden">Este campo é obrigatório.</div>
@@ -211,6 +207,13 @@
 															<div class="help-block hidden" id="pcCashback-error">Campo não preenchido ou maior que 99</div>
 														</fieldset>
 													</div>
+												</div>
+											</fieldset>
+											<h4 class="form-section">
+												<i class="ft-percent"></i> Tabela de Regras
+											</h4>
+											<fieldset>
+												<div class="row">
 													<div class="col-md-12 table-responsive">
 														<table class="table table-striped table-bordered" id="${tableId}">
 														</table>
@@ -250,7 +253,7 @@
 	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
-	
+
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
