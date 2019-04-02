@@ -160,7 +160,6 @@ function getPercentages() {
 	return credenciadoPercentualDoacaos;
 }
 //percentage end ////////////////////////
-
 //cep begin ////////////////////////
 function changeAddressZipcode() {
 	$('#addressZipcode').change(() => {

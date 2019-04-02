@@ -3,6 +3,7 @@
 	var tableId = '#${tableId}'
 	var formId = '#${formId}'
 	var mi = '#${mi}'
+	var role = '${user.role}'
 </script>
 
 <!-- BEGIN VENDOR JS-->

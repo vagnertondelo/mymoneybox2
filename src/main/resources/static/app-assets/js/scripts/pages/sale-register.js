@@ -1,6 +1,7 @@
 const saveUrl = 'save';
 const accounts = 'sale/getaccounts';
 const rules = 'sale/getrules';
+var delay = 300;
 
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Registrar Nova Compra';
@@ -72,19 +73,24 @@ function typeHead() {
 	accountNo = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
+        rateLimitWait: 1000,
+        rateLimitBy: 'throttle',
         remote: {
             url: contextPath + accounts + '#%QUERY',
             wildcard: '%QUERY',
             transport: function(opts, onSuccess, onError) {
                 var url = opts.url.split("#")[0];
                 var query = opts.url.split("#")[1];
-                $.ajax({
-                    url: url,
-                    data: "query=" + query,
-                    type: "POST",
-                    success: onSuccess,
-                    error: onError,
-                })
+                
+                setTimeout(() => { 
+                	 $.ajax({
+                         url: url,
+                         data: "query=" + query,
+                         type: "POST",
+                         success: onSuccess,
+                         error: onError,
+                     })
+                }, delay)
             },
             filter: function(data) {
                 return data;

@@ -28,6 +28,7 @@ function table() {
 }
 
 function selectTableConfig(table) {
+	table.button( 0 ).enable( (role !== 'CUSTOMER') );
 	genericTableId = (table);
 	table.on( 'select deselect', function () {
 		 selectDeselectTable(table)
@@ -56,7 +57,7 @@ function getTableId (table) {
 
 function selectDeselectTable(table) {
 	var selectedRows = table.rows( { selected: true } ).count();
-    table.button( 1 ).enable( selectedRows > 0 && selectedRows < 2 );
+	table.button( 0 ).enable( (role !== 'CUSTOMER') );
 }
 
 function promtpRemove(id) {
@@ -121,19 +122,6 @@ function getButtons() {
 		                "accredited/register";
 		        },
 		        enabled: true
-		    }, {
-		        text: '<i class="ft-trash-2 font-small-2"></i> Remover ',
-		        className : 'btn btn-sm btn-danger box-shadow-2 round btn-min-width pull-right',
-		        attr:  {
-		        	 'data-position':'top', 
-		        	 'data-delay':'50',
-		        	 'data-tooltip': 'Limpar Formulário'
-		        },
-		        action: function ( e, dt, node, config ) {
-		        	var obj = dt.row( { selected: true } ).data();
-		        	promtpRemove(obj.id)
-		        },
-		        enabled: false
 		    }];
 }
 

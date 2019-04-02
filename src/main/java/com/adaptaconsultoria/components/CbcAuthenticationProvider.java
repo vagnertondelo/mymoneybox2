@@ -50,7 +50,9 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 			}
 
 			List<GrantedAuthority> listAuthorities = new ArrayList<GrantedAuthority>();
-			listAuthorities.add(new SimpleGrantedAuthority(op.get().getUser().getRole()));
+			
+			listAuthorities.add(new SimpleGrantedAuthority(getRolePrefix() + op.get().getUser().getRole()));
+			
 			return new UsernamePasswordAuthenticationToken(op.get(), password, listAuthorities);
 		} catch (Exception e) {
 			return null;
@@ -60,5 +62,9 @@ public class CbcAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
+	
+	public String getRolePrefix() {
+		return "ROLE_";
 	}
 }
