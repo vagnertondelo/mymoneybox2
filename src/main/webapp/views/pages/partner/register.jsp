@@ -28,7 +28,6 @@
 						<div class="breadcrumb-wrapper col-12">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-								<li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/partner/list">Listar</a></li>
 							</ol>
 						</div>
 					</div>
