@@ -230,6 +230,7 @@ function getPercentages() {
 	var credenciadoPercentualDoacaos = [];
 	table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
 		  var data = this.data();
+		  data.pcCashback = toFloat(data.pcCashback);
 		  credenciadoPercentualDoacaos.push(data);
 	} );
 	return credenciadoPercentualDoacaos;

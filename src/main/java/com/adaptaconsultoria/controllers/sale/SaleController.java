@@ -46,7 +46,7 @@ public class SaleController {
 		pageUtil.setInnerTitle("Registro de Compra");
 		pageUtil.setFormId("sale-form");
 		pageUtil.setJs("sale-register.js");
-		pageUtil.setAttr("rules", getRules(session));
+//		pageUtil.setAttr("rules", getRules(session));
 		pageUtil.setAttr("mi", "sale");
 		pageUtil.setAttr("sale", obj);
 		pageUtil.setModelAttribute("sale");

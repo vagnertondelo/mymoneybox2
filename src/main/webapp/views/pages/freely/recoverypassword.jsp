@@ -9,6 +9,10 @@
 <jsp:include page="../../tiles/template/css.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/validation/form-validation.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/extensions/sweetalert2/sweetalert-custom-centralize.css">
+
+<!-- Loaders -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/loaders/loaders.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/core/colors/palette-loader.min.css">
 </head>
 <body class="vertical-layout vertical-menu-modern 1-column bg-full-screen-image blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
 	<!-- BEGIN: Content-->
@@ -28,7 +32,7 @@
 										<span>Enviaremos um email para redefinição de sua senha.</span>
 									</h6>
 								</div>
-								<div class="card-content">
+								<div class="card-content blockit">
 									<div class="card-body">
 										<form class="form-horizontal" action="login-simple.html" id="${formId}">
 											<fieldset class="form-group position-relative has-icon-left">
@@ -43,6 +47,7 @@
 										</form>
 									</div>
 								</div>
+
 								<div class="card-footer border-0">
 									<p class="float-sm-left text-center">
 										<a href="${pageContext.request.contextPath}/freely/login" class="card-link">Login</a>
@@ -64,6 +69,7 @@
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

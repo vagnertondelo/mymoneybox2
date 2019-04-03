@@ -5,3 +5,7 @@ function floatToBrl(value) {
 function brlToFloat(value) {
     return isNaN(value) == false ? parseFloat(value) :   parseFloat(value.replace("R$","").replace(".","").replace(",","."));
 }
+
+function toFloat(value) {
+	return isNaN(value) == false ? parseFloat(value) :   parseFloat( value.replace(".","").replace(",",".") );
+}

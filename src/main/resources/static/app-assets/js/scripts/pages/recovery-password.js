@@ -27,24 +27,21 @@ function validate() {
 
 function save() {
     var data = $(formId).serializeObject()
-    saveFireSw('<h1>Sucesso</h1>', 'Um email foi enviado para você.', saveUrl, data);
+    var saveRequestAjaxPromise = saveRequestAjax(data);
+    block2('.blockit')
+    saveRequestAjaxPromise.then(obj => {
+    	unblock('.blockit')
+    	successAlertPassword(obj, "Sucesso", "Um email foi enviado para voce.", confirmButton);
+    })
     return 0;
 }
 
-function successAlertPassword(obj, title, text, resolve, confirmButtonText) {
+function successAlertPassword(obj, title, text, confirmButtonText) {
     Swal.fire({
         type: 'success',
         html: HtmlSw(title, text),
-        showCloseButton: true,
-        focusConfirm: true,
-        confirmButtonText: confirmButtonText,
-        confirmButtonAriaLabel: 'Thumbs up, great!',
     }).then((result) => {
-        if (result.dismiss === undefined) {
-            resolve(true)
-        } else {
-            resolve(false)
-        }
+    	window.location.href = contextPath + "freely/login";
     })
 }
 

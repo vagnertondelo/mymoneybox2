@@ -76,9 +76,6 @@
 														<label class="label-control" for="codeCategory">Categoria:<span class="danger">*</span></label> <select class="codeCategory form-control required" name="codeCategory" id="codeCategory">
 															<optgroup label="Escolha uma categoria">
 																<option value="">Não Selecionado</option>
-																<%-- 																<c:forEach items="${categories}" var="category"> --%>
-																<%-- 																	<option value="${category.code}">${category.name}</option> --%>
-																<%-- 																</c:forEach> --%>
 															</optgroup>
 														</select>
 													</div>
@@ -191,7 +188,7 @@
 														<fieldset>
 															<label for="pcCashback">Percentual %:<span class="danger">*</span></label>
 															<div class="input-group">
-																<input type="number" class="form-control" id="pcCashback" name="pcCashback" aria-describedby="button-addon2" min="0">
+																<input type="text" class="form-control brlmask" id="pcCashback" name="pcCashback" aria-describedby="button-addon2" min="0">
 																<div class="input-group-append">
 																	<button class="btn btn-primary btn-glow" type="button" id="add-pccashback">
 																		<i class="step-icon ft-plus"></i>Adicionar
@@ -253,7 +250,7 @@
 	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/money-helper.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>

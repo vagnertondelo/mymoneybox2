@@ -65,10 +65,11 @@
 											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-														<input type="text" class="form-control typeahead-basic" id="accountNo" name="accountNo" placeholder="Informe CPF/Telfone/Número da Conta/Código da conta" />
+														<input type="text" class="form-control typeahead-basic" id="accountNoTypeHead" name="accountNoTypeHead" placeholder="Informe CPF/Telefone/Número da Conta/Código da conta" />
 													</div>
 												</div>
 											</div>
+											<input type="hidden" class="form-control" id="accountNo" name="accountNo"/>
 											<div class="row">
 												<div class="col-md-6 form-group">
 													<label class="label-control" for="codeRule">Percentual:<span class="danger">*</span></label> <select class="select2 form-control required codeRule" name="codeRule" id="codeRule">

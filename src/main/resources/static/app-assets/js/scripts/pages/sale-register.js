@@ -6,7 +6,7 @@ var delay = 300;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Registrar Nova Compra';
 const cancelButton = 'Sair';
-var accountNo;
+var accountNoTypeHead;
 
 var codeRule = $('#codeRule');
 
@@ -70,7 +70,7 @@ function getRules() {
 }
 
 function typeHead() {
-	accountNo = new Bloodhound({
+	accountNoTypeHead = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         rateLimitWait: 1000,
@@ -97,11 +97,11 @@ function typeHead() {
             }
         }
     })
-	accountNo.initialize();
+	accountNoTypeHead.initialize();
     $('.typeahead-basic').typeahead(null, {
         name: 'Conta',
         display: function(data) {
-            return data.id;
+            return data.text;
         },
         limit: Infinity,
         templates: {
@@ -114,7 +114,7 @@ function typeHead() {
                 return "<div class='omniboxresult'><div class='caseName'>" + data.text + "</div></div>";
             }
         },
-        source: accountNo.ttAdapter()
+        source: accountNoTypeHead.ttAdapter()
     }).on('typeahead:select', function(ev, obj) {
         $('#accountNo').val(obj.id);
     });
@@ -197,7 +197,7 @@ function validate() {
             codeRule: {
                 valueNotEquals: true
             },
-            accountNo: {
+            accountNoTypeHead: {
             	required: true
             }
         },
