@@ -25,7 +25,7 @@ public class SaleServiceImpl implements SaleService {
 	private JsonService jsonService;
 
 	private static final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
-	private static final String url = "sale";
+	private static final String url = "sale/seller";
 	
 	@Override
 	public Object save(Sale obj, HttpSession session) {
