@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="pt-BR" data-textdirection="ltr">
 <head>
 <jsp:include page="../../tiles/template/head.jsp"></jsp:include>
 <jsp:include page="../../tiles/template/css.jsp"></jsp:include>
