@@ -13,12 +13,6 @@ import com.adaptaconsultoria.objects.in.CategoriesIn;
 public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
-	private CbcService cbcService;
-	
-	@Autowired
-	private TokenService tokenService;
-	
-	@Autowired
 	private RequestService requestService;
 	
 	@Autowired

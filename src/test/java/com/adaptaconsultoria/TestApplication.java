@@ -19,7 +19,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.adaptaconsultoria.models.Bean;
-import com.adaptaconsultoria.models.User;
 import com.adaptaconsultoria.objects.in.UserIn;
 import com.adaptaconsultoria.services.AccreditedService;
 import com.adaptaconsultoria.services.CountryService;
@@ -34,6 +33,8 @@ public class TestApplication {
 
 	@Autowired
 	public RequestService requestService;
+
+	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	
 	@Autowired

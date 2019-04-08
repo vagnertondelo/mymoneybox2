@@ -16,6 +16,41 @@
 		<div class="content-wrapper">
 			<div class="content-header row mb-1"></div>
 			<div class="content-body">
+
+				<!-- Indicar -->
+				<div class="row">
+					<div class="col-xl-12 col-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Indicar</h4>
+								<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+								<div class="heading-elements">
+									<ul class="list-inline mb-0">
+										<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="card-content collapse show">
+								<div class="card-body pt-0">
+									<div class="row mb-1">
+										<div class="col-12 col-sm-12">
+											<label for="indicar">Indicar</label>
+											<div class="input-group">
+												<input id="indicar" type="text" readonly="readonly" class="form-control" value="${URL}${pageContext.request.contextPath}/freely/register?sponsorAccountNo=${user.accountNo}" />
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-default" onclick="copy('indicar')" >Copiar</button>
+													<a href="${URL}${pageContext.request.contextPath}/freely/register?sponsorAccountNo=${user.accountNo}" target="_blank" class="btn btn-info">Abrir</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				<!-- Revenue, Hit Rate & Deals -->
 				<div class="row">
 					<div class="col-xl-6 col-12">
@@ -255,6 +290,6 @@
 	<script src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/vendors/js/charts/morris.min.js"></script>
 	
 	<script src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/js/scripts/pages/dashboard-sales.min.js"></script>
-	
+	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>	
 </body>
 </html>

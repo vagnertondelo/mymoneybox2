@@ -21,7 +21,7 @@
 				<ul class="nav navbar-nav float-right">
 					<li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1"><span class="user-name text-bold-700 text-capitalize">${user.name}</span></span><span class="avatar avatar-online"><img src="https://www.w3schools.com/howto/img_avatar.png" alt="avatar"><i></i></span></a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<a class="dropdown-item" href="${pageContext.request.contextPath}/senha/alterasenha"><i class="ft-user"></i> Editar Perfil </a>
+							<a class="dropdown-item" href="${pageContext.request.contextPath}/account/register"><i class="ft-user"></i> Editar Perfil </a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="${pageContext.request.contextPath}/logout"><i class="ft-power"></i> Logout</a>
 						</div></li>
