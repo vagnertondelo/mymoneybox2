@@ -17,7 +17,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	private RequestService requestService;
-	
+
 	@Autowired
 	private SessionService sessionService;
 
@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 	private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
 	private static final String account = "account";
 	private static final String find = account + "/find";
-	
+
 	@Override
 	public Object getAcccount(HttpSession session) {
 		try {
@@ -54,4 +54,5 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 		}
 	}
+
 }

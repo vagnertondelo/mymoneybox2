@@ -27,8 +27,11 @@ public class DashboardController {
 		
 		sessionService.setProjectName(session);
 		sessionService.setUser(session);
-		
+
+		pageUtil.setAttr("URL", request.getRequestURL().toString().split(request.getRequestURI())[0]);
+
 		pageUtil.setAttr("mi", "dashboard");
+		pageUtil.setJs("dashboard.js");
 		return pageUtil.getModel();
 	}
 }

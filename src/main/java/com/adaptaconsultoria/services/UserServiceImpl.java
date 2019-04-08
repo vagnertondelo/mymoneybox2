@@ -86,7 +86,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public Object isLogin(String login, HttpSession session) {
 		try {
@@ -125,7 +124,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public Object isEmail(String email, HttpSession session) {
 		try {
