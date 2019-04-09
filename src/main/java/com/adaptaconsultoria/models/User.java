@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends Token {
-
 	private Boolean doLogin;
 	private String countryIsoCode;
 
@@ -29,6 +28,7 @@ public class User extends Token {
 	private String addressDistrict;
 	private String addressZipcode;
 	private String accountNo;
+	private String addressNumber;
 
 	private String sponsorAccountNo;
 

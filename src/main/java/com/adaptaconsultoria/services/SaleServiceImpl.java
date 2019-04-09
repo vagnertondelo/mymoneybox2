@@ -25,7 +25,8 @@ public class SaleServiceImpl implements SaleService {
 	private JsonService jsonService;
 
 	private static final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
-	private static final String url = "sale/seller";
+	private static final String url = "sale";
+	private static final String urlGet = url + "/seller";
 	
 	@Override
 	public Object save(Sale obj, HttpSession session) {
@@ -42,7 +43,7 @@ public class SaleServiceImpl implements SaleService {
 	public Object list() {
 		try {
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-			Object o = requestService.getRequest(url, true, map);
+			Object o = requestService.getRequest(urlGet, true, map);
 			SaleIn objOp = (SaleIn) jsonService.objToObj(o, new SaleIn());
 			return objOp.getSales();
 		} catch (Exception e) {

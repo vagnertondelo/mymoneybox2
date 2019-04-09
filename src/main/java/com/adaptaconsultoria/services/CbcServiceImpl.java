@@ -202,7 +202,7 @@ public class CbcServiceImpl implements CbcService {
 			ResponseEntity<Token> obj = restTemplate.exchange(append(path), HttpMethod.POST, getPostRequestHeaders(params), Token.class);
 			Optional<Token> tokenOp = Optional.of(obj.getBody());
 			token = tokenOp.get();
-			token.setIpAddress(getIpAdress());
+			token.setIpAddress( getIpAdress() );
 			return token;
 		} catch (Exception e) {
 			log.error(e.getMessage());
