@@ -128,7 +128,7 @@ function save() {
 
     var obj = $(formId).serializeObject()
     var data = JSON.stringify(obj);
-    saveFireSw('<h1>Finalizar Compra</h1>', '<br><h5>Valor da doação: ' + brlSaleAmount + ' </5> <h5>Valor da final: ' + getCashBack(floatSaleAmount) + ' </5>', saveUrl, data);
+    saveFireSw('<h1>Finalizar Compra</h1>', '<br><h5>Valor da compra: ' + brlSaleAmount + ' </5> <h5>Valor final: ' + getCashBack(floatSaleAmount) + ' </5>', saveUrl, data);
     return 0;
 }
 
