@@ -37,7 +37,7 @@ public class AccountController {
 
 	@PostMapping(value = "save")
 	public Object register(@RequestBody User obj, HttpSession session) {
-	    return ResponseEntity.ok(userService.save(obj));
+	    return ResponseEntity.ok(userService.saveNew(obj, session));
 	}
 
 	@GetMapping(value = "register")
@@ -51,11 +51,15 @@ public class AccountController {
 		pageUtil.setTableId("accountpercentagedonation-table");
 		pageUtil.setModelAttribute("user");
 		pageUtil.setAttr("URL", request.getRequestURL().toString().split(request.getRequestURI())[0]);
-
 		pageUtil.setAttr("ipAddress", cbcService.getIpAdress());
-
-		pageUtil.setAttr("user", accountService.getAccountForEditing(session));
+		User user = (User)getUser(session);
+		pageUtil.setAttr("user", user);
+		pageUtil.setAttr("addressCountryIsoCode", user.getCountryIsoCode());
 		return pageUtil.getModel();
+	}
+
+	public Object getUser(HttpSession session) {
+		return accountService.getAccountForEditing(session);
 	}
 
 }

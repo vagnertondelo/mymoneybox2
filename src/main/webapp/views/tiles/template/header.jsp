@@ -7,7 +7,7 @@
 		<div class="navbar-header">
 			<ul class="nav navbar-nav flex-row position-relative">
 				<li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-				<li class="nav-item mr-auto"><a class="navbar-brand" href="home"> <img class="brand-logo" alt="modern admin logo" src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png">
+				<li class="nav-item mr-auto"><a class="navbar-brand" href="dashboard"> <img class="brand-logo" alt="modern admin logo" src="${pageContext.request.contextPath}/resources/app-assets/images/logo/default-logo.png">
 						<h3 class="brand-text">${projectName}</h3>
 				</a></li>
 				<li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>

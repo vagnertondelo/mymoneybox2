@@ -362,7 +362,6 @@ function getColumns() {
 		  ];
 }
 //percentage table end////////////////////////
-
 function setSponsorAccountNo() {
 	try {
 		$(sponsorAccountNo).val(param.sponsorAccountNo);
@@ -444,7 +443,6 @@ function select2Initialize() {
 	$('.codeCategory').select2();
 	$('.currency').select2();
 }
-
 //select countries begin ////////////////////////
 function getLocationsToFillUpSelect2Inputs() {
 	let getCountriesPromise = getCountries();

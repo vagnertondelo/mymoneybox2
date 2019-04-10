@@ -44,7 +44,7 @@
 										<form class="form-horizontal" action="${pageContext.request.contextPath}/login" method="post" id="${formId}">
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> <input type="hidden" id="so" name="so" />
 											<fieldset class="form-group floating-label-form-group">
-												<label for="username">Usuário</label> <input type="text" class="form-control" name="username" id="username" placeholder="" required>
+												<label for="username">Usuário</label> <input type="text" class="form-control" name="username" id="username" placeholder="" autofocus required>
 											</fieldset>
 											<fieldset class="form-group floating-label-form-group mb-1">
 												<label for="password">Senha</label> <input type="password" class="form-control" id="password" name="password" placeholder="" required>

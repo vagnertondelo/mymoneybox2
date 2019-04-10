@@ -61,7 +61,9 @@
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
-											<form:hidden path="addressCountryIsoCode" id="addressCountryIsoCode"/>
+											<form:hidden path="email" id="email"/>
+											<form:hidden path="accountNo" id="accountNo"/>
+											<input type="hidden" id="addrIsoCountry" value="${addressCountryIsoCode}"/>
 											<input name="countryIsoCode" id="countryIsoCode" type="hidden">
 											<h4 class="form-section">
 												<i class="la la-user"></i> Meus Dados
@@ -71,7 +73,7 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<label for="firstname">Nome:<span class="danger">*</span></label>
-															<form:input path="firstname" maxlength="120" type="text" class="form-control text-capitalize required" id="firstname" name="firstname" />
+															<form:input path="firstname" maxlength="120" type="text" class="form-control text-capitalize" id="firstname" name="firstname" />
 														</div>
 													</div>
 													<div class="col-md-4">

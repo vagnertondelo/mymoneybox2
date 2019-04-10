@@ -5,7 +5,7 @@ var delay = 300;
 
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Registrar Nova Compra';
-const cancelButton = 'Sair';
+const cancelButton = 'Listar';
 var accountNoTypeHead;
 
 var codeRule = $('#codeRule');
@@ -62,7 +62,7 @@ function getRules() {
 				block('.blockit')
 		    },
 		}).done(function(data) {
-			if (data != undefined && data != '') {
+			if (data != undefined) {
 				resolve(data);
 			}
 		});

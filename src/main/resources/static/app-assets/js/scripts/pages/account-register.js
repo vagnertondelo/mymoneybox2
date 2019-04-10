@@ -1,26 +1,26 @@
-const saveUrl = 'account/save';
+const saveUrl = 'save';
 const categoriesUrl = 'getcategories';
 const currenciesUrl = 'getcurrencies';
 
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
-const confirmButton = 'Cadastrar Novo';
-const cancelButton = 'Listar';
+const confirmButton = 'Continuar Editando';
+const cancelButton = 'Dashboard';
 
 var rowIndex;
 var clearPccashbackForm = '#clear-pccashback-form';
 var removePccashback = '#remove-pccashback';
 var addPccashback = '#add-pccashback';
 var pccashbackId = '#pccashback-id';
-var addressCountryIsoCode = $('#addressCountryIsoCode').val()
+var addressCountryIsoCode = $('#addrIsoCountry').val()
 
 var isBrazil = false;
 
 $(document).ready(function() {
+	validate()
 	changeAddressZipcode()
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
-	validate()
 	mask()
 });
 
@@ -104,19 +104,20 @@ function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	$('#countryIsoCode').val( $('#addressCountryIsoCode').val() )
-	
+
+	$('#countryIsoCode').val(addressCountryIsoCode);
+	$('#addressCountryIsoCode').val(addressCountryIsoCode);
+
 	var obj = $(formId).serializeObject()
 
 	// var object = $.extend(obj);
-    debugger
 	var data = JSON.stringify(obj);
 	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
 	return 0;
+
 }
 
 function saveFireSw(title, text, url, data) {
-    debugger
 	Swal.fire({
 		  html: HtmlSw(title, text),
 		  showLoaderOnConfirm: true,
@@ -334,47 +335,6 @@ function validate() {
 			 },
 			 passwordConfirm : {
                  equalTo : "#password"
-             },
-             rows: {
-            	 percentages: true
-             },
-             login: {
-            	 remote : {
- 					url : contextPath + "freely/islogin",
- 					type : "GET",
- 					data : {
- 						login : function() {
- 							return $("#login").val()
- 						}
- 					},
- 					dataFilter : function(obj) {
- 						obj = jQuery.parseJSON(obj);
- 						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 }
-             },
-             email: {
-            	 remote : {
-  					url : contextPath + "freely/isemail",
-  					type : "GET",
-  					data : {
-  						email : function() {
-  							return $("#email").val()
-  						}
-  					},
-  					dataFilter : function(obj) {
-  						obj = jQuery.parseJSON(obj);
-  						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 } 
              },
              codeCategory : {
  				valueNotEquals: true

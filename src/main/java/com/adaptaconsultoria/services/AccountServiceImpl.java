@@ -75,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
 			User u = new User();
 
 			u.setLastname(user.getLastname());
+			u.setFirstname(user.getFirstname());
 			u.setName(user.getName());
 			u.setLogin(user.getLogin());
 			u.setEmail(user.getEmail());
