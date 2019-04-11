@@ -21,5 +21,6 @@
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/app-assets/images/ico/favicon.ico">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
  
- 
+  
  <link rel="apple-touch-startup-image" href="${pageContext.request.contextPath}/resources/app-assets/images/ico/apple-icon-120.png" >
+

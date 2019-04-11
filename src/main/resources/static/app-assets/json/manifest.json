@@ -2,7 +2,7 @@
   "name": "My Money Box",
   "short_name": "MMB",
   "display": "fullscreen",
-  "start_url": "/mymoneybox",
+  "start_url": "/mymoneybox/freely/login",
   "theme_color": "#673ab6",
   "description": "App My Money Box.",
   "background_color": "#111111",

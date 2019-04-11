@@ -4,3 +4,4 @@
 		</span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block"> <i class="ft-heart pink"></i></span>
 	</p>
 </footer>
+
