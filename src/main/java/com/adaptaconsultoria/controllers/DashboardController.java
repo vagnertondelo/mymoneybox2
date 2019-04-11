@@ -1,11 +1,10 @@
 package com.adaptaconsultoria.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.adaptaconsultoria.services.AccountService;
-import com.adaptaconsultoria.services.DashboardService;
-import com.sun.org.glassfish.external.statistics.Stats;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.adaptaconsultoria.services.AccountService;
+import com.adaptaconsultoria.services.DashboardService;
 import com.adaptaconsultoria.services.SessionService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
-
-import java.util.List;
+import com.sun.org.glassfish.external.statistics.Stats;
 
 @Controller
 @RequestMapping(value = {"dashboard", ""})
