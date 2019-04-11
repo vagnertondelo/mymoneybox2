@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.adaptaconsultoria</groupId>
-	<artifactId>cashfast</artifactId>
+	<artifactId>mymoneybox</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>cashfast</name>
-	<description>CashFast Project</description>
+	<name>mymoneybox</name>
+	<description>My Money Box Project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -137,8 +137,6 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 		<!-- jsp end -->
-
-
 	</dependencies>
 
 	<build>

@@ -21,7 +21,9 @@ public class Account extends Token {
     private String addressCountryIsoCode;
     private String addressRegionCode;
     private String addressCityCode;
+
     private String addressNumber;
+
     private String addressDistrict;
     private String addressZipcode;
     private String addressLat;

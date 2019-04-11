@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private TokenService tokenService;
+
+	@Autowired
+	private JsonService jsonService;
+
+	@Autowired
+	private RequestService requestService;
 	
 	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	private static final String isLoginPath = "user/login";
@@ -42,21 +48,32 @@ public class UserServiceImpl implements UserService {
 		try {
 			user.setToken(cbcService.requestToken().getToken());
 			user.setDoLogin(true);
-			
+
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<UserIn> obj = restTemplate.exchange(cbcService.append(account), HttpMethod.POST,
-					cbcService.getPostRequestHeaders( objToJson(user) ), UserIn.class);
-			
+					cbcService.getPostRequestHeaders( jsonService.objToJsonString(user) ), UserIn.class);
+
 			Optional<UserIn> object = Optional.of(obj.getBody());
 			return object.get();
-			
+
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
 		return null;
-
 	}
-	
+
+
+	@Override
+	public Object saveNew(User obj, HttpSession session) {
+		try {
+			obj.setToken(tokenService.getToken());
+			return requestService.postRequest(account, obj, session);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		return null;
+	}
+
 	@Override
 	public Object saveAndLogin(User obj, HttpServletRequest request) {
 		UserIn userIn = (UserIn) save(obj);
@@ -74,16 +91,6 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return userIn;
-	}
-	
-	public String objToJson(Object obj) {
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			return objectMapper.writeValueAsString(obj);
-		} catch (JsonProcessingException e) {
-			log.error(e.getMessage());
-		}
-		return null;
 	}
 
 	@Override

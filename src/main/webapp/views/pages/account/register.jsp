@@ -8,15 +8,17 @@
 <html class="loading" lang="en" data-textdirection="ltr" >
 
 <head>
-<jsp:include page="../../tiles/template/head.jsp"></jsp:include>
-<jsp:include page="../../tiles/template/css.jsp"></jsp:include>
-<!-- Select2 -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/select/select2.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/wizard.min.css">
+    <jsp:include page="../../tiles/template/head.jsp"></jsp:include>
+    <jsp:include page="../../tiles/template/css.jsp"></jsp:include>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/validation/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/forms/wizard.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/extensions/flag-icon.min-adjust.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/vendors/css/forms/intlTelInput/intlTelInput.css">
 
-<!-- Loaders -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/loaders/loaders.min.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/core/colors/palette-loader.min.css">
+    <!-- Loaders -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/plugins/loaders/loaders.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/app-assets/css/core/colors/palette-loader.min.css">
 
 </head>
 <body class="vertical-layout vertical-menu-modern 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
@@ -60,6 +62,9 @@
 									<div class="card-body">
 										<form:form id="${formId}" modelAttribute="${modelAttribute}" class="add-doctors-tabs icons-tab-steps steps-validation wizard-notification">
 											<form:hidden path="ipAddress" id="ipAddress" value="${ipAddress}" />
+											<form:hidden path="email" id="email"/>
+											<form:hidden path="accountNo" id="accountNo"/>
+											<input type="hidden" id="addrIsoCountry" value="${addressCountryIsoCode}"/>
 											<input name="countryIsoCode" id="countryIsoCode" type="hidden">
 											<h4 class="form-section">
 												<i class="la la-user"></i> Meus Dados
@@ -69,7 +74,7 @@
 													<div class="col-md-4">
 														<div class="form-group">
 															<label for="firstname">Nome:<span class="danger">*</span></label>
-															<form:input path="firstname" maxlength="120" type="text" class="form-control text-capitalize required" id="firstname" name="firstname" />
+															<form:input path="firstname" maxlength="120" type="text" class="form-control text-capitalize" id="firstname" name="firstname" />
 														</div>
 													</div>
 													<div class="col-md-4">
@@ -107,20 +112,24 @@
 															<option value="">Selecione um País</option>
 														</select>
 													</div>
+
 													<div class="col-md-6">
 														<div class="form-group">
 															<label for="addressZipcode">CEP:</label>
-															<input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área">
+															<form:input path="addressZipcode" type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Código de Área"/>
 														</div>
 													</div>
+
 													<div class="col-md-6 form-group">
 														<label class="label-control" for="addressRegionCode"><span class="sorop">Estado</span>:</label> <select class="form-control state" name="addressRegionCode" id="addressRegionCode">
 														</select>
 													</div>
+
 													<div class="col-md-6 form-group">
 														<label class="label-control" for="addressCityCode">Cidade:</label> <select class="form-control city" name="addressCityCode" id="addressCityCode">
 														</select>
 													</div>
+
 													<div class="col-md-6">
 														<div class="form-group">
 															<label for="addressDistrict">Bairro:</label> <input type="text" class="form-control text-capitalize" id="addressDistrict" name="addressDistrict" placeholder="Bairro">
@@ -128,7 +137,8 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label for="addressNumber">Número:</label> <input type="text" class="form-control text-capitalize" id="addressNumber" name="addressNumber" placeholder="Número">
+															<label for="addressNumber">Número:</label>
+                                                            <form:input path="addressNumber" type="text" class="form-control text-capitalize" id="addressNumber" name="addressNumber" placeholder="Número"/>
 														</div>
 													</div>
 												</div>
@@ -136,7 +146,8 @@
 												<div class="row">
 													<div class="col-md-12">
 														<div class="form-group">
-															<label for="address">Rua:</label> <input type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua">
+															<label for="address">Rua:</label>
+															<form:input path="address" type="text" class="form-control text-capitalize" id="address" name="address" placeholder="Rua"/>
 														</div>
 													</div>
 												</div>
@@ -163,19 +174,17 @@
 		</div>
 	</div>
 	<!-- ////////////////////////////////////////////////////////////////////////////-->
-	<jsp:include page="../../tiles/template/footer.jsp"></jsp:include>
-	<!-- ///////////////////////////////////js/////////////////////////////////////////-->
 	<jsp:include page="../../tiles/template/js.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+	<jsp:include page="../../tiles/template/message.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/form.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/alert.jsp"></jsp:include>
 	<jsp:include page="../../tiles/template/validate.jsp"></jsp:include>
-	<jsp:include page="../../tiles/template/datatable.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/tables/datatable/dataTables.select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/data-table-helper.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/money-helper.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/extensions/block-ui.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/vendors/js/forms/intlTelInput/intlTelInput.js"></script>
+
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/steps-helpers.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/helpers/cep.js"></script>
+
 	<script src="${pageContext.request.contextPath}/resources/app-assets/js/scripts/pages/${js}"></script>
 </body>
 </html>

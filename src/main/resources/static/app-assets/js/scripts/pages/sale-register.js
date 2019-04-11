@@ -5,7 +5,7 @@ var delay = 300;
 
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
 const confirmButton = 'Registrar Nova Compra';
-const cancelButton = 'Sair';
+const cancelButton = 'Listar';
 var accountNoTypeHead;
 
 var codeRule = $('#codeRule');
@@ -62,7 +62,7 @@ function getRules() {
 				block('.blockit')
 		    },
 		}).done(function(data) {
-			if (data != undefined && data != '') {
+			if (data != undefined) {
 				resolve(data);
 			}
 		});
@@ -128,7 +128,7 @@ function save() {
 
     var obj = $(formId).serializeObject()
     var data = JSON.stringify(obj);
-    saveFireSw('<h1>Finalizar Compra</h1>', '<br><h5>Valor da doação: ' + brlSaleAmount + ' </5> <h5>Valor da final: ' + getCashBack(floatSaleAmount) + ' </5>', saveUrl, data);
+    saveFireSw('<h1>Finalizar Compra</h1>', '<br><h5>Valor da compra: ' + brlSaleAmount + ' </5> <h5>Valor final: ' + getCashBack(floatSaleAmount) + ' </5>', saveUrl, data);
     return 0;
 }
 

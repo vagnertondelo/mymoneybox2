@@ -32,6 +32,7 @@ public class AccreditedServiceImpl implements AccreditedService {
 	public Object save(Accredited obj, HttpSession session) {
 		try {
 			obj.setToken(tokenService.getToken());
+			if (obj.getToken() == null) throw new Exception();
 			return requestService.postRequest(url, obj, session);
 		} catch (Exception e) {
 			log.error(e.getMessage());

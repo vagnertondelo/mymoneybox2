@@ -2,6 +2,7 @@ package com.adaptaconsultoria;
 
 import java.io.IOException;
 
+import com.adaptaconsultoria.services.AccountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -34,6 +35,9 @@ public class TestApplication {
 	@Autowired
 	public RequestService requestService;
 
+	@Autowired
+	public AccountService accountService;
+
 	@SuppressWarnings("unused")
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	
@@ -47,7 +51,7 @@ public class TestApplication {
 	public void contextLoads() {
 		
 	}
-	
+
 	public void accreditedService() {
 		System.out.println(accreditedService.list());
 	}

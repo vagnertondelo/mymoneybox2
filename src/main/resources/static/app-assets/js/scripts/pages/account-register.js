@@ -4,48 +4,51 @@ const currenciesUrl = 'getcurrencies';
 
 var table;
 const errorMessage = 'Ocorreu um erro ao tentar salvar o registro.';
-const confirmButton = 'Cadastrar Novo';
-const cancelButton = 'Listar';
+const confirmButton = 'Continuar Editando';
+const cancelButton = 'Dashboard';
 
 var rowIndex;
 var clearPccashbackForm = '#clear-pccashback-form';
 var removePccashback = '#remove-pccashback';
 var addPccashback = '#add-pccashback';
 var pccashbackId = '#pccashback-id';
+var addressCountryIsoCode = $('#addrIsoCountry').val()
 
 var isBrazil = false;
 
 $(document).ready(function() {
+	validate()
+	changeAddressZipcode()
 	select2Initialize()
 	getLocationsToFillUpSelect2Inputs()
-	validate()
 	mask()
-	onClickClearForm()
-	openTable()
-	changeAddressZipcode()
 });
 
-//percentage begin //////////////////////
-function openTable() {
+function changeAddressZipcodeForce() {
+
+	setTimeout(function(){
+		try {
+			$('#addressZipcode').trigger('change')
+		} catch (e) {
+			console.log('error')
+		}
+	}, 100);
 }
 
-function onClickClearForm() {
-	$(clearPccashbackForm).click(function () {
-		resetAddButton()
-	})
+function getCountryFullName() {
+	var name;
+	switch (addressCountryIsoCode) {
+		case 'BR':
+			isBrazil = true;
+			name = 'brazil';
+		break;
+		case 'PY':
+			name = 'brazil';
+		break;
+		default: return '';
+	}
+	return name;
 }
-
-function resetAddButton() {
-	$(clearPccashbackForm).addClass("hidden")
-	$(removePccashback).addClass("hidden")
-	$(addPccashback).html("<i class=\"step-icon ft-plus\"></i>Adicionar")
-}
-
-function resetForm() {
-	$(':input', formId).not(':button, :submit, :reset, :hidden').val('').prop(
-			'checked', false).prop('selected', false);
-}
-
 //cep begin ////////////////////////
 function changeAddressZipcode() {
 	$('#addressZipcode').change(() => {
@@ -57,7 +60,6 @@ function changeAddressZipcode() {
 
 function setSelect2ValuesAutomaticallyByZipCode(obj) {
 	var regionSelect = select2SearchAutomatically(regionSelect2, obj.estado_info.nome)
-
 	regionSelect.then((r) => {
 		select2SearchAutomatically(citySelect2, obj.cidade)
 		setAdressByCep(obj)
@@ -98,100 +100,21 @@ function select2SearchAutomatically($el, term) {
 	});
 }
 
-//percentage table begin////////////////////////
-function tableItself(obj) {
-    console.log(obj)
-    table = $(tableId)
-        .DataTable({
-            data: obj,
-            autoWidth: false,
-            language: getLanguage(),
-            columns: getColumns(),
-            columnDefs: getColumnDefs(),
-            initComplete: function(settings, json) {
-                selectTableConfig(this.DataTable());
-            },
-            dom: 'Bfrtip',
-            paging	: false,
-            searching: false,
-            select: true,
-            order: [
-                [1, 'asc']
-            ]
-        });
-}
-
-function selectTableConfig(table) {
-	$('#' +table.tables().nodes().to$().attr('id')+ ' tbody').on('dblclick', 'tr', function () {
-		table.rows(this).select()
-		rowIndex = table.row( this ).index();
-		
-		var obj = table.row({
-			selected : true
-		}).data();
-		
-		$(clearPccashbackForm).removeClass("hidden")
-		$(removePccashback).removeClass("hidden")
-		$(addPccashback).html("Editar");
-		
-		tableClick(obj) 
-	});
-}
-
-function tableClick(data) {
-	$(pccashbackId).val(data.id)
-	$("#description").val(data.description)
-	$("#currency").val(data.currency).trigger('change');
-	$("#pcCashback").val(data.pcCashback)
-	return 0;
-}
-
-function getColumnDefs() {
-	return [{
-        targets: [0],
-        visible: false
-    }, {
-        className: "dt-center",
-        "targets": []
-    }];
-}
-
-function getColumns() {
-	 return [ { 
-		 		data: "id" 
-		 	},{ 
-		 		title: "Descrição",
-		 		data: "description" 
-		 	},{ 
-		 		title: "Moeda",
-		 		data: "currency" 
-		 	}, { 
-		 		title: "Percentual %",
-		 		data: "pcCashback" 
-		 	}
-		  ];
-}
-//percentage table end////////////////////////
-
-function setSponsorAccountNo() {
-	try {
-		$(sponsorAccountNo).val(param.sponsorAccountNo);
-	} catch (e) {
-		console.log(e)
-	}
-}
-
 function save() {
 	if($("#addressCityCode").val() === '') {
 		$("#addressRegionCode").val('')
 	}
-	$('#countryIsoCode').val( $('#addressCountryIsoCode').val() )
-	
+
+	$('#countryIsoCode').val(addressCountryIsoCode);
+	$('#addressCountryIsoCode').val(addressCountryIsoCode);
+
 	var obj = $(formId).serializeObject()
-	var object = $.extend(obj);
-	var data = JSON.stringify(object);
+
+	// var object = $.extend(obj);
+	var data = JSON.stringify(obj);
 	saveFireSw('<h1>Finalizar Registro</h1>', 'Clique abaixo para continuar.', saveUrl, data);
 	return 0;
+
 }
 
 function saveFireSw(title, text, url, data) {
@@ -219,7 +142,6 @@ function saveFireSw(title, text, url, data) {
 		  	})
 		  }
 		}).then(function(obj) {
-			
 			return new Promise(resolve => {
 				if (obj.value != undefined) {
 					obj = obj.value;
@@ -231,7 +153,6 @@ function saveFireSw(title, text, url, data) {
 					}
 				} 
 			})
-			
 		}).then(function (r) {
 			if (r) {
 				window.location.href = contextPath + "account/register";
@@ -249,7 +170,6 @@ function select2Initialize() {
 	countrySelect2 = $('.countries').select2();
 	regionSelect2 = $('.state').select2();
 	citySelect2 = $('.city').select2();
-	
 	$('.codeCategory').select2();
 	$('.currency').select2();
 }
@@ -262,6 +182,8 @@ function getLocationsToFillUpSelect2Inputs() {
 			let countries = c;
 			setCountriesSelect2(countries)
 			setOnChangeCountriesEvent(countries)
+			select2SearchAutomatically(countrySelect2, getCountryFullName());
+			changeAddressZipcodeForce();
 		} else {
 			getLocationsToFillUpSelect2Inputs()
 		}
@@ -413,47 +335,6 @@ function validate() {
 			 },
 			 passwordConfirm : {
                  equalTo : "#password"
-             },
-             rows: {
-            	 percentages: true
-             },
-             login: {
-            	 remote : {
- 					url : contextPath + "freely/islogin",
- 					type : "GET",
- 					data : {
- 						login : function() {
- 							return $("#login").val()
- 						}
- 					},
- 					dataFilter : function(obj) {
- 						obj = jQuery.parseJSON(obj);
- 						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 }
-             },
-             email: {
-            	 remote : {
-  					url : contextPath + "freely/isemail",
-  					type : "GET",
-  					data : {
-  						email : function() {
-  							return $("#email").val()
-  						}
-  					},
-  					dataFilter : function(obj) {
-  						obj = jQuery.parseJSON(obj);
-  						updateToken(obj.token)
-						if (obj.isvalid) {
-							return true;
-						}
-						return false;
-					}
-            	 } 
              },
              codeCategory : {
  				valueNotEquals: true
