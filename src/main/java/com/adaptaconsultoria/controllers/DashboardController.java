@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.adaptaconsultoria.models.Stat;
 import com.adaptaconsultoria.services.AccountService;
 import com.adaptaconsultoria.services.DashboardService;
 import com.adaptaconsultoria.services.SessionService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
-import com.sun.org.glassfish.external.statistics.Stats;
 
-@SuppressWarnings("restriction")
 @Controller
 @RequestMapping(value = {"dashboard", ""})
 public class DashboardController {
@@ -47,8 +46,7 @@ public class DashboardController {
 		sessionService.setUser(session);
 		pageUtil.setAttr("URL", request.getRequestURL().toString().split(request.getRequestURI())[0]);
 		pageUtil.setAttr("mi", "dashboard");
-		@SuppressWarnings({ "unchecked" })
-		List<Stats> stats = (List<Stats>) dashboardService.list();
+		List<Stat> stats = (List<Stat>) dashboardService.list();
 
 		pageUtil.setAttr("stats", stats);
 		pageUtil.setJs("dashboard.js");
