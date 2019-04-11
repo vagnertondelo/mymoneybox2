@@ -47,6 +47,7 @@ public class DashboardController {
 		sessionService.setUser(session);
 		pageUtil.setAttr("URL", request.getRequestURL().toString().split(request.getRequestURI())[0]);
 		pageUtil.setAttr("mi", "dashboard");
+		@SuppressWarnings({ "unchecked" })
 		List<Stats> stats = (List<Stats>) dashboardService.list();
 
 		pageUtil.setAttr("stats", stats);
