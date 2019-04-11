@@ -18,6 +18,7 @@ import com.adaptaconsultoria.services.SessionService;
 import com.adaptaconsultoria.utils.pages.PageUtil;
 import com.sun.org.glassfish.external.statistics.Stats;
 
+@SuppressWarnings("restriction")
 @Controller
 @RequestMapping(value = {"dashboard", ""})
 public class DashboardController {
